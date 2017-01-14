@@ -1,0 +1,43 @@
+Protocol
+
+Server to Client
+ID,x,y,status
+
+ID List
+0	Player
+1	Sword
+
+Status List
+Player
+0 	Dead
+1	Low Sword Stance
+2	Low Jab
+3	Normal Stance (hold sword at medium height)
+4	Medium Height Jab
+5	High Sword Stance
+6	High Jab
+7	Hold sword so that it is ready to throw
+8	Throws sword
+9	Crouch
+10	Jump
+
+Sword 
+0	Held by player
+1	Sword thrown 90 degrees
+2 	Sword thrown 180 degrees
+3	Sword thrown 270 degrees
+4	Sword thrown 0 degrees
+
+Client to Server
+W	(up)
+A	(left)
+S	(down)
+D	(right)
+F	(attack)
+G	(jump)
+#W	(stop up)
+#A	(stop left)
+#S	(stop down)
+#D	(stop right)
+#F	(stop attack)
+#G	(stop jump)
