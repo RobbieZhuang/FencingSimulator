@@ -38,11 +38,11 @@ public class Game implements Runnable {
 
 	}
 	void getInput (){
-		long start = System.currentTimeMillis();
+
 		for (int i = 0; i < players.size(); i ++){
 			keys.get(i).setKeys(Server.getInput(keys.get(i).getPlayerID()));
 		}
-		System.out.println(System.currentTimeMillis() - start);
+
 	}
 
 	void updateGameState(){

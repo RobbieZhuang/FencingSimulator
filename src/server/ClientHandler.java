@@ -38,7 +38,8 @@ public class ClientHandler implements Runnable {
 
     /**
      * Default constructor
-     *
+     *+
+     *3
      * @param connectionSocket is the connection socket hooked up to the client socket
      * @param playerID 
      * @param queue            is the server queue for messages

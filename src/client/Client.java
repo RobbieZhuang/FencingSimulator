@@ -22,7 +22,7 @@ import javax.swing.JFrame;
 
 public class Client {
 
-    private static final String IP = "10.242.166.183";
+    private static final String IP = "192.168.0.104";
     // Declaring variables
     private static volatile boolean clientRunning;
     private static Socket socket;
@@ -68,7 +68,7 @@ public class Client {
         System.out.println("Running client receiver");
 
         String users = clientReceiver.firstMessage();
-        System.out.println(users);
+        System.out.println("users: " + users);
 
         // Sending thread
         JFrame frame = new JFrame();
