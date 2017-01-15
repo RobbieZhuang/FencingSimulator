@@ -3,83 +3,63 @@
  */
 package server;
 
-import java.util.ArrayList;
 
 public class Game implements Runnable {
-	
-	static ArrayList <Player> players;
-	static ArrayList <Keys> keys;
-	static ArrayList <Terrain> terrainBlocks;
-	static ArrayList <Map> maps;
-	static int currentMap;
+	GameState gameState;
+	Thread t;
 	static boolean running;
-	int numPlayers;
+	
 
 	Game (){
-		initialize();
-
-
+		gameState = new GameState();
+		t = new Thread (new GameOutputManager(gameState));
 	}
 
-	void initialize(){
-		numPlayers = 0;
-		terrainBlocks = new ArrayList <Terrain>();
-		players = new ArrayList <Player>();
-		keys = new ArrayList <Keys>();
+
+	void addPlayer (int playerID){
+		gameState.addPlayer(new Player (playerID));
+		gameState.addKeys(new Keys (playerID));
 	}
 
-	static void addPlayer (int playerID){
-		players.add(new Player(playerID));
-		keys.add(new Keys (playerID));
-
-	}
-
-	public static void removePlayer (int id){
-
+	void removePlayer (int playerID){
+		gameState.removePlayer (playerID);
+		gameState.removeKeys(playerID);
 	}
 	void getInput (){
-
-		for (int i = 0; i < players.size(); i ++){
-			keys.get(i).setKeys(Server.getInput(keys.get(i).getPlayerID()));
+		for (int i = 0; i < gameState.getNumPlayers(); i ++){
+			gameState.getKeys().get(i).setKeys(Server.getInput(gameState.getKeys().get(i).getPlayerID()));
 		}
-
 	}
 
 	void updateGameState(){
-		for (int i = 0; i < players.size(); i ++){
-			if (keys.get(i).getKey(0)){
-				players.get(i).moveUp();
+		for (int i = 0; i < gameState.getNumPlayers(); i ++){
+			if (gameState.getKeys().get(i).getKey(0)){
+				gameState.getPlayers().get(i).moveUp();
 			}
-			if (keys.get(i).getKey(1)){
-				players.get(i).moveLeft();
+			if (gameState.getKeys().get(i).getKey(1)){
+				gameState.getPlayers().get(i).moveLeft();
 			}
-			if (keys.get(i).getKey(2)){
-				players.get(i).moveDown();
+			if (gameState.getKeys().get(i).getKey(2)){
+				gameState.getPlayers().get(i).moveDown();
 			}
-			if (keys.get(i).getKey(3)){
-				players.get(i).moveRight();
+			if (gameState.getKeys().get(i).getKey(3)){
+				gameState.getPlayers().get(i).moveRight();
 			}
-		}
-	}
-
-	void outputGameState(){		
-		for (int i = 0; i < players.size(); i ++){
-			GameOutputManager.updateGameState(players.get(i).getX(), players.get(i).getY(), players.get(i).getID(), players.get(i).getID());
 		}
 	}
 
 	public void run (){
 		running = true;
+		t.start();
 		while (running){
 
 			getInput();
 			updateGameState();
-			outputGameState();
 			
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				// TODO Auto-generat)ed catch block
 				e.printStackTrace();
 			}
 			

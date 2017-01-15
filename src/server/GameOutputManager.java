@@ -11,19 +11,15 @@ package server;
 
 
 public class GameOutputManager implements Runnable {
-	static GameState gameState = new GameState();
+	GameState gameState;
 	static int counter = 0;
 	long end;
 	long start;
 	long currentTime;
-	GameOutputManager (){
-		
-	}
 	
-	public static void updateGameState (int x, int y, int ID, int status){
-		gameState.update(x, y, ID, status);
+	GameOutputManager (GameState gameState){
+		this.gameState = gameState;
 	}
-	
 	
 	/**
 	 * This is the new thread
@@ -39,10 +35,12 @@ public class GameOutputManager implements Runnable {
 			}
 			counter++;
 				
-				
-				Server.sendMessage(gameState.getString());
+				for (int i = 0; i < gameState.getNumPlayers(); i ++){
+					Server.sendMessage(gameState.getPlayers().get(i).getPlayerString());
+				}
+	
 				try {
-					Thread.sleep(10);
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

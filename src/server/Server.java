@@ -66,18 +66,12 @@ public class Server {
 	public static boolean [] getInput (int playerID){
 		return getClient(playerID).getKeys();
 	}
-
-	public static void startOutputManager (){
-		Thread t = new Thread (new GameOutputManager ());
-		t.start();
-	}
-
+	
 	private void run() {
 		try {
 			System.out.println("Started server");
 			//starts the server output manager
 
-			Thread f = new Thread (new GameOutputManager());
 			Thread t = new Thread (game);
 			
 			// Constantly trying to allow clients to connect to server
@@ -94,7 +88,6 @@ public class Server {
 					
 					clients.add(clientHandler);
 					if (counter == 0){
-						f.start();
 						t.start();
 					}
 					
@@ -120,5 +113,9 @@ public class Server {
 			e.printStackTrace();
 		}
 		System.out.println("The server should end");
+	}
+
+	public static Game getGame() {
+		return game;
 	}
 }

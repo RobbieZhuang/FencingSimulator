@@ -6,7 +6,7 @@ public class Player {
 	private int y;
 	private int ID;
 	private int status;
-
+	
 	public Player(int playerID) {
 		this.x = 0;
 		this.y = 0;
@@ -50,6 +50,11 @@ public class Player {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+	public String getPlayerString() {
+		return ID + " " + x + " " + y + " " + status;
+	}
+
 
 	
 }

@@ -62,7 +62,7 @@ public class ClientHandler implements Runnable {
     	write(""+playerID);
     	
         System.out.println("Running new ServerReceiver");
-        Game.addPlayer(playerID);
+        Server.getGame().addPlayer(playerID);
         
         String message;
 

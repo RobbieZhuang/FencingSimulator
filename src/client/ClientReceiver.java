@@ -20,7 +20,7 @@ public class ClientReceiver implements Runnable {
     private volatile boolean running = true;
     private String player1;
     private String player2;
-    
+    private int counter = 0;
     private long start;
     private long end;
     
@@ -43,10 +43,19 @@ public class ClientReceiver implements Runnable {
         while (running) {
             // Attempting to receive message
             try {
+    			if (counter%10 == 0) {
+    				start = System.currentTimeMillis();
+    			}
+    			counter++;
                 String serverMessage = input.readLine();
                 if (!serverMessage.equals("-1")) {
                     runCommands(serverMessage);
                 }
+    			if (counter%10 == 0) {
+    				end = System.currentTimeMillis();
+    				System.out.println("Messages rec / sec: " + (int)(10*1000/(end - start)));
+    				counter = 0;
+    			}
             } catch (Exception e) {
                 System.out.println("*** Error receiving message ***");
                 e.printStackTrace();

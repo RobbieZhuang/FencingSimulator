@@ -23,6 +23,10 @@ public class Keys {
 
 	public boolean getKey(int i) {
 		return keys [i];
+	}
+
+	public int getID() {
+		return this.playerID;
 	} 
 	
 	
