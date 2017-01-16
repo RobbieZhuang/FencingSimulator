@@ -102,4 +102,13 @@ public class GameState {
 	public String getGameString(int playerID) {
 		return getPlayer(playerID).getPlayerString();
 	}
+	
+	public String getGameString(){
+		String gameString = "";
+		for (int i = 0; i < numPlayers; i ++){
+			gameString += players.get(i).getID() + " " + players.get(i).getX() + " " + players.get(i).getY() + " "
+					+ players.get(i).getStatus() + " ";
+		}
+		return gameString;
+	}
 }

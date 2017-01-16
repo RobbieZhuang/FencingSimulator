@@ -47,7 +47,7 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 		for (int a = 0; a < 2; a++) {
 			PlayerImage p = players[a];
 			g.setColor(p.getPlayerColor());
-			g.fillRect(p.getpX(), p.getpY(), 25, 25);
+			g.fillRect((int)p.getpX(), (int)p.getpY(), 25, 25);
 		}
 		g.setColor(Color.MAGENTA);
 		LinkedList <Land> terrain = r.getTerrain();
@@ -63,10 +63,15 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 	public static synchronized void updatePlayer (String playerInfo) {
 		String playerID = playerInfo.substring(0, playerInfo.indexOf(' '));
 		playerInfo = playerInfo.substring(playerInfo.indexOf(' ')+1, playerInfo.length());
-		int pX = Integer.parseInt(playerInfo.substring(0, playerInfo.indexOf(' ')));
+		
+		
+		double pX = Double.parseDouble(playerInfo.substring(0, playerInfo.indexOf(' ')));
+		
 		//System.out.println(pX);
 		playerInfo = playerInfo.substring(playerInfo.indexOf(' ')+1, playerInfo.length());
-		int pY = Integer.parseInt(playerInfo.substring(0, playerInfo.indexOf(' ')));
+		
+		
+		double pY = Double.parseDouble(playerInfo.substring(0, playerInfo.indexOf(' ')));
 		playerInfo = playerInfo.substring(playerInfo.indexOf(' ')+1, playerInfo.length());
 		int status = Integer.parseInt(playerInfo);
 
@@ -74,11 +79,22 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 			if (players[a].getPlayerID().equals(playerID)) {
 				players[a].setpX(pX);
 				players[a].setpY(pY);
+//				players[a].setpX(players[a].getpX() + 1);
+				
 				players[a].setStatus(status);
 			}
 		}
 	}
 
+//	public static void updatePlayers (String gameString){
+//		int numPlayers = (gameString.length() - gameString.replace(" ", "").length())/4;
+//		String[] strs = gameString.trim().split("\\s+");
+//		for (int i = 0; i < numPlayers; i ++){
+//				if (players)
+//			}
+//		}
+//	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();

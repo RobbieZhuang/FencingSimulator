@@ -23,7 +23,7 @@ public class ClientReceiver implements Runnable {
     private int counter = 0;
     private long start;
     private long end;
-    
+    String serverMessage;
     
 
     /**
@@ -47,13 +47,13 @@ public class ClientReceiver implements Runnable {
     				start = System.currentTimeMillis();
     			}
     			counter++;
-                String serverMessage = input.readLine();
+                serverMessage = input.readLine();
                 if (!serverMessage.equals("-1")) {
                     runCommands(serverMessage);
                 }
     			if (counter%10 == 0) {
     				end = System.currentTimeMillis();
-    				System.out.println("Messages rec / sec: " + (int)(10*1000/(end - start)));
+    				System.out.println("ping: " + (int)(end - start)/10);
     				counter = 0;
     			}
             } catch (Exception e) {
@@ -97,5 +97,6 @@ public class ClientReceiver implements Runnable {
              }
     	}
     }
+
     
 }

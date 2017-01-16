@@ -59,7 +59,6 @@ public class Game implements Runnable {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generat)ed catch block
 				e.printStackTrace();
 			}
 			

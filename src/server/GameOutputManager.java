@@ -39,6 +39,7 @@ public class GameOutputManager implements Runnable {
 					Server.sendMessage(gameState.getPlayers().get(i).getPlayerString());
 				}
 	
+//				Server.sendMessage(gameState.getGameString());
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {

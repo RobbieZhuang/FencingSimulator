@@ -4,8 +4,8 @@ import java.awt.Color;
 
 public class PlayerImage {
 	private String playerID;
-	private int pX;
-	private int pY;
+	private double pX;
+	private double pY;
 	private int status;
 	private Color playerColor;
 	
@@ -21,19 +21,19 @@ public class PlayerImage {
 		return playerID;
 	}
 	
-	public int getpX() {
+	public double getpX() {
 		return pX;
 	}
 
-	public void setpX(int pX) {
-		this.pX = pX;
+	public void setpX(double pX2) {
+		this.pX = pX2;
 	}
 
-	public int getpY() {
+	public double getpY() {
 		return pY;
 	}
 
-	public void setpY(int pY) {
+	public void setpY(double pY) {
 		this.pY = pY;
 	}
 

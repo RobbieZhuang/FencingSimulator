@@ -2,8 +2,8 @@ package server;
 
 public class Player {
 	private double speed = 1;
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private int ID;
 	private int status;
 	
@@ -26,13 +26,14 @@ public class Player {
 	public void moveDown() {
 		this.y += speed;
 	}
-	public int getX() {
+
+	public double getX() {
 		return x;
 	}
 	public void setX(int x) {
 		this.x = x;
 	}
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 	public void setY(int y) {
