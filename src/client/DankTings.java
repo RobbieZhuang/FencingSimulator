@@ -107,18 +107,25 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 		int keyCode = e.getKeyCode();
 
 			if ((keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) && !clicked[0]){
+				players[0].setpY(players[0].getpY()+3);
 				Client.send("W");
 				clicked[0] = true;
 			} 
 			if ((keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) && !clicked[1]){
+
+				players[0].setpY(players[0].getpY()+3);
 				Client.send("A");
 				clicked[1] = true;
 			} 
 			if ((keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) && !clicked[2]){
+
+				players[0].setpX(players[0].getpX()-3);
 				Client.send("S");
 				clicked[2] = true;
 			} 
 			if ((keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) && !clicked[3]){
+
+				players[0].setpX(players[0].getpX()+3);
 				Client.send("D");
 				clicked[3] = true;
 			}
@@ -187,7 +194,9 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 				fps = (int)(10*1000/(end - start));
 				counter = 0;
 			}
+			System.out.println(players[0].dank(players[1]));
 		}
+		
 	}
 
 }

@@ -8,8 +8,10 @@ public class PlayerImage {
 	private double pY;
 	private int status;
 	private Color playerColor;
+	private Hitbox d;
 	
 	public PlayerImage (String playerID, Color playerColor) {
+		d= new Hitbox(pX, pY, 100, 100);
 		this.pX = 0;
 		this.pY = 0;
 		this.status = 0;
@@ -25,8 +27,9 @@ public class PlayerImage {
 		return pX;
 	}
 
-	public void setpX(double pX2) {
-		this.pX = pX2;
+	public void setpX(double pX) {
+		d.setHitBox(pX, pY);
+		this.pX = pX;
 	}
 
 	public double getpY() {
@@ -34,6 +37,7 @@ public class PlayerImage {
 	}
 
 	public void setpY(double pY) {
+		d.setHitBox(pX, pY);
 		this.pY = pY;
 	}
 
@@ -49,5 +53,12 @@ public class PlayerImage {
 		return playerColor;
 	}
 	
+	public boolean dank(PlayerImage sa) {
+		return d.collidesWith(sa.getD());
+	}
+
+	public Hitbox getD() {
+		return d;
+	}
 	
 }
