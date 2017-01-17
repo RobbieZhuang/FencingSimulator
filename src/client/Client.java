@@ -5,6 +5,7 @@
 package client;
 
 import javax.swing.JFrame;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,12 +16,17 @@ import java.util.Scanner;
 public class Client {
 
     private static final String IP = "10.242.171.92";
+
+    // Declaring constants
+    public static int SCREEN_WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    public static int SCREEN_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2;
+    public static int SPRITE_SIZE = SCREEN_HEIGHT / 5;
+    static boolean playOnline;
     // Declaring variables
     private static volatile boolean clientRunning;
     private static Socket socket;
     private static BufferedReader input;
     private static ClientSender clientSender;
-    static boolean playOnline;
 
     /**
      * Main Method for BRBClient
@@ -38,7 +44,7 @@ public class Client {
         } else {
             // Playing offline
             JFrame frame = new JFrame();
-            frame.setSize(2000, 600);
+            frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
             DankTings panel = new DankTings("0", "1");
             panel.requestFocusInWindow();
@@ -50,6 +56,28 @@ public class Client {
             frame.setVisible(true);
             frame.setResizable(false);
         }
+    }
+
+    /**
+     * send
+     * This sends a message from client to server or physics if offline
+     *
+     * @param message is the player movement info, etc.
+     */
+    public static void send(String message) {
+        clientSender.send(message);
+    }
+
+    /**
+     * playOnline
+     * Checks if player wants to play online/offline
+     *
+     * @return true if online, false if offline
+     */
+    private static boolean playOnline() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter 0 to debug offline, 1 to play online");
+        return !input.next().equals("0");
     }
 
     /**
@@ -83,7 +111,7 @@ public class Client {
 
         // Sending thread
         JFrame frame = new JFrame();
-        frame.setSize(2000, 600);
+        frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         DankTings panel = new DankTings(users, "1");
         panel.requestFocusInWindow();
@@ -103,37 +131,12 @@ public class Client {
         Thread t = new Thread(panel);
         t.start();
     }
-    
+
     public void render () {
-    	
+
     }
 
     public void move(String s) {
 
-    }
-
-    /**
-     * send
-     * This sends a message from client to server or physics if offline
-     *
-     * @param message is the player movement info, etc.
-     */
-    public static void send(String message) {
-        clientSender.send(message);
-    }
-
-    /**
-     * playOnline
-     * Checks if player wants to play online/offline
-     *
-     * @return true if online, false if offline
-     */
-    private static boolean playOnline() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter 0 to play offline, 1 to play online");
-        if (input.next().equals("0")) {
-            return false;
-        }
-        return true;
     }
 }
