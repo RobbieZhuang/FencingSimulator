@@ -11,93 +11,149 @@
 
 package client;
 
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.JFrame;
 
 //import physics.Physics;
 
-public class Client {
-
+public class Client extends Canvas implements Runnable{
 	private static String IP = "";
 	// Declaring variables
-	private static volatile boolean clientRunning;
+	private static volatile boolean running;
 	private static Socket socket;
-//	private static Physics physics;
+	//	private static Physics physics;
 	static boolean playOnline;
 
-	/**
-	 * Main Method for BRBClient
-	 *
-	 * @param args is an array of console line arguments
-	 * @throws IOException to prevent exceptions caused by input and output streams
-	 */
-	public static void main(String[] args) throws Exception {
-		IP = Inet4Address.getLocalHost().getHostAddress();
-		playOnline = playOnline();
-		if (playOnline) {
-			clientRunning = true;
-			Client client = new Client();
-			client.run();
-		}
-	}
+	
+	
+	
+	
+	private ClientReceiver clientReceiver;
+	private ClientSender clientSender;
+	
+	
+	public static final int WIDTH = 1680;
+	public static final int HEIGHT = WIDTH /4*3;
+	public static final String NAME = "Game";
 
-	/**
-	 * Running the client
-	 *
-	 * @throws IOException for exceptions in input and output streams
-	 */
-	public void run() throws Exception {
+	private JFrame frame;
 
+	public Client (){
+		setMaximumSize(new Dimension (WIDTH, HEIGHT));
+		setMinimumSize (new Dimension (WIDTH, HEIGHT));
+		setPreferredSize (new Dimension(WIDTH, HEIGHT));
+
+		frame = new JFrame (NAME);
+		frame.setLayout(new BorderLayout());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(this, BorderLayout.CENTER);
+		frame.pack();
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+
+		
 		try {
-			System.out.println("Attempting connection");
 			socket = new Socket(IP, 6000);
-
-			// Initiate client sender
 			PrintWriter write = new PrintWriter(socket.getOutputStream());
-			ClientSender sender = new ClientSender(write);
-
 			// Initiate client reader
 			BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			ClientReceiver clientReceiver = new ClientReceiver(input);
-
-			// Get User names from the server
-			String users = clientReceiver.firstMessage();
-			System.out.println("users: " + users);
-
-			// Initiate game JFrame
-			JFrame frame = new JFrame();
-			frame.setSize(2000, 600);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-			// Initiate game JPanel
-			DankTings panel = new DankTings("1", sender);
-			panel.addNewPlayer("0");
-			panel.addNewPlayer("1");
-			panel.requestFocusInWindow();
-			frame.add(panel);
-			frame.setVisible(true);
-			frame.setResizable(false);
-			
-			// Update the client receiver object with panel object
-			clientReceiver.updatePanel(panel);
-
-			Thread cr = new Thread(clientReceiver);
-			cr.start();
-			
-			System.out.println("Connection successful");
-		} catch (Exception e) {
-			System.out.println("Connection failed");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		// Initiate client sender
+		
+		clientSender = new ClientSender(null);
+		
+		
 	}
+
+	public synchronized void start(){
+		running = true;
+		new Thread (this).start();
+	}
+
+	public synchronized void stop(){
+		running = false;
+	}
+	
+
+	void render (){
+
+	}
+
+
+
+
+
+	public static void main(String[] args) throws Exception {
+		System.out.println("Attempting connection");
+		Client client = new Client();
+		client.start();
+	}
+
+	public void run (){
+		while (running){
+			getOutput();
+			render();
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+	
+	
+private void getOutput() {
+		String message = ClientReceiver.getServerMessage();
+	}
+
+//	/**
+//	 * Running the client
+//	 *
+//	 * @throws IOException for exceptions in input and output streams
+//	 */
+//	public void run() {
+//
+//		try {
+//			
+//
+//
+//			// Update the client receiver object with panel object
+//			clientReceiver.updatePanel(panel);
+//
+//			Thread cr = new Thread(clientReceiver);
+//			cr.start();
+//
+//			System.out.println("Connection successful");
+//		} catch (Exception e) {
+//			System.out.println("Connection failed");
+//			e.printStackTrace();
+//		}
+//
+//		//main render loop
+//		while (running){
+//
+//		}
+//
+//	}
 
 	/**
 	 * playOnline
@@ -107,11 +163,11 @@ public class Client {
 	 */
 	private static boolean playOnline() {
 		return true;
-//		Scanner input = new Scanner(System.in);
-//		System.out.println("Enter 0 to play offline, 1 to play online");
-//		if (input.next().equals("1")) {
-//			return true;
-//		}
-//		return false;
+		//		Scanner input = new Scanner(System.in);
+		//		System.out.println("Enter 0 to play offline, 1 to play online");
+		//		if (input.next().equals("1")) {
+		//			return true;
+		//		}
+		//		return false;
 	}
 }
