@@ -25,8 +25,12 @@ public class ClientSender{
     }
    
     public void send (String str) {
-    	System.out.println(str);
     	output.println(str);
+    	output.flush();
+    }
+    
+    public void send (long b) {
+    	output.println(b);
     	output.flush();
     }
 }

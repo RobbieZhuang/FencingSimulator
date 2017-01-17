@@ -55,7 +55,4 @@ public class Player {
 	public String getPlayerString() {
 		return ID + " " + x + " " + y + " " + status;
 	}
-
-
-	
 }

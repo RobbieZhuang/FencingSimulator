@@ -15,23 +15,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
 
-import physics.Physics;
+//import physics.Physics;
 
 public class Client {
 
-	private static final String IP = "192.168.0.104";
+	private static String IP = "";
 	// Declaring variables
 	private static volatile boolean clientRunning;
 	private static Socket socket;
-	private static BufferedReader input;
-	private static ClientSender clientSender;
-	private static Physics physics;
+//	private static Physics physics;
 	static boolean playOnline;
 
 	/**
@@ -41,26 +40,12 @@ public class Client {
 	 * @throws IOException to prevent exceptions caused by input and output streams
 	 */
 	public static void main(String[] args) throws Exception {
+		IP = Inet4Address.getLocalHost().getHostAddress();
 		playOnline = playOnline();
 		if (playOnline) {
 			clientRunning = true;
 			Client client = new Client();
 			client.run();
-		} else {
-			JFrame frame = new JFrame();
-			frame.setSize(2000, 600);
-
-			DankTings panel = new DankTings("0", "1");
-			panel.requestFocusInWindow();
-			panel.go();
-			frame.add(panel);
-
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-			frame.setVisible(true);
-			frame.setResizable(false);
-			
-			physics = new Physics();
 		}
 	}
 
@@ -75,62 +60,42 @@ public class Client {
 			System.out.println("Attempting connection");
 			socket = new Socket(IP, 6000);
 
-			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			// Initiate client sender
 			PrintWriter write = new PrintWriter(socket.getOutputStream());
-			clientSender = new ClientSender(write);
+			ClientSender sender = new ClientSender(write);
 
+			// Initiate client reader
+			BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			ClientReceiver clientReceiver = new ClientReceiver(input);
 
+			// Get User names from the server
+			String users = clientReceiver.firstMessage();
+			System.out.println("users: " + users);
+
+			// Initiate game JFrame
+			JFrame frame = new JFrame();
+			frame.setSize(2000, 600);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+			// Initiate game JPanel
+			DankTings panel = new DankTings("1", sender);
+			panel.addNewPlayer("0");
+			panel.addNewPlayer("1");
+			panel.requestFocusInWindow();
+			frame.add(panel);
+			frame.setVisible(true);
+			frame.setResizable(false);
+			
+			// Update the client receiver object with panel object
+			clientReceiver.updatePanel(panel);
+
+			Thread cr = new Thread(clientReceiver);
+			cr.start();
+			
 			System.out.println("Connection successful");
 		} catch (Exception e) {
 			System.out.println("Connection failed");
 			e.printStackTrace();
-		}
-
-		// Receiving thread
-		ClientReceiver clientReceiver = new ClientReceiver(input);
-		System.out.println("Running client receiver");
-
-		String users = clientReceiver.firstMessage();
-		System.out.println("users: " + users);
-
-		// Sending thread
-		JFrame frame = new JFrame();
-		frame.setSize(2000, 600);
-
-		DankTings panel = new DankTings(users, "1");
-		panel.requestFocusInWindow();
-		panel.go();
-		frame.add(panel);
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		frame.setVisible(true);
-		frame.setResizable(false);
-
-		//        DankTings panel = new DankTings(users.substring(0, users.indexOf(' ')), users.substring(users.indexOf(' ')+1, users.length()));
-
-		Thread cr = new Thread(clientReceiver);
-		cr.start();
-
-		Thread t = new Thread(panel);
-		t.start();
-	}
-	
-	public void move(String s){
-
-	}
-
-	/**
-	 * send
-	 * This sends a message from client to server or physics if offline
-	 * 
-	 * @param message is the player movement info, etc.
-	 */
-	public static void send (String message) {
-		if (playOnline) {
-			clientSender.send(message);
-		} else {
-			physics.send(message);
 		}
 	}
 
@@ -141,11 +106,12 @@ public class Client {
 	 * @return true if online, false if offline
 	 */
 	private static boolean playOnline() {
-		Scanner input = new Scanner(System.in);
-		System.out.println("Enter 0 to play offline, 1 to play online");
-		if (input.next().equals("0")) {
-			return false;
-		}
 		return true;
+//		Scanner input = new Scanner(System.in);
+//		System.out.println("Enter 0 to play offline, 1 to play online");
+//		if (input.next().equals("1")) {
+//			return true;
+//		}
+//		return false;
 	}
 }

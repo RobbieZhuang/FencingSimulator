@@ -6,5 +6,4 @@ public class Sword {
 	private double y;
 	private double dy;
 	private int ID;
-	private 
 }

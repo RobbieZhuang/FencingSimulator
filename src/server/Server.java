@@ -16,8 +16,6 @@ public class Server {
 	static boolean running = true;
 	static Game game;
 	
-
-	
 	
 	public static void main (String args[]){
 		Server server = new Server();
@@ -26,14 +24,15 @@ public class Server {
 	}
 
 	private void initialize(){
+		
 		try {
 			socketServer = new ServerSocket (6000);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		game = new Game ();
 		clients = new ArrayList <ClientHandler>();
+		game = new Game ();
 	}
 
 	/**
@@ -48,7 +47,7 @@ public class Server {
 	}
 
 	public static void sendMessage (String message){
-		for (int i = 0; i < clients.size(); i ++){
+		for (int i = 0; i < clients.size(); i++){
 			clients.get(i).write(message);
 		}
 	}
@@ -78,8 +77,6 @@ public class Server {
 			int counter = 0;
 			while (running) {
 				try {
-					
-					
 					// Adding new clients to server
 					Socket connectionSocket = socketServer.accept();
 					ClientHandler clientHandler = new ClientHandler(connectionSocket, counter);
