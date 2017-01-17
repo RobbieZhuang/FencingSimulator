@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 
 import graphics.SpriteSheet;
+import graphics.SpriteSheetLoader;
 import map.Land;
 import map.RoomOutdoors;
 
@@ -36,6 +37,7 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 		this.myPlayerID = myPlayerID;
 		players[0] = new PlayerImage(myPlayerID, Color.ORANGE);
 		players[1] = new PlayerImage(playerID2, Color.YELLOW);
+		SpriteSheetLoader spriteSheetLoader = new SpriteSheetLoader(16, 16, 8, 8, spriteSheet);
 		this.setLayout(null);
 		this.setSize(2000, 600);
 		addKeyListener(this);
@@ -52,6 +54,7 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 			PlayerImage p = players[a];
 			g.setColor(p.getPlayerColor());
 			g.fillRect((int)p.getpX(), (int)p.getpY(), 25, 25);
+			g.drawImage(SpriteSheetLoader.sprites[0][0], (int)p.getpX(), (int)p.getpY(), null);
 		}
 		g.setColor(Color.MAGENTA);
 		LinkedList <Land> terrain = r.getTerrain();

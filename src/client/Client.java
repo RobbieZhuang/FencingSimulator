@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class Client {
 
-    private static final String IP = "192.168.2.36";
+    private static final String IP = "10.242.171.92";
     // Declaring variables
     private static volatile boolean clientRunning;
     private static Socket socket;
@@ -102,6 +102,10 @@ public class Client {
 
         Thread t = new Thread(panel);
         t.start();
+    }
+    
+    public void render () {
+    	
     }
 
     public void move(String s) {
