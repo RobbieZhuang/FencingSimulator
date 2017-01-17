@@ -12,7 +12,7 @@ package client;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class ClientSender implements Runnable{
+public class ClientSender{
     private PrintWriter output;
     
     /**
@@ -33,10 +33,4 @@ public class ClientSender implements Runnable{
     	output.println(b);
     	output.flush();
     }
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 }

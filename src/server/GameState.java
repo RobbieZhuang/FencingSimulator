@@ -104,7 +104,7 @@ public class GameState {
 	}
 	
 	public String getGameString(){
-		String gameString = "numPlayers ";
+		String gameString = "";
 		for (int i = 0; i < numPlayers; i ++){
 			gameString += players.get(i).getID() + " " + players.get(i).getX() + " " + players.get(i).getY() + " "
 					+ players.get(i).getStatus() + " ";
