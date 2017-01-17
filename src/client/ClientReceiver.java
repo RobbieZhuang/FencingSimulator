@@ -67,7 +67,13 @@ public class ClientReceiver implements Runnable {
         running = false;
     }
     
-    public void updatePanel (DankTings panel) {
+    
+    
+    public static String getServerMessage() {
+		return serverMessage;
+	}
+
+	public void updatePanel (DankTings panel) {
     	this.panel = panel;
     }
     
