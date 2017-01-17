@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
@@ -11,29 +12,30 @@ import javax.swing.JPanel;
 import map.Land;
 import map.RoomOutdoors;
 
-public class DankTings extends JPanel implements KeyListener, Runnable {
-
+public class DankTings extends JPanel implements KeyListener {
+	private int length = 700;
+	private int height = 600;
+	
 	// MAKE MAP HERE
-	private volatile static PlayerImage [] players = new PlayerImage[2];
-	private String myPlayerID;
+	private volatile ArrayList <PlayerImage> players;
 	private boolean running;
+	private String myPlayerID;
+	private ClientSender sender;
 
-	private boolean [] clicked;
+	private byte keysPressed;
+
 	long start;
 	long end;
 	long counter = 0;
 	int fps = 0;
 
-	RoomOutdoors r = new RoomOutdoors();
 
-	public DankTings(String myPlayerID, String playerID2) {
-		clicked = new boolean [4];
-		System.out.println("Running DankTings");
+	public DankTings(String myPlayerID, ClientSender sender) {
 		this.myPlayerID = myPlayerID;
-		players[0] = new PlayerImage(myPlayerID, Color.ORANGE);
-		players[1] = new PlayerImage(playerID2, Color.YELLOW);
+		players = new ArrayList<>();
+		this.sender = sender;
 		this.setLayout(null);
-		this.setSize(2000, 600);
+		this.setSize(length, height);
 		addKeyListener(this);
 		setFocusable(true);
 		setBackground(Color.black);
@@ -41,113 +43,105 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		
+
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		for (int a = 0; a < 2; a++) {
-			PlayerImage p = players[a];
+		for (int a = 0; a < players.size(); a++) {
+			PlayerImage p = players.get(a);
 			g.setColor(p.getPlayerColor());
 			g.fillRect((int)p.getpX(), (int)p.getpY(), 25, 25);
 		}
+		
 		g.setColor(Color.MAGENTA);
-		LinkedList <Land> terrain = r.getTerrain();
-		for (Land l: terrain) {
-			g.fillRect(l.getlX(), l.getlY(), l.getLength(), l.getHeight());
-		}
+//		LinkedList <Land> terrain = r.getTerrain();
+//		for (Land l: terrain) {
+//			g.fillRect(l.getlX(), l.getlY(), l.getLength(), l.getHeight());
+//		}
 
 
-		g.drawString( fps + "", 50, 50);
+		g.drawString(fps + "", 50, 50);
 
 	}
 
-	public static synchronized void updatePlayer (String playerInfo) {
-		String playerID = playerInfo.substring(0, playerInfo.indexOf(' '));
-		playerInfo = playerInfo.substring(playerInfo.indexOf(' ')+1, playerInfo.length());
-		
-		
-		double pX = Double.parseDouble(playerInfo.substring(0, playerInfo.indexOf(' ')));
-		
-		//System.out.println(pX);
-		playerInfo = playerInfo.substring(playerInfo.indexOf(' ')+1, playerInfo.length());
-		
-		
-		double pY = Double.parseDouble(playerInfo.substring(0, playerInfo.indexOf(' ')));
-		playerInfo = playerInfo.substring(playerInfo.indexOf(' ')+1, playerInfo.length());
-		int status = Integer.parseInt(playerInfo);
+	public synchronized void updatePlayer (String playerInfo) {
+		String [] update = playerInfo.split(" ");
+		String playerID = update[0];
+		double pX = Double.parseDouble(update[1]);
+		double pY = Double.parseDouble(update[2]);
+		int status = Integer.parseInt(update[3]);
 
-		for (int a = 0; a < 2; a++) {
-			if (players[a].getPlayerID().equals(playerID)) {
-				players[a].setpX(pX);
-				players[a].setpY(pY);
-//				players[a].setpX(players[a].getpX() + 1);
-				
-				players[a].setStatus(status);
+		for (int a = 0; a < players.size(); a++) {
+			PlayerImage p = players.get(a);
+			if (p.getPlayerID().equals(playerID)) {
+				p.setpX(pX);
+				p.setpY(pY);
+				p.setStatus(status);
 			}
 		}
+		
+		updateScreen();
 	}
 
-//	public static void updatePlayers (String gameString){
-//		int numPlayers = (gameString.length() - gameString.replace(" ", "").length())/4;
-//		String[] strs = gameString.trim().split("\\s+");
-//		for (int i = 0; i < numPlayers; i ++){
-//				if (players)
-//			}
-//		}
-//	}
-	
+	//	public static void updatePlayers (String gameString){
+	//		int numPlayers = (gameString.length() - gameString.replace(" ", "").length())/4;
+	//		String[] strs = gameString.trim().split("\\s+");
+	//		for (int i = 0; i < numPlayers; i ++){
+	//				if (players)
+	//			}
+	//		}
+	//	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
+		// WASDFG
+
 		int keyCode = e.getKeyCode();
 
-			if ((keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) && !clicked[0]){
-				Client.send("W");
-				clicked[0] = true;
-			} 
-			if ((keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) && !clicked[1]){
-				Client.send("A");
-				clicked[1] = true;
-			} 
-			if ((keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) && !clicked[2]){
-				Client.send("S");
-				clicked[2] = true;
-			} 
-			if ((keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) && !clicked[3]){
-				Client.send("D");
-				clicked[3] = true;
-			}
-			if (keyCode == KeyEvent.VK_F) {
-				Client.send("F");
-			}
-			if (keyCode == KeyEvent.VK_G) {
-				Client.send("G");
-			}
+		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP){
+			keysPressed = (byte) (keysPressed | (1<<0));
+		} 
+		if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT){
+			keysPressed = (byte) (keysPressed | (1<<1));
+		} 
+		if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN){
+			keysPressed = (byte) (keysPressed | (1<<2));
+		} 
+		if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT){
+			keysPressed = (byte) (keysPressed | (1<<3));
+		}
+		if (keyCode == KeyEvent.VK_F) {
+			keysPressed = (byte) (keysPressed | (1<<4));
+		}
+		if (keyCode == KeyEvent.VK_G) {
+			keysPressed = (byte) (keysPressed | (1<<5));
+		}
 
-
+		sender.send(keysPressed);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		if (keyCode == KeyEvent.VK_W  || keyCode == KeyEvent.VK_UP){
-			System.out.println("#W");
-			Client.send("#W");
-			clicked[0] = false;
+			keysPressed = (byte) (keysPressed & ~(1<<0));
 		}
 		if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT){
-			Client.send("#A");
-
-			clicked[1] = false;
-
+			keysPressed = (byte) (keysPressed & ~(1<<1));
 		}
-		 if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN){
-			Client.send("#S");
-			clicked[2] = false;
+		if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN){
+			keysPressed = (byte) (keysPressed & ~(1<<2));
+		}
+		if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT){
+			keysPressed = (byte) (keysPressed & ~(1<<3));
+		}
+		if (keyCode == KeyEvent.VK_F) {
+			keysPressed = (byte) (keysPressed & ~(1<<4));
+		}
+		if (keyCode == KeyEvent.VK_G) {
+			keysPressed = (byte) (keysPressed & ~(1<<5));
+		}
 
-		}
-		 if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT){
-			Client.send("#D");
-			clicked[3] = false;
-		}
+		sender.send(keysPressed);
 	}
 
 	@Override
@@ -155,32 +149,20 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 		// TODO Auto-generated method stub
 	}
 
-	public void go () {
-		running = true;
-		Thread t = new Thread(this);
-		t.start();
+	private void updateScreen () {
+		//		if (counter%10 == 0) {
+		//		start = System.currentTimeMillis();
+		//	}
+		//	counter++;
+		this.repaint();
+		//	if (counter%10 == 0) {
+		//		end = System.currentTimeMillis();
+		//		fps = (int)(10*1000/(end - start));
+		//		counter = 0;
+		//	}
 	}
-
-	@Override
-	public void run() {
-		while (running) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (counter%10 == 0) {
-				start = System.currentTimeMillis();
-			}
-			counter++;
-			this.repaint();
-			if (counter%10 == 0) {
-				end = System.currentTimeMillis();
-				fps = (int)(10*1000/(end - start));
-				counter = 0;
-			}
-		}
+	
+	public void addNewPlayer (String playerID) {
+		players.add(new PlayerImage(playerID, new Color((int)Math.random()*256, (int)Math.random()*256, (int)Math.random()*256)));
 	}
-
 }

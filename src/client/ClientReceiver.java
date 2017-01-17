@@ -18,12 +18,8 @@ public class ClientReceiver implements Runnable {
     private Thread t;
     private BufferedReader input;
     private volatile boolean running = true;
-    private String player1;
-    private String player2;
-    private int counter = 0;
-    private long start;
-    private long end;
-    String serverMessage;
+    private String serverMessage;
+    private DankTings panel;
     
 
     /**
@@ -43,19 +39,11 @@ public class ClientReceiver implements Runnable {
         while (running) {
             // Attempting to receive message
             try {
-    			if (counter%10 == 0) {
-    				start = System.currentTimeMillis();
-    			}
-    			counter++;
                 serverMessage = input.readLine();
                 if (!serverMessage.equals("-1")) {
                     runCommands(serverMessage);
+            		System.out.println(serverMessage);
                 }
-    			if (counter%10 == 0) {
-    				end = System.currentTimeMillis();
-    				System.out.println("ping: " + (int)(end - start)/10);
-    				counter = 0;
-    			}
             } catch (Exception e) {
                 System.out.println("*** Error receiving message ***");
                 e.printStackTrace();
@@ -67,7 +55,7 @@ public class ClientReceiver implements Runnable {
     /**
      * Starting the thread
      */
-    void start() {
+    public void start() {
         t = new Thread(this, "cr#");
         t.run();
     }
@@ -75,13 +63,18 @@ public class ClientReceiver implements Runnable {
     /**
      * Ending the thread
      */
-    void terminate() {
+    public void terminate() {
         running = false;
     }
+    
+    public void updatePanel (DankTings panel) {
+    	this.panel = panel;
+    }
+    
     private void runCommands(String command){
-    	//if (command.substring(0, command.indexOf(' ')).equals("updating")) {
-    		DankTings.updatePlayer(command/*.substring(command.indexOf(' ') + 1)*/);
-    	//}
+    	if (panel != null) {
+    		panel.updatePlayer(command);
+    	}
     }
     
     public String firstMessage () {

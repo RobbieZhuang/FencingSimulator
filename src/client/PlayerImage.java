@@ -48,6 +48,4 @@ public class PlayerImage {
 	public Color getPlayerColor() {
 		return playerColor;
 	}
-	
-	
 }
