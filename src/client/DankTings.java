@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+import graphics.SpriteSheet;
 import map.Land;
 import map.RoomOutdoors;
 
@@ -17,6 +18,9 @@ public class DankTings extends JPanel implements KeyListener, Runnable {
 	private volatile static PlayerImage [] players = new PlayerImage[2];
 	private String myPlayerID;
 	private boolean running;
+
+    // Sprites
+    SpriteSheet spriteSheet = new SpriteSheet("/resources/SpriteSheet.png");
 
 	private boolean [] clicked;
 	long start;
