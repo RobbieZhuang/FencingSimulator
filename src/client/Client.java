@@ -11,9 +11,9 @@
 
 package client;
 
+import client.gui.Screen;
+
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,16 +24,18 @@ import java.net.Socket;
 
 public class Client implements Runnable{
     public static final String NAME = "Game";
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+    public static ClientReceiver clientReceiver;
+    public static ClientSender clientSender;
+    //	private ArrayList <PlayerImage> players = new ArrayList <PlayerImage>();
+    public static PlayerImage[] players = new PlayerImage[2];
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "192.168.0.103";
+    private String IP = "10.242.189.33";
     // Declaring variables
 	private volatile boolean running;
 	private Socket socket;
-	private ClientReceiver clientReceiver;
-	private ClientSender clientSender;
-//	private ArrayList <PlayerImage> players = new ArrayList <PlayerImage>();
-	private PlayerImage [] players = new PlayerImage [2];
 	private JFrame frame;
 	private DankTings jpanel;
 	
@@ -55,20 +57,12 @@ public class Client implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		frame = new JFrame (NAME);
-//		frame.setLayout(new BorderLayout());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		System.out.println("ddd");
-		jpanel = new DankTings(clientReceiver.getPlayerID(), clientSender, players);
-		frame.add(jpanel, BorderLayout.CENTER);
-		jpanel.requestFocusInWindow();
-		
-		frame.setSize(new Dimension(DankTings.WIDTH, DankTings.HEIGHT));
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+
+        Screen screen = new Screen(NAME);
+
+//		jpanel = new DankTings(clientReceiver.getPlayerID(), clientSender, players);
+//		frame.add(jpanel, BorderLayout.CENTER);
+//		jpanel.requestFocusInWindow();
 
 		players[0] = new PlayerImage(0,50,50,1);
 		players[1] = new PlayerImage(1,0,0,0);
@@ -142,7 +136,7 @@ public class Client implements Runnable{
 	}
 
     void render (){
-        jpanel.repaint();
+        Screen.contentPane.repaint();
     }
 
     //	/**
@@ -180,7 +174,6 @@ public class Client implements Runnable{
 			String message = clientReceiver.getServerMessage();
 			String [] args = message.trim().split("\\s+");
 
-			jpanel.setMap(0);
 			int c = 0;
 			for (int i = 1; i < args.length; i+= 4){
 				players[c].setpX(Double.parseDouble(args [i+1]));

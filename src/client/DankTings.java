@@ -15,9 +15,9 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class DankTings extends JPanel implements KeyListener {
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
-	public static final int SPRITE_SIZE = 135;
+    public static final int WIDTH = Client.WIDTH;
+    public static final int HEIGHT = Client.HEIGHT;
+    public static final int SPRITE_SIZE = 135;
 	public static final int SPRITE_ROWS = 3;
 	public static final int SPRITE_COLUMNS = 16;
 	public static final int SPRITE_PIXELS = 16;
@@ -28,18 +28,17 @@ public class DankTings extends JPanel implements KeyListener {
 	long end;
 	long counter = 0;
 	int fps = 0;
-	// MAKE MAP HERE
+    long startTime = System.currentTimeMillis();
+    long elapsedTime = 0L;
+    boolean walkingDouble;
+    ArrayList<Room> rooms = new ArrayList<Room>();
+    // MAKE MAP HERE
 	private PlayerImage [] players;
 	private ClientSender sender;
 	private byte keysPressed;
-	long startTime = System.currentTimeMillis();
-	long elapsedTime = 0L;
-	boolean walkingDouble;
-
 	// MAKE MAP HERE
 	private boolean running;
 	private int myPlayerID;
-	ArrayList <Room> rooms = new ArrayList <Room>();
 	private int currentMap = 0;
 
 	private Rain r = new Rain(2000, 500);
@@ -58,7 +57,8 @@ public class DankTings extends JPanel implements KeyListener {
 		addKeyListener(this);
 		setFocusable(true);
 		setBackground(Color.black);
-	}
+        setMap(0);
+    }
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -120,8 +120,8 @@ public class DankTings extends JPanel implements KeyListener {
 				}
 
 				// Drawing the player
-				g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX()-cameraLX, (int) p.getpY()-cameraTY, SPRITE_SIZE, SPRITE_SIZE, null);
-			}
+                g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX() - cameraLX, (int) p.getpY() - cameraTY, SPRITE_SIZE, SPRITE_SIZE, null);
+            }
 		}
 		//		LinkedList <Land> terrain = r.getTerrain();
 		//		for (Land l: terrain) {
