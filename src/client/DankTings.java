@@ -13,13 +13,11 @@ import map.Land;
 import map.RoomOutdoors;
 
 public class DankTings extends JPanel implements KeyListener {
-	private int length = 700;
-	private int height = 600;
+	public static final int WIDTH = 1080;
+	public static final int HEIGHT = WIDTH /4*3;
 	
 	// MAKE MAP HERE
 	private volatile ArrayList <PlayerImage> players;
-	private boolean running;
-	private String myPlayerID;
 	private ClientSender sender;
 
 	private byte keysPressed;
@@ -30,12 +28,11 @@ public class DankTings extends JPanel implements KeyListener {
 	int fps = 0;
 
 
-	public DankTings(String myPlayerID, ClientSender sender) {
-		this.myPlayerID = myPlayerID;
-		players = new ArrayList<>();
+	public DankTings(ClientSender sender, ArrayList <PlayerImage> players) {
+		this.players = players;
 		this.sender = sender;
 		this.setLayout(null);
-		this.setSize(length, height);
+		this.setSize(WIDTH, HEIGHT);
 		addKeyListener(this);
 		setFocusable(true);
 		setBackground(Color.black);
@@ -43,10 +40,9 @@ public class DankTings extends JPanel implements KeyListener {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-
-		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		for (int a = 0; a < players.size(); a++) {
+			System.out.println("drawing rect");
 			PlayerImage p = players.get(a);
 			g.setColor(p.getPlayerColor());
 			g.fillRect((int)p.getpX(), (int)p.getpY(), 25, 25);
@@ -63,24 +59,24 @@ public class DankTings extends JPanel implements KeyListener {
 
 	}
 
-	public synchronized void updatePlayer (String playerInfo) {
-		String [] update = playerInfo.split(" ");
-		String playerID = update[0];
-		double pX = Double.parseDouble(update[1]);
-		double pY = Double.parseDouble(update[2]);
-		int status = Integer.parseInt(update[3]);
-
-		for (int a = 0; a < players.size(); a++) {
-			PlayerImage p = players.get(a);
-			if (p.getPlayerID().equals(playerID)) {
-				p.setpX(pX);
-				p.setpY(pY);
-				p.setStatus(status);
-			}
-		}
-		
-		updateScreen();
-	}
+//	public synchronized void updatePlayer (String playerInfo) {
+//		String [] update = playerInfo.split(" ");
+//		String playerID = update[0];
+//		double pX = Double.parseDouble(update[1]);
+//		double pY = Double.parseDouble(update[2]);
+//		int status = Integer.parseInt(update[3]);
+//
+//		for (int a = 0; a < players.size(); a++) {
+//			PlayerImage p = players.get(a);
+//			if (p.getPlayerID().equals(playerID)) {
+//				p.setpX(pX);
+//				p.setpY(pY);
+//				p.setStatus(status);
+//			}
+//		}
+//		
+//		updateScreen();
+//	}
 
 	//	public static void updatePlayers (String gameString){
 	//		int numPlayers = (gameString.length() - gameString.replace(" ", "").length())/4;
@@ -148,21 +144,21 @@ public class DankTings extends JPanel implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 	}
-
-	private void updateScreen () {
-		//		if (counter%10 == 0) {
-		//		start = System.currentTimeMillis();
-		//	}
-		//	counter++;
-		this.repaint();
-		//	if (counter%10 == 0) {
-		//		end = System.currentTimeMillis();
-		//		fps = (int)(10*1000/(end - start));
-		//		counter = 0;
-		//	}
-	}
+//
+//	private void updateScreen () {
+//		//		if (counter%10 == 0) {
+//		//		start = System.currentTimeMillis();
+//		//	}
+//		//	counter++;
+//		this.repaint();
+//		//	if (counter%10 == 0) {
+//		//		end = System.currentTimeMillis();
+//		//		fps = (int)(10*1000/(end - start));
+//		//		counter = 0;
+//		//	}
+//	}
 	
-	public void addNewPlayer (String playerID) {
-		players.add(new PlayerImage(playerID, new Color((int)Math.random()*256, (int)Math.random()*256, (int)Math.random()*256)));
-	}
+//	public void addNewPlayer (String playerID) {
+//		players.add(new PlayerImage(playerID, new Color((int)Math.random()*256, (int)Math.random()*256, (int)Math.random()*256)));
+//	}
 }

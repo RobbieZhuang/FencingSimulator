@@ -21,49 +21,34 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
 //import physics.Physics;
 
-public class Client extends Canvas implements Runnable{
-	private static String IP = "";
+public class Client implements Runnable{
+	private String IP = "";
 	// Declaring variables
-	private static volatile boolean running;
-	private static Socket socket;
+	private volatile boolean running;
+	private Socket socket;
 	//	private static Physics physics;
 	static boolean playOnline;
 
-
-
-
-
+	
+	
 	private ClientReceiver clientReceiver;
 	private ClientSender clientSender;
 
+	private ArrayList <PlayerImage> players = new ArrayList <PlayerImage>();
 
-	public static final int WIDTH = 1080;
-	public static final int HEIGHT = WIDTH /4*3;
 	public static final String NAME = "Game";
 
 	private JFrame frame;
-	private BufferedImage image = new BufferedImage (WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private DankTings jpanel;
 	
 		
 	public Client (){
-		setMaximumSize(new Dimension (WIDTH, HEIGHT));
-		setMinimumSize (new Dimension (WIDTH, HEIGHT));
-		setPreferredSize (new Dimension(WIDTH, HEIGHT));
-
-		frame = new JFrame (NAME);
-		frame.setLayout(new BorderLayout());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(this, BorderLayout.CENTER);
-		frame.pack();
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-
 
 		try {
 			socket = new Socket(IP, 6000);
@@ -77,30 +62,27 @@ public class Client extends Canvas implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		frame = new JFrame (NAME);
+//		frame.setLayout(new BorderLayout());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		jpanel = new DankTings(clientSender, players);
+		frame.add(jpanel, BorderLayout.CENTER);
+		jpanel.requestFocusInWindow();
+		
+		frame.setSize(new Dimension(DankTings.WIDTH, DankTings.HEIGHT));
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+
+
 
 		// Initiate client sender
 
 
 
 	}
-
-	public synchronized void start(){
-		running = true;
-		new Thread (this).start();
-	}
-
-	public synchronized void stop(){
-		running = false;
-	}
-
-
-	void render (){
-
-	}
-
-
-
-
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Attempting connection");
@@ -111,7 +93,6 @@ public class Client extends Canvas implements Runnable{
 	public void run (){
 		System.out.println("starting thread");
 		clientReceiver.start();
-		clientSender.start();
 		
 		long lastTime = System.nanoTime();
 		long lastTimer = System.currentTimeMillis();
@@ -127,7 +108,7 @@ public class Client extends Canvas implements Runnable{
 			lastTime = now;
 			
 			while (dt >= 1){
-//				getOutput();
+				getOutput();
 				render();
 				frames++;
 				dt -=1;
@@ -142,28 +123,56 @@ public class Client extends Canvas implements Runnable{
 		}
 	}
 
+	public synchronized void start(){
+		running = true;
+		new Thread (this).start();
+	}
+
+	public synchronized void stop(){
+		running = false;
+	}
+
+
+	void render (){
+		jpanel.repaint();
+	}
 
 
 	private void getOutput() {
-		System.out.println("trying to get output");
 		try{
 			String message = clientReceiver.getServerMessage();
 			String [] args = message.trim().split("\\s+");
 
 			int numPlayers = Integer.parseInt(args[0]);
-			int [][] output = new int [numPlayers][4];
-			int c = 0;
 			for (int i = 1; i < args.length; i+= 4){
-				output [c][0] = Integer.parseInt(args [i]);
-				output [c][1] = (int)Double.parseDouble(args [i+1]);
-				output [c][2] = (int)Double.parseDouble(args [i+2]);
-				output [c][3] = Integer.parseInt(args [i+3]);
-				c++;
+				int playerID = Integer.parseInt(args [i]);
+				double x = Double.parseDouble(args [i+1]);
+				double y= (int)Double.parseDouble(args [i+2]);
+				int status = Integer.parseInt(args [i+3]);
+				
+				boolean set = false;
+				for (PlayerImage p: players){
+					if (p.getPlayerID() == playerID){
+						p.setpX(x);
+						p.setpY(y);
+						p.setStatus(status);
+						set = true;
+					}
+				}
+				
+				if (!set){
+					System.out.println("Adding new player image");
+					players.add(new PlayerImage (playerID, x, y, status));
+				}
 			}
 
-			for (int i = 0; i < output.length;i ++){
-				System.out.println("PlayerID: " + output[i][0] + ", x: " + output[i][1] + ", y: " + output [i][2] + ", status: "+ output[i][3]);
-			}
+
+//			for (int i = 0; i < players.size();i ++){
+//				System.out.println("NUM PLAYERS: " + players.size() +" PlayerID: " + players.get(i).getPlayerID()
+//						+ ", x: " + players.get(i).getpX()
+//						+ ", y: " + players.get(i).getpX()
+//						+ ", status: "+ players.get(i).getStatus());
+//			}
 		} catch (Exception e){
 			e.printStackTrace();
 		}

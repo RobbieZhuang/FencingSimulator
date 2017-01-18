@@ -68,20 +68,19 @@ public class ClientReceiver implements Runnable {
     }
     
     
-    
     public String getServerMessage() {
 		return serverMessage;
 	}
 
-	public void updatePanel (DankTings panel) {
-    	this.panel = panel;
-    }
+//	public void updatePanel (DankTings panel) {
+//    	this.panel = panel;
+//    }
     
-    private void runCommands(String command){
-    	if (panel != null) {
-    		panel.updatePlayer(command);
-    	}
-    }
+//    private void runCommands(String command){
+//    	if (panel != null) {
+//    		panel.updatePlayer(command);
+//    	}
+//    }
     
     public String firstMessage () {
     	while (true) {

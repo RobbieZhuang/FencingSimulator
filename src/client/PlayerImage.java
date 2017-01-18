@@ -3,21 +3,22 @@ package client;
 import java.awt.Color;
 
 public class PlayerImage {
-	private String playerID;
+	private int playerID;
 	private double pX;
 	private double pY;
 	private int status;
 	private Color playerColor;
 	
-	public PlayerImage (String playerID, Color playerColor) {
-		this.pX = 0;
-		this.pY = 0;
-		this.status = 0;
+	public PlayerImage (int playerID, double x, double y, int status) {
+		this.pX = x;
+		this.pY = y;
+		this.status = status;
 		this.playerID = playerID;
-		this.playerColor = playerColor;
+		this.playerColor = new Color((int)Math.random()*256, (int)Math.random()*256, (int)Math.random()*256);
+		this.playerColor = Color.red;
 	}
 
-	public String getPlayerID () {
+	public int getPlayerID () {
 		return playerID;
 	}
 	

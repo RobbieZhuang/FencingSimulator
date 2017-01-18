@@ -45,11 +45,16 @@ public class ClientHandler implements Runnable {
      * @param queue            is the server queue for messages
      * @throws IOException to prevent exceptions caused by input and output streams
      */
-    ClientHandler(Socket connectionSocket, int playerID) throws IOException {
+    ClientHandler(Socket connectionSocket, int playerID){
         status = 1;
         this.connectionSocket = connectionSocket;
-        input = new BufferedReader(new InputStreamReader(this.connectionSocket.getInputStream()));
-        output = new PrintWriter(this.connectionSocket.getOutputStream());
+        try {
+			input = new BufferedReader(new InputStreamReader(this.connectionSocket.getInputStream()));
+			output = new PrintWriter(this.connectionSocket.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         running = true;
         this.playerID = playerID;
     }
