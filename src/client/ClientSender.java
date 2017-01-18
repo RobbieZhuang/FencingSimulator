@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class ClientSender implements Runnable{
     private PrintWriter output;
+    private boolean running;
+    Thread t;
     
     /**
      * Default constructor
@@ -39,4 +41,19 @@ public class ClientSender implements Runnable{
 		// TODO Auto-generated method stub
 		
 	}
+	
+    /**
+     * Starting the thread
+     */
+    public void start() {
+        t = new Thread(this, "cs#");
+        t.start();
+    }
+
+    /**
+     * Ending the thread
+     */
+    public void terminate() {
+        running = false;
+    }
 }
