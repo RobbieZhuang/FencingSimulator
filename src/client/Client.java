@@ -32,7 +32,7 @@ public class Client implements Runnable{
     public static PlayerImage[] players = new PlayerImage[2];
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "10.242.189.33";
+    private String IP = "";
     // Declaring variables
 	private volatile boolean running;
 	private Socket socket;

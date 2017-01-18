@@ -23,7 +23,7 @@ public class Hitbox {
         this.tY = tY;
         this.bY = tY + height;
         this.rX = lX + length;
-        this.r = new Rectangle((int)lX+25,(int)tY+25,(int)length-25,(int)height-25);
+        this.r = new Rectangle((int)lX,(int)tY,(int)length,(int)height);
     }
     
     public boolean collidesWith(Hitbox h) {

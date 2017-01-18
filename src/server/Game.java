@@ -131,12 +131,13 @@ public class Game implements Runnable {
 					}
 				}
 			}
+			p.iterateRespawnTimer();
 			// THIS IS WHERE I CAN'T RESPAWN THE DUDE
 			if (!p.isAlive()){
-				//p.basicRevive();
+				p.basicRevive();
 				System.out.println(gameState.getRoom().getNearestRespawn((int)p.getX()).x);
 				System.out.println(gameState.getRoom().getNearestRespawn((int)p.getX()).y);
-				p.revive(gameState.getRoom().getNearestRespawn((int)p.getX()).x,gameState.getRoom().getNearestRespawn((int)p.getX()).y);
+//				p.revive(gameState.getRoom().getNearestRespawn((int)p.getX()).x,gameState.getRoom().getNearestRespawn((int)p.getX()).y);
 			}
 		}
 	}

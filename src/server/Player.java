@@ -14,21 +14,22 @@ public class Player {
 	private boolean alive = true;
 	private int jumpCounter = 0;
 	private int attackCounter = 30;
-
+	private int respawnTimer = 100;
+	
 	public Player(int playerID) {
 		if (playerID == 1){
 			this.x = 150;
 			this.y = 150;
 			this.ID = playerID;
 			this.status = 0;
-			this.hitbox = new Hitbox(x,y,x+135,y+135);
+			this.hitbox = new Hitbox(x+25,y+25,x+110,y+100);
 		}
 		else{
 			this.x = 0;
 			this.y = 0;
 			this.ID = playerID;
 			this.status = 0;
-			this.hitbox = new Hitbox(x,y,x+135,y+135);
+			this.hitbox = new Hitbox(x+25,y+25,x+110,y+100);	
 		}
 	}
 
@@ -84,7 +85,7 @@ public class Player {
 		this.alive = false;
 		int rand = (int)Math.random()*3 + 8;
 		status = rand;
-		
+		respawnTimer = 100;
 	}
 	public void revive(int x, int y){
 		this.alive = true;
@@ -92,8 +93,16 @@ public class Player {
 		this.status = 0;
 	}
 	public void basicRevive(){
-		this.alive = true;
-		this.status = 0;
+		if (respawnTimer == 0){
+			this.alive = true;
+			this.status = 0;
+		}
+	}
+	
+	public void iterateRespawnTimer(){
+		if (respawnTimer > 0){
+			respawnTimer --;
+		}
 	}
 	public double getX() {
 		return x;
