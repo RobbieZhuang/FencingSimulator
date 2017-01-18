@@ -9,7 +9,9 @@ public class Player {
 	private int ID;
 	private int status;
 	private Hitbox hitbox;
-
+	private boolean facingLeft = true;
+	
+	
 	public Player(int playerID) {
 		if (playerID == 1){
 			this.x = 150;
@@ -27,6 +29,13 @@ public class Player {
 		}
 	}
 
+	void faceLeft(){
+		this.facingLeft = true;
+	}
+	void faceRight(){
+		this.facingLeft = false;
+	}
+	
 	public void moveUp() {
 		this.y += -speed;
 		updateHitbox();
@@ -43,6 +52,8 @@ public class Player {
 		this.y += speed;
 		updateHitbox();
 	}
+	
+
 	private void updateHitbox(){
 		this.hitbox.settY(this.y);
 		this.hitbox.setlX(this.x);
@@ -86,5 +97,41 @@ public class Player {
 		}else {
 			status++;
 		}
+	}
+	
+	
+	
+	
+	public void stand(){
+		if (facingLeft){
+			this.status = 0;
+		} else {
+			this.status = 1;
+		}
+	}
+
+	public void walk(){
+		if (facingLeft){
+			this.status = 4;
+		} else {
+			this.status = 6;
+		}
+	}
+	
+	public void jump(){
+		if (facingLeft){
+			this.status = 8;
+		} else {
+			this.status = 9;
+		}
+	}
+	
+	public void attack() {
+		if (facingLeft){
+			this.status = 2;
+		} else {
+			this.status = 3;
+		}
+		
 	}
 }

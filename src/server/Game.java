@@ -47,6 +47,8 @@ public class Game implements Runnable {
 				// check collision
 				boolean collides = false;
 				gameState.getPlayers().get(i).moveLeft();
+				gameState.getPlayers().get(i).faceLeft();
+				gameState.getPlayers().get(i).walk();
 				for (int j = 0;j < gameState.getNumPlayers() && !collides; j++) {
 					if (j != i){
 						if (gameState.getPlayers().get(i).getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
@@ -71,6 +73,8 @@ public class Game implements Runnable {
 			if (gameState.getKeys().get(i).getKey(3)){
 				boolean collides = false;
 				gameState.getPlayers().get(i).moveRight();
+				gameState.getPlayers().get(i).faceRight();
+				gameState.getPlayers().get(i).walk();
 				for (int j = 0;j < gameState.getNumPlayers() && !collides; j++) {
 					if (j != i){
 						if (gameState.getPlayers().get(i).getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
@@ -81,7 +85,11 @@ public class Game implements Runnable {
 				}
 			}
 			if (gameState.getKeys().get(i).getKey(4)){
-				gameState.getPlayers().get(i).changeStatus();
+				gameState.getPlayers().get(i).attack();
+			}
+			
+			if (gameState.getKeys().get(i).getKey(5)){
+				gameState.getPlayers().get(i).jump();
 			}
 
 		}
