@@ -12,8 +12,10 @@ package client;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class ClientSender{
+public class ClientSender implements Runnable{
     private PrintWriter output;
+    private boolean running;
+    Thread t;
     
     /**
      * Default constructor
@@ -32,5 +34,26 @@ public class ClientSender{
     public void send (long b) {
     	output.println(b);
     	output.flush();
+    }
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+    /**
+     * Starting the thread
+     */
+    public void start() {
+        t = new Thread(this, "cs#");
+        t.start();
+    }
+
+    /**
+     * Ending the thread
+     */
+    public void terminate() {
+        running = false;
     }
 }

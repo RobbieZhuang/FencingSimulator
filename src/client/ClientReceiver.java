@@ -40,10 +40,10 @@ public class ClientReceiver implements Runnable {
             // Attempting to receive message
             try {
                 serverMessage = input.readLine();
-                if (!serverMessage.equals("-1")) {
-                    runCommands(serverMessage);
-            		System.out.println(serverMessage);
-                }
+//                if (!serverMessage.equals("-1")) {
+//                    runCommands(serverMessage);
+//                }
+//                System.out.println(serverMessage);
             } catch (Exception e) {
                 System.out.println("*** Error receiving message ***");
                 e.printStackTrace();
@@ -57,7 +57,7 @@ public class ClientReceiver implements Runnable {
      */
     public void start() {
         t = new Thread(this, "cr#");
-        t.run();
+        t.start();
     }
 
     /**
@@ -67,7 +67,13 @@ public class ClientReceiver implements Runnable {
         running = false;
     }
     
-    public void updatePanel (DankTings panel) {
+    
+    
+    public String getServerMessage() {
+		return serverMessage;
+	}
+
+	public void updatePanel (DankTings panel) {
     	this.panel = panel;
     }
     
