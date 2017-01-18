@@ -25,16 +25,7 @@ public class Hitbox {
         this.rX = lX + length;
         this.r = new Rectangle((int)lX+25,(int)tY+25,(int)length-25,(int)height-25);
     }
-
-    public boolean collidesWith(double x, double y) {
-        if (x >= lX && x <= rX) {
-            if (y >= tY && y <= bY) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    
     public boolean collidesWith(Hitbox h) {
     	/*
         double hLX = h.getlX();
