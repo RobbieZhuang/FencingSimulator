@@ -174,7 +174,6 @@ public class Client implements Runnable{
 			String message = clientReceiver.getServerMessage();
 			String [] args = message.trim().split("\\s+");
 
-			jpanel.setMap(0);
 			int c = 0;
 			for (int i = 1; i < args.length; i+= 4){
 				players[c].setpX(Double.parseDouble(args [i+1]));
