@@ -5,16 +5,14 @@
 package client;
 
 import javax.swing.JFrame;
-import java.awt.Toolkit;
 import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -112,6 +110,12 @@ public class Client {
         return !input.next().equals("0");
     }
 
+    public static void main(String[] args) throws Exception {
+        System.out.println("Attempting connection");
+        Client client = new Client();
+        client.start();
+    }
+
     /**
      * Running the client
      *
@@ -193,21 +197,6 @@ public class Client {
 
 	public synchronized void stop(){
 		running = false;
-	}
-
-
-	void render (){
-
-	}
-
-
-
-
-
-	public static void main(String[] args) throws Exception {
-		System.out.println("Attempting connection");
-		Client client = new Client();
-		client.start();
 	}
 
 	public void run (){
@@ -301,20 +290,4 @@ public class Client {
 	//		}
 	//
 	//	}
-
-	/**
-	 * playOnline
-	 * Checks if player wants to play online/offline
-	 *
-	 * @return true if online, false if offline
-	 */
-	private static boolean playOnline() {
-		return true;
-		//		Scanner input = new Scanner(System.in);
-		//		System.out.println("Enter 0 to play offline, 1 to play online");
-		//		if (input.next().equals("1")) {
-		//			return true;
-		//		}
-		//		return false;
-	}
 }
