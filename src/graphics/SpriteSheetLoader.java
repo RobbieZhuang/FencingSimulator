@@ -21,8 +21,8 @@ public class SpriteSheetLoader {
      * @param width       is the width of screen
      * @param height      is the height of screen
      * @param spriteSheet is the png file with all the sprites
-     * @param rows is the numbers of rows that the sprite sheet has
-     * @param columns is the number of columns that the sprite sheet has
+     * @param rows        is the numbers of rows that the sprite sheet has
+     * @param columns     is the number of columns that the sprite sheet has
      * @param spriteSheet is the sprite sheet
      */
     public SpriteSheetLoader(int width, int height, int rows, int columns, SpriteSheet spriteSheet) {
@@ -37,7 +37,7 @@ public class SpriteSheetLoader {
         sprites = new BufferedImage[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                sprites[i][j] = spriteSheet.getSheet().getSubimage(i * width, j * height, width, height);
+                sprites[i][j] = spriteSheet.image.getSubimage(i * width, j * height, width, height);
             }
         }
     }

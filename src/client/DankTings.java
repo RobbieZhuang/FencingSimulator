@@ -1,63 +1,63 @@
 package client;
 
+import graphics.SpriteSheet;
+import graphics.SpriteSheetLoader;
+
+import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
-
-import javax.swing.JPanel;
-
-import map.Land;
-import map.RoomOutdoors;
 
 public class DankTings extends JPanel implements KeyListener {
-	public static final int WIDTH = 1080;
-	public static final int HEIGHT = WIDTH /4*3;
-	
-	// MAKE MAP HERE
-	private volatile ArrayList <PlayerImage> players;
-	private ClientSender sender;
+    public static final int WIDTH = 1080;
+    public static final int HEIGHT = WIDTH / 4 * 3;
+    public static final int SPRITE_SIZE = WIDTH / 8;
+    // Sprites
+    SpriteSheet spriteSheet = new SpriteSheet("/resources/SpriteSheet.png");
+    long start;
+    long end;
+    long counter = 0;
+    int fps = 0;
+    // MAKE MAP HERE
+    private volatile ArrayList<PlayerImage> players;
+    private ClientSender sender;
+    private byte keysPressed;
 
-	private byte keysPressed;
 
-	long start;
-	long end;
-	long counter = 0;
-	int fps = 0;
+    public DankTings(ClientSender sender, ArrayList<PlayerImage> players) {
+        this.players = players;
+        this.sender = sender;
+        this.setLayout(null);
+        this.setSize(WIDTH, HEIGHT);
+        SpriteSheetLoader spriteSheetLoader = new SpriteSheetLoader(16, 16, 2, 8, spriteSheet);
+        addKeyListener(this);
+        setFocusable(true);
+        setBackground(Color.black);
+    }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (int a = 0; a < players.size(); a++) {
+            System.out.println("drawing rect");
+            PlayerImage p = players.get(a);
+            g.setColor(p.getPlayerColor());
+            g.fillRect((int) p.getpX(), (int) p.getpY(), 25, 25);
+            g.drawImage(SpriteSheetLoader.sprites[0][0], (int) p.getpX(), (int) p.getpY(), SPRITE_SIZE, SPRITE_SIZE, null);
+        }
 
-	public DankTings(ClientSender sender, ArrayList <PlayerImage> players) {
-		this.players = players;
-		this.sender = sender;
-		this.setLayout(null);
-		this.setSize(WIDTH, HEIGHT);
-		addKeyListener(this);
-		setFocusable(true);
-		setBackground(Color.black);
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		for (int a = 0; a < players.size(); a++) {
-			System.out.println("drawing rect");
-			PlayerImage p = players.get(a);
-			g.setColor(p.getPlayerColor());
-			g.fillRect((int)p.getpX(), (int)p.getpY(), 25, 25);
-		}
-		
-		g.setColor(Color.MAGENTA);
+        g.setColor(Color.MAGENTA);
 //		LinkedList <Land> terrain = r.getTerrain();
 //		for (Land l: terrain) {
 //			g.fillRect(l.getlX(), l.getlY(), l.getLength(), l.getHeight());
 //		}
 
 
-		g.drawString(fps + "", 50, 50);
+        g.drawString(fps + "", 50, 50);
 
-	}
+    }
 
 //	public synchronized void updatePlayer (String playerInfo) {
 //		String [] update = playerInfo.split(" ");
@@ -78,72 +78,72 @@ public class DankTings extends JPanel implements KeyListener {
 //		updateScreen();
 //	}
 
-	//	public static void updatePlayers (String gameString){
-	//		int numPlayers = (gameString.length() - gameString.replace(" ", "").length())/4;
-	//		String[] strs = gameString.trim().split("\\s+");
-	//		for (int i = 0; i < numPlayers; i ++){
-	//				if (players)
-	//			}
-	//		}
-	//	}
+    //	public static void updatePlayers (String gameString){
+    //		int numPlayers = (gameString.length() - gameString.replace(" ", "").length())/4;
+    //		String[] strs = gameString.trim().split("\\s+");
+    //		for (int i = 0; i < numPlayers; i ++){
+    //				if (players)
+    //			}
+    //		}
+    //	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// WASDFG
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // WASDFG
 
-		int keyCode = e.getKeyCode();
+        int keyCode = e.getKeyCode();
 
-		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP){
-			keysPressed = (byte) (keysPressed | (1<<0));
-		} 
-		if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT){
-			keysPressed = (byte) (keysPressed | (1<<1));
-		} 
-		if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN){
-			keysPressed = (byte) (keysPressed | (1<<2));
-		} 
-		if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT){
-			keysPressed = (byte) (keysPressed | (1<<3));
-		}
-		if (keyCode == KeyEvent.VK_F) {
-			keysPressed = (byte) (keysPressed | (1<<4));
-		}
-		if (keyCode == KeyEvent.VK_G) {
-			keysPressed = (byte) (keysPressed | (1<<5));
-		}
+        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+            keysPressed = (byte) (keysPressed | (1 << 0));
+        }
+        if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+            keysPressed = (byte) (keysPressed | (1 << 1));
+        }
+        if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+            keysPressed = (byte) (keysPressed | (1 << 2));
+        }
+        if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+            keysPressed = (byte) (keysPressed | (1 << 3));
+        }
+        if (keyCode == KeyEvent.VK_F) {
+            keysPressed = (byte) (keysPressed | (1 << 4));
+        }
+        if (keyCode == KeyEvent.VK_G) {
+            keysPressed = (byte) (keysPressed | (1 << 5));
+        }
 
-		sender.send(keysPressed);
-	}
+        sender.send(keysPressed);
+    }
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		int keyCode = e.getKeyCode();
-		if (keyCode == KeyEvent.VK_W  || keyCode == KeyEvent.VK_UP){
-			keysPressed = (byte) (keysPressed & ~(1<<0));
-		}
-		if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT){
-			keysPressed = (byte) (keysPressed & ~(1<<1));
-		}
-		if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN){
-			keysPressed = (byte) (keysPressed & ~(1<<2));
-		}
-		if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT){
-			keysPressed = (byte) (keysPressed & ~(1<<3));
-		}
-		if (keyCode == KeyEvent.VK_F) {
-			keysPressed = (byte) (keysPressed & ~(1<<4));
-		}
-		if (keyCode == KeyEvent.VK_G) {
-			keysPressed = (byte) (keysPressed & ~(1<<5));
-		}
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+            keysPressed = (byte) (keysPressed & ~(1 << 0));
+        }
+        if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+            keysPressed = (byte) (keysPressed & ~(1 << 1));
+        }
+        if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+            keysPressed = (byte) (keysPressed & ~(1 << 2));
+        }
+        if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+            keysPressed = (byte) (keysPressed & ~(1 << 3));
+        }
+        if (keyCode == KeyEvent.VK_F) {
+            keysPressed = (byte) (keysPressed & ~(1 << 4));
+        }
+        if (keyCode == KeyEvent.VK_G) {
+            keysPressed = (byte) (keysPressed & ~(1 << 5));
+        }
 
-		sender.send(keysPressed);
-	}
+        sender.send(keysPressed);
+    }
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+    }
 //
 //	private void updateScreen () {
 //		//		if (counter%10 == 0) {
@@ -157,7 +157,7 @@ public class DankTings extends JPanel implements KeyListener {
 //		//		counter = 0;
 //		//	}
 //	}
-	
+
 //	public void addNewPlayer (String playerID) {
 //		players.add(new PlayerImage(playerID, new Color((int)Math.random()*256, (int)Math.random()*256, (int)Math.random()*256)));
 //	}

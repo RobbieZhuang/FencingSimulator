@@ -11,39 +11,29 @@
 
 package client;
 
+import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 //import physics.Physics;
 
 public class Client implements Runnable{
-	private String IP = "";
-	// Declaring variables
+    public static final String NAME = "Game";
+    //	private static Physics physics;
+    static boolean playOnline;
+    private String IP = "192.168.2.36";
+    // Declaring variables
 	private volatile boolean running;
 	private Socket socket;
-	//	private static Physics physics;
-	static boolean playOnline;
-
-	
-	
 	private ClientReceiver clientReceiver;
 	private ClientSender clientSender;
-
 	private ArrayList <PlayerImage> players = new ArrayList <PlayerImage>();
-
-	public static final String NAME = "Game";
-
 	private JFrame frame;
 	private DankTings jpanel;
 	
@@ -90,23 +80,39 @@ public class Client implements Runnable{
 		client.start();
 	}
 
+    /**
+     * playOnline
+     * Checks if player wants to play online/offline
+     *
+     * @return true if online, false if offline
+     */
+    private static boolean playOnline() {
+        return true;
+        //		Scanner input = new Scanner(System.in);
+        //		System.out.println("Enter 0 to play offline, 1 to play online");
+        //		if (input.next().equals("1")) {
+        //			return true;
+        //		}
+        //		return false;
+    }
+
 	public void run (){
 		System.out.println("starting thread");
 		clientReceiver.start();
-		
+
 		long lastTime = System.nanoTime();
 		long lastTimer = System.currentTimeMillis();
 		double nsPerFrame = 1000000000D/60D;
-		
+
 		int frames = 0;
-		
-		double dt = 0;
-		
+
+        double dt = 0;
+
 		while (running){
 			long now = System.nanoTime();
 			dt += (now - lastTime)/nsPerFrame;
 			lastTime = now;
-			
+
 			while (dt >= 1){
 				getOutput();
 				render();
@@ -132,11 +138,39 @@ public class Client implements Runnable{
 		running = false;
 	}
 
+    void render (){
+        jpanel.repaint();
+    }
 
-	void render (){
-		jpanel.repaint();
-	}
-
+    //	/**
+    //	 * Running the client
+    //	 *
+    //	 * @throws IOException for exceptions in input and output streams
+    //	 */
+    //	public void run() {
+    //
+    //		try {
+    //
+    //
+    //
+    //			// Update the client receiver object with panel object
+    //			clientReceiver.updatePanel(panel);
+    //
+    //			Thread cr = new Thread(clientReceiver);
+    //			cr.start();
+    //
+    //			System.out.println("Connection successful");
+    //		} catch (Exception e) {
+    //			System.out.println("Connection failed");
+    //			e.printStackTrace();
+    //		}
+    //
+    //		//main render loop
+    //		while (running){
+    //
+    //		}
+    //
+	//	}
 
 	private void getOutput() {
 		try{
@@ -149,7 +183,7 @@ public class Client implements Runnable{
 				double x = Double.parseDouble(args [i+1]);
 				double y= (int)Double.parseDouble(args [i+2]);
 				int status = Integer.parseInt(args [i+3]);
-				
+
 				boolean set = false;
 				for (PlayerImage p: players){
 					if (p.getPlayerID() == playerID){
@@ -159,7 +193,7 @@ public class Client implements Runnable{
 						set = true;
 					}
 				}
-				
+
 				if (!set){
 					System.out.println("Adding new player image");
 					players.add(new PlayerImage (playerID, x, y, status));
@@ -176,51 +210,5 @@ public class Client implements Runnable{
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-	}
-
-	//	/**
-	//	 * Running the client
-	//	 *
-	//	 * @throws IOException for exceptions in input and output streams
-	//	 */
-	//	public void run() {
-	//
-	//		try {
-	//			
-	//
-	//
-	//			// Update the client receiver object with panel object
-	//			clientReceiver.updatePanel(panel);
-	//
-	//			Thread cr = new Thread(clientReceiver);
-	//			cr.start();
-	//
-	//			System.out.println("Connection successful");
-	//		} catch (Exception e) {
-	//			System.out.println("Connection failed");
-	//			e.printStackTrace();
-	//		}
-	//
-	//		//main render loop
-	//		while (running){
-	//
-	//		}
-	//
-	//	}
-
-	/**
-	 * playOnline
-	 * Checks if player wants to play online/offline
-	 * 
-	 * @return true if online, false if offline
-	 */
-	private static boolean playOnline() {
-		return true;
-		//		Scanner input = new Scanner(System.in);
-		//		System.out.println("Enter 0 to play offline, 1 to play online");
-		//		if (input.next().equals("1")) {
-		//			return true;
-		//		}
-		//		return false;
 	}
 }
