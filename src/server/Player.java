@@ -10,8 +10,8 @@ public class Player {
 	private int status;
 	private Hitbox hitbox;
 	private boolean facingLeft = true;
-	
-	
+	private int jumpCounter = 0;
+
 	public Player(int playerID) {
 		if (playerID == 1){
 			this.x = 150;
@@ -35,7 +35,7 @@ public class Player {
 	void faceRight(){
 		this.facingLeft = false;
 	}
-	
+
 	public void moveUp() {
 		this.y += -speed;
 		updateHitbox();
@@ -52,8 +52,14 @@ public class Player {
 		this.y += speed;
 		updateHitbox();
 	}
-	
 
+	public void iterateJump() {
+		this.y += -jumpCounter*jumpCounter;
+		if (jumpCounter > 0){
+			this.jumpCounter --;
+		}
+		updateHitbox();
+	}
 	private void updateHitbox(){
 		this.hitbox.settY(this.y);
 		this.hitbox.setlX(this.x);
@@ -98,10 +104,10 @@ public class Player {
 			status++;
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	public void stand(){
 		if (facingLeft){
 			this.status = 0;
@@ -117,21 +123,22 @@ public class Player {
 			this.status = 6;
 		}
 	}
-	
+
 	public void jump(){
+		jumpCounter = 4;
 		if (facingLeft){
 			this.status = 8;
 		} else {
 			this.status = 9;
 		}
 	}
-	
+
 	public void attack() {
 		if (facingLeft){
 			this.status = 2;
 		} else {
 			this.status = 3;
 		}
-		
+
 	}
 }
