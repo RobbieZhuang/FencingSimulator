@@ -11,6 +11,7 @@ public class Player {
 	private Hitbox hitbox;
 	private boolean facingLeft = true;
 	private boolean attacking = false;
+	private boolean alive = true;
 	private int jumpCounter = 0;
 	private int attackCounter = 30;
 
@@ -36,6 +37,12 @@ public class Player {
 	}
 	void faceRight(){
 		this.facingLeft = false;
+	}
+	public boolean isFacingLeft(){
+		return facingLeft;
+	}
+	public boolean isFacingRight(){
+		return !facingLeft;
 	}
 
 	public void moveUp() {
@@ -69,6 +76,24 @@ public class Player {
 	}
 	public Hitbox getHitbox(){
 		return hitbox;
+	}
+	public boolean isAlive(){
+		return this.alive;
+	}
+	public void dead(){
+		this.alive = false;
+		int rand = (int)Math.random()*3 + 8;
+		status = rand;
+		
+	}
+	public void revive(int x, int y){
+		this.alive = true;
+		this.x = x; this.y = y;
+		this.status = 0;
+	}
+	public void basicRevive(){
+		this.alive = true;
+		this.status = 0;
 	}
 	public double getX() {
 		return x;
@@ -106,10 +131,6 @@ public class Player {
 			status++;
 		}
 	}
-
-
-
-
 	public void stand(){
 		if (facingLeft){
 			this.status = 0;
@@ -139,9 +160,19 @@ public class Player {
 		if (attackCounter >= 15 && attackCounter <= 30){
 			if (facingLeft){
 				moveLeft();
+				moveLeft();
+				moveLeft();
+				moveRight();
+				moveRight();
+				moveRight();
 				this.status = 2;
 			} else {
 				moveRight();
+				moveRight();
+				moveRight();
+				moveLeft();
+				moveLeft();
+				moveLeft();
 				this.status = 3;
 			}
 			attackCounter--;

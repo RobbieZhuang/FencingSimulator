@@ -97,9 +97,7 @@ public class Server {
 					clients.add(clientHandler2);
 
 					t.start();
-
-
-
+					
 					System.out.println("Connection successful");
 				} catch (SocketException se) {
 					System.out.println("SocketServer has closed");
