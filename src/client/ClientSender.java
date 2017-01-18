@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class ClientSender{
     private PrintWriter output;
+    private boolean running;
+    Thread t;
     
     /**
      * Default constructor
@@ -25,8 +27,12 @@ public class ClientSender{
     }
    
     public void send (String str) {
-    	System.out.println(str);
     	output.println(str);
     	output.flush();
     }
-}
+    
+    public void send (long b) {
+    	output.println(b);
+    	output.flush();
+    }
+ }

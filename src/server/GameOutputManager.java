@@ -35,11 +35,12 @@ public class GameOutputManager implements Runnable {
 			}
 			counter++;
 				
-				for (int i = 0; i < gameState.getNumPlayers(); i ++){
-					Server.sendMessage(gameState.getPlayers().get(i).getPlayerString());
-				}
-	
-//				Server.sendMessage(gameState.getGameString());
+//				for (int i = 0; i < gameState.getNumPlayers(); i ++){
+//					Server.sendMessage(gameState.getPlayers().get(i).getPlayerString());
+//				}
+				
+				System.out.println("Message that will be sent: " + gameState.getGameString());
+				Server.sendMessage(gameState.getGameString());
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {

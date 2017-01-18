@@ -1,6 +1,3 @@
-/*
- * Test Git
- */
 package server;
 
 

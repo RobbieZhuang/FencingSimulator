@@ -9,7 +9,7 @@ public class PlayerImage {
 	private int status;
 	private Color playerColor;
 	private Hitbox d;
-	
+
 	public PlayerImage (String playerID, Color playerColor) {
 		d= new Hitbox(pX, pY, 100, 100);
 		this.pX = 0;
@@ -60,5 +60,5 @@ public class PlayerImage {
 	public Hitbox getD() {
 		return d;
 	}
-	
+
 }
