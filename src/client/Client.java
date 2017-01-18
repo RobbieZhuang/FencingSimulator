@@ -26,7 +26,7 @@ public class Client implements Runnable{
     public static final String NAME = "Game";
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "192.168.0.103";
+    private String IP = "192.168.1.103";
     // Declaring variables
 	private volatile boolean running;
 	private Socket socket;
@@ -74,8 +74,6 @@ public class Client implements Runnable{
 		players[1] = new PlayerImage(1,0,0,0);
 
 		// Initiate client sender
-
-
 
 	}
 

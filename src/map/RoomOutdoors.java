@@ -2,6 +2,8 @@ package map;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.util.Collection;
 import java.util.LinkedList;
 
 public class RoomOutdoors extends Room {
@@ -12,7 +14,7 @@ public class RoomOutdoors extends Room {
 		terrain.add(new Land (0, 400, 800, 50, 0));
 		terrain.add(new Land (900, 350, 200, 50, 0));
 		terrain.add(new Land (1200, 300, 800, 50, 0));
-		
+		generateRespawnPoints();
 	}
 	
 	@Override
@@ -23,5 +25,12 @@ public class RoomOutdoors extends Room {
 			Land l = terrain.get(a);
 			g.fillRect(l.getlX()-lX, l.getlY()-tY, l.getLength(), l.getHeight());
 		}
+	}
+
+	@Override
+	protected void generateRespawnPoints() {
+		super.getRespawn().add(new Point(100, 200));
+		super.getRespawn().add(new Point(1100, 200));
+		super.getRespawn().add(new Point (500, 200));
 	}
 }
