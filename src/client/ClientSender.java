@@ -14,8 +14,6 @@ import java.util.Scanner;
 
 public class ClientSender{
     private PrintWriter output;
-    private boolean running;
-    Thread t;
     
     /**
      * Default constructor

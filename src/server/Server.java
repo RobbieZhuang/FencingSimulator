@@ -15,8 +15,8 @@ public class Server {
 	static GameOutputManager outputManager;
 	static boolean running = true;
 	static Game game;
-	
-	
+
+
 	public static void main (String args[]){
 		Server server = new Server();
 		server.initialize();
@@ -24,7 +24,7 @@ public class Server {
 	}
 
 	private void initialize(){
-		
+
 		try {
 			socketServer = new ServerSocket (6000);
 		} catch (IOException e) {
@@ -61,34 +61,45 @@ public class Server {
 		System.out.println("clienthandler not found");
 		return null;
 	}
-	
+
 	public static boolean [] getInput (int playerID){
 		return getClient(playerID).getKeys();
 	}
-	
+
 	private void run() {
 		try {
 			System.out.println("Started server");
 			//starts the server output manager
 
 			Thread t = new Thread (game);
-			
+
 			// Constantly trying to allow clients to connect to server
-			int counter = 0;
 			while (running) {
 				try {
 					// Adding new clients to server
-					Socket connectionSocket = socketServer.accept();
-					ClientHandler clientHandler = new ClientHandler(connectionSocket, counter);
-					Thread cl = new Thread(clientHandler);
-					cl.start();
-					
-					clients.add(clientHandler);
-					if (counter == 0){
-						t.start();
-					}
-					
-					counter++;
+					Socket connectionSocket1 = socketServer.accept();
+					ClientHandler clientHandler1 = new ClientHandler(connectionSocket1, 0);
+					Thread c1 = new Thread(clientHandler1);
+					c1.start();
+
+					clients.add(clientHandler1);
+
+
+
+					System.out.println("Connection successful");
+
+					// Adding new clients to server
+					Socket connectionSocket2 = socketServer.accept();
+					ClientHandler clientHandler2 = new ClientHandler(connectionSocket2, 1);
+					Thread c2 = new Thread(clientHandler2);
+					c2.start();
+
+					clients.add(clientHandler2);
+
+					t.start();
+
+
+
 					System.out.println("Connection successful");
 				} catch (SocketException se) {
 					System.out.println("SocketServer has closed");

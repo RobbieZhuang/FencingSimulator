@@ -55,4 +55,12 @@ public class Player {
 	public String getPlayerString() {
 		return ID + " " + x + " " + y + " " + status;
 	}
+
+	public void changeStatus() {
+		if (status >= 7){
+			status = 0;
+		}else {
+			status++;
+		}
+	}
 }

@@ -42,6 +42,10 @@ public class Game implements Runnable {
 			if (gameState.getKeys().get(i).getKey(3)){
 				gameState.getPlayers().get(i).moveRight();
 			}
+			if (gameState.getKeys().get(i).getKey(4)){
+				gameState.getPlayers().get(i).changeStatus();
+			}
+			
 		}
 	}
 

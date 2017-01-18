@@ -21,13 +21,13 @@ public class DankTings extends JPanel implements KeyListener {
     long counter = 0;
     int fps = 0;
     // MAKE MAP HERE
-    private volatile ArrayList<PlayerImage> players;
+    private PlayerImage [] players;
     private ClientSender sender;
     private byte keysPressed;
 
 
-    public DankTings(ClientSender sender, ArrayList<PlayerImage> players) {
-        this.players = players;
+    public DankTings(ClientSender sender, PlayerImage[] players2) {
+        this.players = players2;
         this.sender = sender;
         this.setLayout(null);
         this.setSize(WIDTH, HEIGHT);
@@ -40,10 +40,15 @@ public class DankTings extends JPanel implements KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (int a = 0; a < players.size(); a++) {
-            System.out.println("drawing rect");
-            PlayerImage p = players.get(a);
-            g.setColor(p.getPlayerColor());
+        for (int a = 0; a < players.length; a++) {
+
+            PlayerImage p = players[a];
+            if (p.getStatus() == 0){
+                g.setColor(p.getPlayerColor());
+            }
+            else {
+            	g.setColor(Color.MAGENTA);
+            }
             g.fillRect((int) p.getpX(), (int) p.getpY(), 25, 25);
             g.drawImage(SpriteSheetLoader.sprites[0][0], (int) p.getpX(), (int) p.getpY(), SPRITE_SIZE, SPRITE_SIZE, null);
         }

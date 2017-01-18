@@ -18,7 +18,7 @@ public class ClientReceiver implements Runnable {
     private Thread t;
     private BufferedReader input;
     private volatile boolean running = true;
-    private String serverMessage;
+    private String serverMessage = "";
     private DankTings panel;
     
 

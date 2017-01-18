@@ -27,13 +27,14 @@ public class Client implements Runnable{
     public static final String NAME = "Game";
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "192.168.2.36";
+    private String IP = "";
     // Declaring variables
 	private volatile boolean running;
 	private Socket socket;
 	private ClientReceiver clientReceiver;
 	private ClientSender clientSender;
-	private ArrayList <PlayerImage> players = new ArrayList <PlayerImage>();
+//	private ArrayList <PlayerImage> players = new ArrayList <PlayerImage>();
+	private PlayerImage [] players = new PlayerImage [2];
 	private JFrame frame;
 	private DankTings jpanel;
 	
@@ -66,7 +67,8 @@ public class Client implements Runnable{
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
-
+		players[0] = new PlayerImage(0,50,50,1);
+		players[1] = new PlayerImage(1,0,0,0);
 
 		// Initiate client sender
 
@@ -177,36 +179,17 @@ public class Client implements Runnable{
 			String message = clientReceiver.getServerMessage();
 			String [] args = message.trim().split("\\s+");
 
-			int numPlayers = Integer.parseInt(args[0]);
+			int c = 0;
 			for (int i = 1; i < args.length; i+= 4){
-				int playerID = Integer.parseInt(args [i]);
-				double x = Double.parseDouble(args [i+1]);
-				double y= (int)Double.parseDouble(args [i+2]);
-				int status = Integer.parseInt(args [i+3]);
-
-				boolean set = false;
-				for (PlayerImage p: players){
-					if (p.getPlayerID() == playerID){
-						p.setpX(x);
-						p.setpY(y);
-						p.setStatus(status);
-						set = true;
-					}
-				}
-
-				if (!set){
-					System.out.println("Adding new player image");
-					players.add(new PlayerImage (playerID, x, y, status));
-				}
+				players[c].setpX(Double.parseDouble(args [i+1]));
+				players[c].setpY(Double.parseDouble(args [i+2]));
+				players[c].setStatus(Integer.parseInt(args [i+3]));
+//				System.out.println("PlayerID: " + players[c].getPlayerID()
+//						+ "x: " + players[c].getpX()
+//						+ "y: " + players[c].getpY()
+//						+ "status: " + players[c].getStatus());
+				c++;
 			}
-
-
-//			for (int i = 0; i < players.size();i ++){
-//				System.out.println("NUM PLAYERS: " + players.size() +" PlayerID: " + players.get(i).getPlayerID()
-//						+ ", x: " + players.get(i).getpX()
-//						+ ", y: " + players.get(i).getpX()
-//						+ ", status: "+ players.get(i).getStatus());
-//			}
 		} catch (Exception e){
 			e.printStackTrace();
 		}
