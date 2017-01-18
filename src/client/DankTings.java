@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class DankTings extends JPanel implements KeyListener {
     public static final int WIDTH = Client.WIDTH;
     public static final int HEIGHT = Client.HEIGHT;
-    public static final int SPRITE_SIZE = 135;
+    public static final int SPRITE_SIZE = 50;
 	public static final int SPRITE_ROWS = 3;
 	public static final int SPRITE_COLUMNS = 16;
 	public static final int SPRITE_PIXELS = 16;
@@ -118,10 +118,12 @@ public class DankTings extends JPanel implements KeyListener {
 						}
 					}
 				}
+				
 
 				// Drawing the player
                 g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX() - cameraLX, (int) p.getpY() - cameraTY, SPRITE_SIZE, SPRITE_SIZE, null);
-            }
+               
+			}
 		}
 		//		LinkedList <Land> terrain = r.getTerrain();
 		//		for (Land l: terrain) {

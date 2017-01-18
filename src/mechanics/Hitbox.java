@@ -71,17 +71,13 @@ public class Hitbox {
         return tY;
     }
     
-    public void setlX(double lX) {
+
+    public void setXY (double lX, double tY){
         this.lX = lX;
         this.rX = lX + length;
-    }
-
-    public void settY(double tY) {
     	this.tY = tY;
         this.bY = tY + height;
-    }
-    public void setRectForPlayer(int x, int y){
-    	this.r = new Rectangle(x+25,y+25,150-25,150-25);
+    	this.r = new Rectangle((int)lX, (int)tY,(int)length, (int)height);
     }
 
     public double getrX() {
