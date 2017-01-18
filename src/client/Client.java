@@ -14,6 +14,7 @@ package client;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,12 +42,14 @@ public class Client extends Canvas implements Runnable{
 	private ClientSender clientSender;
 
 
-	public static final int WIDTH = 1680;
+	public static final int WIDTH = 1080;
 	public static final int HEIGHT = WIDTH /4*3;
 	public static final String NAME = "Game";
 
 	private JFrame frame;
-
+	private BufferedImage image = new BufferedImage (WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	
+		
 	public Client (){
 		setMaximumSize(new Dimension (WIDTH, HEIGHT));
 		setMinimumSize (new Dimension (WIDTH, HEIGHT));
