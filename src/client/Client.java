@@ -26,7 +26,7 @@ public class Client implements Runnable{
     public static final String NAME = "Game";
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "192.168.1.103";
+    private String IP = "192.168.0.103";
     // Declaring variables
 	private volatile boolean running;
 	private Socket socket;
@@ -48,6 +48,9 @@ public class Client implements Runnable{
 			clientReceiver = new ClientReceiver(input);
 			clientSender = new ClientSender(write);
 
+			System.out.println("starting thread");
+			clientReceiver.start();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,8 +59,9 @@ public class Client implements Runnable{
 		frame = new JFrame (NAME);
 //		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		jpanel = new DankTings(clientSender, players);
+		
+		System.out.println("ddd");
+		jpanel = new DankTings(clientReceiver.getPlayerID(), clientSender, players);
 		frame.add(jpanel, BorderLayout.CENTER);
 		jpanel.requestFocusInWindow();
 		
@@ -98,8 +102,6 @@ public class Client implements Runnable{
     }
 
 	public void run (){
-		System.out.println("starting thread");
-		clientReceiver.start();
 
 		long lastTime = System.nanoTime();
 		long lastTimer = System.currentTimeMillis();

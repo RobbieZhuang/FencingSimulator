@@ -20,7 +20,7 @@ public class ClientReceiver implements Runnable {
     private volatile boolean running = true;
     private String serverMessage = "";
     private DankTings panel;
-    
+    private int playerID = -999;
 
     /**
      * Default constructor
@@ -36,6 +36,21 @@ public class ClientReceiver implements Runnable {
      */
     @Override
     public void run() {
+    	boolean messageReceived = false;
+    	while (!messageReceived) {
+    		try {
+                String message = input.readLine();
+                System.out.println(message);
+                if (!(message.equals("-1"))) {
+                    playerID = Integer.parseInt(message);
+                    messageReceived = true;
+                }
+//                System.out.println(serverMessage);
+            } catch (Exception e) {
+                System.out.println("*** Error receiving message ***");
+                e.printStackTrace();
+            }
+    	}
         while (running) {
             // Attempting to receive message
             try {
@@ -96,5 +111,8 @@ public class ClientReceiver implements Runnable {
     	}
     }
 
+    public int getPlayerID () {
+    	return playerID;
+    }
     
 }

@@ -41,4 +41,14 @@ public class Land {
 	public int getHeight() {
 		return height;
 	}
+
+	public Hitbox getHitbox() {
+		return hitbox;
+	}
+
+	public BufferedImage getTexture() {
+		return texture;
+	}
+	
+	
 }

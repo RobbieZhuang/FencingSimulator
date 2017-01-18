@@ -35,56 +35,32 @@ public class Game implements Runnable {
 			Player p = gameState.getPlayers().get(i);
 			Keys k = gameState.getKeys().get(i);
 			
-//			if (gameState.getKeys().get(i).getKey(0)){
-//				// check collision
-//				boolean collides = false;
-//				gameState.getPlayers().get(i).moveUp();
-//				for (int j = 0; j < gameState.getNumPlayers() && !collides; j++) {
-//					if (j != i){
-//						if (gameState.getPlayers().get(i).getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
-//							gameState.getPlayers().get(i).moveDown();
-//							collides = true;
-//						}
-//					}
-//				}
-//			}
-			if (k.getKey(1)){
+			if (k.getKey(1) && !p.getAttacking()){
 				// check collision
 				boolean collides = false;
 				p.moveLeft();
 				p.faceLeft();
 				p.walk();
-				for (int j = 0;j < gameState.getNumPlayers() && !collides; j++) {
+				for (int j = 0;j < gameState.getRoom().getTerrain().size() && !collides; j++) {
 					if (j != i){
-						if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
+						if (p.getHitbox().collidesWith(gameState.getRoom().getTerrain().get(j).getHitbox())){
 							collides = true;
 							p.moveRight();
 						}
 					}
 				}
 			}
-//			if (gameState.getKeys().get(i).getKey(2)){
-//				boolean collides = false;
-//				gameState.getPlayers().get(i).moveDown();
-//				for (int j = 0;j < gameState.getNumPlayers() && !collides; j++) {
-//					if (j != i){
-//						if (gameState.getPlayers().get(i).getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
-//							collides = true;
-//							gameState.getPlayers().get(i).moveUp();		
-//						}
-//					}
-//				}
-//			}
+
 			if (k.getKey(3)){
 				boolean collides = false;
 				p.moveRight();
 				p.faceRight();
 				p.walk();
-				for (int j = 0;j < gameState.getNumPlayers() && !collides; j++) {
+				for (int j = 0;j < gameState.getRoom().getTerrain().size() && !collides; j++) {
 					if (j != i){
-						if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
-							p.moveLeft();
+						if (p.getHitbox().collidesWith(gameState.getRoom().getTerrain().get(j).getHitbox())){
 							collides = true;
+							p.moveLeft();
 						}
 					}
 				}
@@ -93,6 +69,9 @@ public class Game implements Runnable {
 			if (!k.getKey(1) && !k.getKey(3)){
 				p.stand();
 			}
+			
+			p.iterateAttack();
+			
 			if (k.getKey(4)){
 				gameState.getPlayers().get(i).attack();
 			}
@@ -101,15 +80,27 @@ public class Game implements Runnable {
 				gameState.getPlayers().get(i).jump();
 			}
 
-			
-			p.iterateJump();
-			
 			//non keys
 			boolean collides = false;
+			p.iterateJump();
+			for (int j = 0;j < gameState.getRoom().getTerrain().size() && !collides; j++) {
+				if (j != i){
+					if (p.getY() >= DankTings.HEIGHT/2 || p.getHitbox().collidesWith(gameState.getRoom().getTerrain().get(j).getHitbox())){
+						collides = true;
+						p.moveDown();
+						p.moveDown();
+						p.moveDown();
+						p.moveDown();
+					}
+				}
+			}
+			
+						
+			collides = false;
 			p.moveDown();
 			for (int j = 0;j < gameState.getNumPlayers() && !collides; j++) {
 				if (j != i){
-					if (p.getY() >= DankTings.HEIGHT/2 || p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
+					if (p.getY() >= DankTings.HEIGHT/2 || p.getHitbox().collidesWith(gameState.getRoom().getTerrain().get(j).getHitbox())){
 						collides = true;
 						p.moveUp();
 					}

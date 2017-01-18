@@ -10,7 +10,9 @@ public class Player {
 	private int status;
 	private Hitbox hitbox;
 	private boolean facingLeft = true;
+	private boolean attacking = false;
 	private int jumpCounter = 0;
+	private int attackCounter = 30;
 
 	public Player(int playerID) {
 		if (playerID == 1){
@@ -134,11 +136,33 @@ public class Player {
 	}
 
 	public void attack() {
-		if (facingLeft){
-			this.status = 2;
-		} else {
-			this.status = 3;
+		if (attackCounter >= 15 && attackCounter <= 30){
+			if (facingLeft){
+				moveLeft();
+				this.status = 2;
+			} else {
+				moveRight();
+				this.status = 3;
+			}
+			attackCounter--;
+			attacking = true;
 		}
+	}
 
+	public void iterateAttack() {
+		if (attacking){
+			attack();
+		}
+		if (attackCounter > 0 && attackCounter < 30){
+			attackCounter --;
+		} else{
+			attackCounter = 30;
+			attacking = false;
+		}
+		
+	}
+
+	public boolean getAttacking() {
+		return attacking;
 	}
 }

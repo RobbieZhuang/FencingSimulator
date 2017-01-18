@@ -45,14 +45,14 @@ public class Rain {
 		}
 	}
 
-	public void drawRain (Graphics g) {
+	public void drawRain (Graphics g, int lX, int tY) {
 		// TODO Auto-generated method stub
 		if (!running) {
 			return;
 		}
 		g.setColor(dropColor);
 		for (Drop d: drops) {
-			g.fillRect(d.getX(), d.getY(), d.getWidth(), d.getHeight());
+			g.fillRect(d.getX()-lX, d.getY()-tY, d.getWidth(), d.getHeight());
 		}
 	}
 

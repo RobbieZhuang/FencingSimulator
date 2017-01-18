@@ -2,10 +2,14 @@ package server;
 
 import java.util.ArrayList;
 
+import map.Room;
+import map.RoomCastle;
+import map.RoomOutdoors;
+
 public class GameState {
 	private ArrayList <Player> players;
 	private ArrayList <Keys> keys;
-	private ArrayList <Terrain> terrainBlocks;
+	private ArrayList <Room> rooms;
 	private ArrayList <Map> maps;
 	private int currentMap;
 	private int numPlayers;
@@ -13,7 +17,9 @@ public class GameState {
 	public GameState (){
 		players = new ArrayList<Player>();
 		keys = new ArrayList<Keys>();
-		terrainBlocks = new ArrayList<Terrain>();
+		rooms = new ArrayList<Room>();
+		rooms.add(new RoomCastle());
+		rooms.add(new RoomOutdoors());
 		maps = new ArrayList<Map>();
 		numPlayers = 0;
 		currentMap = 0;
@@ -71,12 +77,8 @@ public class GameState {
 		return null;
 	}
 	
-	public ArrayList<Terrain> getTerrainBlocks() {
-		return terrainBlocks;
-	}
-
-	public void setTerrainBlocks(ArrayList<Terrain> terrainBlocks) {
-		this.terrainBlocks = terrainBlocks;
+	public Room getRoom (){
+		return rooms.get(currentMap);
 	}
 
 	public ArrayList<Map> getMaps() {
