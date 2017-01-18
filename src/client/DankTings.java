@@ -26,6 +26,10 @@ public class DankTings extends JPanel implements KeyListener {
     private PlayerImage [] players;
     private ClientSender sender;
     private byte keysPressed;
+    long startTime = System.currentTimeMillis();
+    long elapsedTime = 0L;
+    boolean walkingDouble;
+
 
 
     public DankTings(ClientSender sender, PlayerImage[] players2) {
@@ -45,25 +49,56 @@ public class DankTings extends JPanel implements KeyListener {
         for (int a = 0; a < players.length; a++) {
 
             PlayerImage p = players[a];
-            if (p.getStatus() == 0){
+            if (p.getStatus() == 0) {
                 g.setColor(p.getPlayerColor());
-            }
-            else {
-            	g.setColor(Color.MAGENTA);
+            } else {
+                g.setColor(Color.MAGENTA);
             }
             g.fillRect((int) p.getpX(), (int) p.getpY(), 25, 25);
-            g.drawImage(SpriteSheetLoader.sprites[0][0], (int) p.getpX(), (int) p.getpY(), SPRITE_SIZE, SPRITE_SIZE, null);
+
+            // Making sure that only two players are drawn
+            if (players.length < 3) {
+                // Walking animation
+                if ((players[a].getStatus() > 3) && (players[a].getStatus() < 8)) {
+                    elapsedTime = System.currentTimeMillis() - startTime;
+                    System.out.println("Elapsed time: " + elapsedTime);
+                    if (elapsedTime >= 100) {
+                        System.out.println(players[a].getStatus() + " " + walkingDouble);
+                        walkingDouble = !walkingDouble;
+                        if (walkingDouble) {
+                            // The player switches walking animation
+                            if (players[a].getStatus() == 4) {
+                                players[a].setStatus(5);
+                                walkingDouble = true;
+                            } else if (players[a].getStatus() == 5) {
+                                players[a].setStatus(4);
+                                walkingDouble = false;
+                            } else if (players[a].getStatus() == 6) {
+                                players[a].setStatus(7);
+                                walkingDouble = true;
+                            } else if (players[a].getStatus() == 7) {
+                                players[a].setStatus(6);
+                                walkingDouble = false;
+                            }
+                        }
+
+                        // Resetting the timer
+                        startTime = System.currentTimeMillis();
+                    }
+
+                    if (walkingDouble) {
+                        if (players[a].getStatus() == 4) {
+                            players[a].setStatus(5);
+                        } else if (players[a].getStatus() == 6) {
+                            players[a].setStatus(7);
+                        }
+                    }
+                }
+
+                // Drawing the player
+                g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX(), (int) p.getpY(), SPRITE_SIZE, SPRITE_SIZE, null);
+            }
         }
-
-        g.setColor(Color.MAGENTA);
-//		LinkedList <Land> terrain = r.getTerrain();
-//		for (Land l: terrain) {
-//			g.fillRect(l.getlX(), l.getlY(), l.getLength(), l.getHeight());
-//		}
-
-
-        g.drawString(fps + "", 50, 50);
-
     }
 
 //	public synchronized void updatePlayer (String playerInfo) {
