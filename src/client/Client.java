@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 
 //import physics.Physics;
 
@@ -27,7 +26,7 @@ public class Client implements Runnable{
     public static final String NAME = "Game";
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "";
+    private String IP = "192.168.2.36";
     // Declaring variables
 	private volatile boolean running;
 	private Socket socket;

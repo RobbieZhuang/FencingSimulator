@@ -37,7 +37,7 @@ public class SpriteSheetLoader {
         sprites = new BufferedImage[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                sprites[i][j] = spriteSheet.image.getSubimage(i * width, j * height, width, height);
+                sprites[i][j] = spriteSheet.image.getSubimage(j * width, i * height, width, height);
             }
         }
     }

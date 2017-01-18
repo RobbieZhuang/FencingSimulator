@@ -8,12 +8,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 public class DankTings extends JPanel implements KeyListener {
     public static final int WIDTH = 1080;
     public static final int HEIGHT = WIDTH / 4 * 3;
     public static final int SPRITE_SIZE = WIDTH / 8;
+    public static final int SPRITE_ROWS = 3;
+    public static final int SPRITE_COLUMNS = 16;
+    public static final int SPRITE_PIXELS = 16;
     // Sprites
     SpriteSheet spriteSheet = new SpriteSheet("/resources/SpriteSheet.png");
     long start;
@@ -31,7 +33,7 @@ public class DankTings extends JPanel implements KeyListener {
         this.sender = sender;
         this.setLayout(null);
         this.setSize(WIDTH, HEIGHT);
-        SpriteSheetLoader spriteSheetLoader = new SpriteSheetLoader(16, 16, 2, 8, spriteSheet);
+        SpriteSheetLoader spriteSheetLoader = new SpriteSheetLoader(SPRITE_PIXELS, SPRITE_PIXELS, SPRITE_ROWS, SPRITE_COLUMNS, spriteSheet);
         addKeyListener(this);
         setFocusable(true);
         setBackground(Color.black);

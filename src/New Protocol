@@ -1,0 +1,13 @@
+New Protocol
+
+0   standing face left
+1   standing face right
+2   stab left
+3   stab right
+4   walk left
+6   walk right
+8   jump left
+9   jump right
+10  dead 1
+11  dead 2
+12  dead 3
