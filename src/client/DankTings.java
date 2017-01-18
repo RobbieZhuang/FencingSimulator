@@ -2,6 +2,9 @@ package client;
 
 import graphics.SpriteSheet;
 import graphics.SpriteSheetLoader;
+import map.Room;
+import map.RoomOutdoors;
+import specialEffects.Rain;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -10,9 +13,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class DankTings extends JPanel implements KeyListener {
-    public static final int WIDTH = 1080;
-    public static final int HEIGHT = WIDTH / 4 * 3;
-    public static final int SPRITE_SIZE = WIDTH / 8;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+    public static final int SPRITE_SIZE = 135;
     public static final int SPRITE_ROWS = 3;
     public static final int SPRITE_COLUMNS = 16;
     public static final int SPRITE_PIXELS = 16;
@@ -29,11 +32,19 @@ public class DankTings extends JPanel implements KeyListener {
     long startTime = System.currentTimeMillis();
     long elapsedTime = 0L;
     boolean walkingDouble;
-
+ 
+    // MAKE MAP HERE
+ 	private PlayerImage player;
+ 	private boolean running;
+ 	private String myPlayerID;
+ 	private Room room = new RoomOutdoors();
+ 	
+ 	private Rain r = new Rain(2000, 500);
 
 
     public DankTings(ClientSender sender, PlayerImage[] players2) {
         this.players = players2;
+        player = players2[1];
         this.sender = sender;
         this.setLayout(null);
         this.setSize(WIDTH, HEIGHT);
@@ -99,8 +110,45 @@ public class DankTings extends JPanel implements KeyListener {
                 g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX(), (int) p.getpY(), SPRITE_SIZE, SPRITE_SIZE, null);
             }
         }
+        int cameraLX = cameraLeftX((int)player.getpX());
+		int cameraTY = cameraTopY((int)player.getpY());
+		// TODO Auto-generated method stub
+		super.paintComponent(g);
+		g.setColor(player.getPlayerColor());
+		g.fillRect((int)player.getpX()-cameraLX, (int)player.getpY()-cameraTY, 25, 25);
+
+		g.setColor(Color.MAGENTA);
+		//		LinkedList <Land> terrain = r.getTerrain();
+		//		for (Land l: terrain) {
+		//			g.fillRect(l.getlX(), l.getlY(), l.getLength(), l.getHeight());
+		//		}
+
+
+		g.drawString(fps + "", 50, 50);
+		r.drawRain(g);
+		room.drawRoom(cameraLX, cameraTY, g);
     }
 
+    private int cameraLeftX (int pX) {
+		int lX = pX - WIDTH/2;
+		if (lX > room.getLength() - WIDTH) {
+			lX = room.getLength() - WIDTH;
+		} else if (lX < 0) {
+			lX = 0;
+		}
+		return lX;
+	}
+	
+	private int cameraTopY (int pY) {
+		int tY = pY - HEIGHT/2;
+		if (tY < 0) {
+			tY = 0;
+		} else if (tY > room.getHeight()-HEIGHT) {
+			tY = room.getHeight()-HEIGHT;
+		}
+		return tY;
+	}
+	
 //	public synchronized void updatePlayer (String playerInfo) {
 //		String [] update = playerInfo.split(" ");
 //		String playerID = update[0];

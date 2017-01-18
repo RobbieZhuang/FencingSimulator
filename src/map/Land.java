@@ -2,13 +2,15 @@ package map;
 
 import java.awt.image.BufferedImage;
 
+import mechanics.Hitbox;
+
 public class Land {
 	private int lX;
 	private int lY;
 	private int length;
 	private int height;
 
-	private int hitBoxDistance;
+	private Hitbox hitbox;
 	
 	private BufferedImage texture;
 	
@@ -17,16 +19,11 @@ public class Land {
 		this.lY = lY;
 		this.length = length;
 		this.height = height;
-		this.hitBoxDistance = hitBoxDistance;
+		hitbox = new Hitbox(lX - hitBoxDistance, lY - hitBoxDistance, length + hitBoxDistance*2, height + hitBoxDistance*2);
 	}
 	
-	public boolean isTouching (int pX, int pY) {
-		if (pX > lX	- hitBoxDistance && pX < lX + length + hitBoxDistance) {
-			if (pY > lY - hitBoxDistance && pY < lY + height + hitBoxDistance) {
-				return true;
-			}
-		}
-		return false;
+	public boolean collidesWith (Hitbox h) {
+		return hitbox.collidesWith(h);
 	}
 	
 	public int getlX() {
