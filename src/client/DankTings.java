@@ -110,6 +110,7 @@ public class DankTings extends JPanel implements KeyListener {
                 g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX(), (int) p.getpY(), SPRITE_SIZE, SPRITE_SIZE, null);
             }
         }
+        /*
         int cameraLX = cameraLeftX((int)player.getpX());
 		int cameraTY = cameraTopY((int)player.getpY());
 		// TODO Auto-generated method stub
@@ -127,6 +128,7 @@ public class DankTings extends JPanel implements KeyListener {
 		g.drawString(fps + "", 50, 50);
 		r.drawRain(g);
 		room.drawRoom(cameraLX, cameraTY, g);
+		*/
     }
 
     private int cameraLeftX (int pX) {
