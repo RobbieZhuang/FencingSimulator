@@ -11,9 +11,12 @@ public class RoomCastle extends Room {
 		LinkedList <Land> terrain = super.getTerrain();
 		terrain.add(new Land (500, 500, 1500, 100, 0));
 		terrain.add(new Land (800, 450, 400, 50, 0));
-		terrain.add(new Land (0, 500, 400, 100, 0));
-		terrain.add(new Land (800, 0, 600, 200, 0));
+        terrain.add(new Land(0, 500, 4000, 100, 0));
+        terrain.add(new Land (800, 0, 600, 200, 0));
 		terrain.add(new Land (0, 0, 2000, 50, 0));
+        terrain.add(new Land(-10, 0, 5, 1000, 0));
+        terrain.add(new Land(2000, 0, 5, 1000, 0));
+
 		generateRespawnPoints();
 	}
 

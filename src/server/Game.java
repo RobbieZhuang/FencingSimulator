@@ -1,12 +1,9 @@
 package server;
 
-import client.DankTings;
-import mechanics.Hitbox;
-
 public class Game implements Runnable {
-	GameState gameState;
+    static boolean running;
+    GameState gameState;
 	Thread t;
-	static boolean running;
 
 
 	Game (){
@@ -78,8 +75,10 @@ public class Game implements Runnable {
 						for (int j = 0; j < gameState.getNumPlayers(); j++) {
 							if (i != j){
 								if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
-									gameState.getPlayers().get(j).dead();
-									System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
+                                    if (gameState.getPlayers().get(j).isAlive()) {
+                                        gameState.getPlayers().get(j).dead();
+                                    }
+                                    System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
 								}
 							}
 						}
@@ -94,8 +93,10 @@ public class Game implements Runnable {
 						for (int j = 0; j < gameState.getNumPlayers(); j++) {
 							if (i != j){
 								if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
-									gameState.getPlayers().get(j).dead();
-									System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
+                                    if (gameState.getPlayers().get(j).isAlive()) {
+                                        gameState.getPlayers().get(j).dead();
+                                    }
+                                    System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
 								}
 							}
 						}
