@@ -3,6 +3,7 @@ package client;
 import graphics.SpriteSheet;
 import graphics.SpriteSheetLoader;
 import map.Room;
+import map.RoomCastle;
 import map.RoomOutdoors;
 import specialEffects.Rain;
 
@@ -11,6 +12,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class DankTings extends JPanel implements KeyListener {
 	public static final int WIDTH = 800;
@@ -37,13 +39,16 @@ public class DankTings extends JPanel implements KeyListener {
 	// MAKE MAP HERE
 	private boolean running;
 	private int myPlayerID;
-	private Room room = new RoomOutdoors();
+	ArrayList <Room> rooms = new ArrayList <Room>();
+	private int currentMap = 0;
 
 	private Rain r = new Rain(2000, 500);
 
 
 	public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
 		r.go();
+		rooms.add(new RoomCastle());
+		rooms.add(new RoomOutdoors());
 		this.myPlayerID = myPlayerID;
 		this.players = players2;
 		this.sender = sender;
@@ -126,14 +131,18 @@ public class DankTings extends JPanel implements KeyListener {
 		//
 		//		g.drawString(fps + "", 50, 50);
 		r.drawRain(g, cameraLX, cameraTY);
-		room.drawRoom(cameraLX, cameraTY, g);
+		rooms.get(currentMap).drawRoom(cameraLX, cameraTY, g);
 
+	}
+	
+	public void setMap(int currentMap){
+		this.currentMap = currentMap;
 	}
 
 	private int cameraLeftX (int pX) {
 		int lX = pX - WIDTH/2;
-		if (lX > room.getLength() - WIDTH) {
-			lX = room.getLength() - WIDTH;
+		if (lX > rooms.get(currentMap).getLength() - WIDTH) {
+			lX = rooms.get(currentMap).getLength() - WIDTH;
 		} else if (lX < 0) {
 			lX = 0;
 		}
@@ -144,8 +153,8 @@ public class DankTings extends JPanel implements KeyListener {
 		int tY = pY - HEIGHT/2;
 		if (tY < 0) {
 			tY = 0;
-		} else if (tY > room.getHeight()-HEIGHT) {
-			tY = room.getHeight()-HEIGHT;
+		} else if (tY > rooms.get(currentMap).getHeight()-HEIGHT) {
+			tY = rooms.get(currentMap).getHeight()-HEIGHT;
 		}
 		return tY;
 	}
