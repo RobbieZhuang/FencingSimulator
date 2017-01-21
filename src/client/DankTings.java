@@ -2,6 +2,7 @@ package client;
 
 import graphics.SpriteSheet;
 import graphics.SpriteSheetLoader;
+import map.Map;
 import map.Room;
 import map.RoomCastle;
 import map.RoomOutdoors;
@@ -21,7 +22,7 @@ public class DankTings extends JPanel implements KeyListener {
 	public static final int SPRITE_ROWS = 3;
 	public static final int SPRITE_COLUMNS = 16;
 	public static final int SPRITE_PIXELS = 16;
-
+	
 	// Sprites
 	SpriteSheet spriteSheet = new SpriteSheet("/resources/SpriteSheet.png");
 	long start;
@@ -31,12 +32,10 @@ public class DankTings extends JPanel implements KeyListener {
     long startTime = System.currentTimeMillis();
     long elapsedTime = 0L;
     boolean walkingDouble;
-    ArrayList<Room> rooms = new ArrayList<Room>();
-    // MAKE MAP HERE
+    public static Map map;
 	private PlayerImage [] players;
 	private ClientSender sender;
 	private byte keysPressed;
-	// MAKE MAP HERE
 	private boolean running;
 	private int myPlayerID;
 	private int currentMap = 0;
@@ -46,8 +45,7 @@ public class DankTings extends JPanel implements KeyListener {
 
 	public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
 		r.go();
-		rooms.add(new RoomCastle());
-		rooms.add(new RoomOutdoors());
+		this.map = new Map();
 		this.myPlayerID = myPlayerID;
 		this.players = players2;
 		this.sender = sender;
@@ -133,7 +131,7 @@ public class DankTings extends JPanel implements KeyListener {
 		//
 		//		g.drawString(fps + "", 50, 50);
 		r.drawRain(g, cameraLX, cameraTY);
-		rooms.get(currentMap).drawRoom(cameraLX, cameraTY, g);
+		map.getCurrentRoom().drawRoom(cameraLX, cameraTY, g);
 
 	}
 	
@@ -143,8 +141,8 @@ public class DankTings extends JPanel implements KeyListener {
 
 	private int cameraLeftX (int pX) {
 		int lX = pX - WIDTH/2;
-		if (lX > rooms.get(currentMap).getLength() - WIDTH) {
-			lX = rooms.get(currentMap).getLength() - WIDTH;
+		if (lX > map.getCurrentRoom().getLength() - WIDTH) {
+			lX = map.getCurrentRoom().getLength() - WIDTH;
 		} else if (lX < 0) {
 			lX = 0;
 		}
@@ -155,8 +153,8 @@ public class DankTings extends JPanel implements KeyListener {
 		int tY = pY - HEIGHT/2;
 		if (tY < 0) {
 			tY = 0;
-		} else if (tY > rooms.get(currentMap).getHeight()-HEIGHT) {
-			tY = rooms.get(currentMap).getHeight()-HEIGHT;
+		} else if (tY > map.getCurrentRoom().getHeight()-HEIGHT) {
+			tY = map.getCurrentRoom().getHeight()-HEIGHT;
 		}
 		return tY;
 	}

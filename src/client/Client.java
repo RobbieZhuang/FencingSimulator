@@ -32,7 +32,7 @@ public class Client implements Runnable{
     public static PlayerImage[] players = new PlayerImage[2];
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "";
+    private String IP = "192.168.1.103";
     // Declaring variables
 	private volatile boolean running;
 	private Socket socket;
@@ -172,10 +172,12 @@ public class Client implements Runnable{
 	private void getOutput() {
 		try{
 			String message = clientReceiver.getServerMessage();
-			String [] args = message.trim().split("\\s+");
-
+			System.out.println("Message From Server: " + message);
+			String [] args = message.trim().split(" ");
+			DankTings.map.setCurrentRoom(Integer.parseInt(args[1]));
+			System.out.println("THE CURRENT ROOM IS: " + args[1]);
 			int c = 0;
-			for (int i = 1; i < args.length; i+= 4){
+			for (int i = 2; i < args.length; i+= 4){
 				players[c].setpX(Double.parseDouble(args [i+1]));
 				players[c].setpY(Double.parseDouble(args [i+2]));
 				players[c].setStatus(Integer.parseInt(args [i+3]));
@@ -186,6 +188,7 @@ public class Client implements Runnable{
 				c++;
 			}
 		} catch (Exception e){
+			System.out.println("Something went wrong when trying to receive messages.\nThis is probably because you did not click play yet.");
 			e.printStackTrace();
 		}
 	}

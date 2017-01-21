@@ -16,6 +16,43 @@ public class Player {
 	private int jumpCounter = 0;
 	private int attackCounter = 30;
 	private int respawnTimer = 100;
+	private int totalNumberOfKills = 0;
+	private int totalNumberOfDeaths = 0;
+
+	/**
+	 * getTotalNumberOfKills
+	 * @return int
+	 */
+	public int getTotalNumberOfKills() {
+		return totalNumberOfKills;
+	}
+	
+	/**
+	 * setTotalNumberOfKills
+	 * @param int 
+	 */
+	public void setTotalNumberOfKills(int totalNumberOfKills) {
+		this.totalNumberOfKills = totalNumberOfKills;
+	}
+	
+	public void increaseTotalNumberOfKills(){
+		this.totalNumberOfKills++;
+	}
+	/**
+	 * getTotalNumberOfDeaths
+	 * @return int
+	 */
+	public int getTotalNumberOfDeaths() {
+		return totalNumberOfDeaths;
+	}
+	
+	/**
+	 * setTotalNumberOfDeaths
+	 * @param int 
+	 */
+	public void setTotalNumberOfDeaths(int totalNumberOfDeaths) {
+		this.totalNumberOfDeaths = totalNumberOfDeaths;
+	}
 
 	public Player(int playerID) {
 		this.x = 150;
@@ -86,6 +123,7 @@ public class Player {
 		int rand = (int) (Math.random() * 3) + 10;
 		status = rand;
 		respawnTimer = 100;
+		totalNumberOfDeaths++;
 	}
 
 	public void revive(int x, int y) {

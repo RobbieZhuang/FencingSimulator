@@ -39,8 +39,8 @@ public class Game implements Runnable {
 					p.moveLeft();
 					p.faceLeft();
 					p.walk();
-					for (int j = 0;j < gameState.getRoom().getTerrain().size() && !collides; j++) {
-						if (p.getHitbox().collidesWith(gameState.getRoom().getTerrain().get(j).getHitbox())){
+					for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
+						if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
 							collides = true;
 							p.moveRight();
 						}
@@ -52,8 +52,8 @@ public class Game implements Runnable {
 					p.moveRight();
 					p.faceRight();
 					p.walk();
-					for (int j = 0;j < gameState.getRoom().getTerrain().size() && !collides; j++) {
-						if (p.getHitbox().collidesWith(gameState.getRoom().getTerrain().get(j).getHitbox())){
+					for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
+						if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
 							collides = true;
 							p.moveLeft();
 						}
@@ -77,6 +77,7 @@ public class Game implements Runnable {
 								if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
                                     if (gameState.getPlayers().get(j).isAlive()) {
                                         gameState.getPlayers().get(j).dead();
+                                        gameState.getPlayer(i).increaseTotalNumberOfKills();
                                     }
                                     System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
 								}
@@ -95,6 +96,7 @@ public class Game implements Runnable {
 								if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
                                     if (gameState.getPlayers().get(j).isAlive()) {
                                         gameState.getPlayers().get(j).dead();
+                                        gameState.getPlayer(i).increaseTotalNumberOfKills();
                                     }
                                     System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
 								}
@@ -113,8 +115,8 @@ public class Game implements Runnable {
 				//non keys
 				boolean collides = false;
 				p.iterateJump();
-				for (int j = 0;j < gameState.getRoom().getTerrain().size() && !collides; j++) {
-					if (p.getHitbox().collidesWith(gameState.getRoom().getTerrain().get(j).getHitbox())){
+				for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
+					if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
 						collides = true;
 						p.moveDown();
 						p.moveDown();
@@ -124,8 +126,8 @@ public class Game implements Runnable {
 				}
 				collides = false;
 				p.moveDown();
-				for (int j = 0;j < gameState.getRoom().getTerrain().size() && !collides; j++) {
-					if (p.getHitbox().collidesWith(gameState.getRoom().getTerrain().get(j).getHitbox())){
+				for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
+					if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
 						collides = true;
 						p.moveUp();
 						System.out.println("detecing collision43545345235454h4g");
@@ -136,8 +138,8 @@ public class Game implements Runnable {
 			// THIS IS WHERE I CAN'T RESPAWN THE DUDE
 			if (!p.isAlive()){
 				p.basicRevive();
-				System.out.println(gameState.getRoom().getNearestRespawn((int)p.getX()).x);
-				System.out.println(gameState.getRoom().getNearestRespawn((int)p.getX()).y);
+				System.out.println(gameState.getMap().getCurrentRoom().getNearestRespawn((int)p.getX()).x);
+				System.out.println(gameState.getMap().getCurrentRoom().getNearestRespawn((int)p.getX()).y);
 //				p.revive(gameState.getRoom().getNearestRespawn((int)p.getX()).x,gameState.getRoom().getNearestRespawn((int)p.getX()).y);
 			}
 		}

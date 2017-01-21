@@ -2,29 +2,40 @@ package server;
 
 import java.util.ArrayList;
 
+import map.Map;
 import map.Room;
 import map.RoomCastle;
 import map.RoomOutdoors;
 
 public class GameState {
+	
 	private ArrayList <Player> players;
 	private ArrayList <Keys> keys;
-	private ArrayList <Room> rooms;
-	private ArrayList <Map> maps;
-	private int currentMap;
+	
+	// Declare map variable
+	private static Map map;
 	private int numPlayers;
 
 	public GameState (){
 		players = new ArrayList<Player>();
 		keys = new ArrayList<Keys>();
-		rooms = new ArrayList<Room>();
-		rooms.add(new RoomCastle());
-		rooms.add(new RoomOutdoors());
-		maps = new ArrayList<Map>();
+		map = new Map();
 		numPlayers = 0;
-		currentMap = 0;
 	}
-
+	
+	/**
+	 * getMap
+	 * This method returns the map object
+	 * @return Map
+	 */
+	public Map getMap(){
+		return this.map;
+	}
+	
+	/**
+	 * Player methods
+	 * @return
+	 */
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -52,6 +63,10 @@ public class GameState {
 		return null;
 	}
 
+	/**
+	 * Key methods
+	 * @return
+	 */
 	public ArrayList<Keys> getKeys() {
 		return keys;
 	}
@@ -76,37 +91,27 @@ public class GameState {
 		}
 		return null;
 	}
-	
-	public Room getRoom (){
-		return rooms.get(currentMap);
-	}
-
-	public ArrayList<Map> getMaps() {
-		return maps;
-	}
-
-	public void setMaps(ArrayList<Map> maps) {
-		this.maps = maps;
-	}
-
-	public int getCurrentMap() {
-		return currentMap;
-	}
-
-	public void setCurrentMap(int currentMap) {
-		this.currentMap = currentMap;
-	}
 
 	public int getNumPlayers() {
 		return numPlayers;
 	}
-
+	
+	/**
+	 * getGameString
+	 * concatenates the string to be sent to the client
+	 * @return String
+	 */
 	public String getGameString(int playerID) {
 		return getPlayer(playerID).getPlayerString();
 	}
 	
+	/**
+	 * getGameString
+	 * concatenates the string to be sent to the client
+	 * @return String
+	 */
 	public String getGameString(){
-		String gameString = currentMap + " ";
+		String gameString = players.size() + " " + map.getCurrentRoomID() + " ";
 		for (int i = 0; i < numPlayers; i ++){
 			gameString += players.get(i).getID() + " " + players.get(i).getX() + " " + players.get(i).getY() + " "
 					+ players.get(i).getStatus() + " ";
