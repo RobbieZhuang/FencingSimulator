@@ -12,8 +12,10 @@ package client;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class ClientSender{
+public class ClientSender implements Runnable {
     private PrintWriter output;
+    private byte message;
+    private boolean running;
     
     /**
      * Default constructor
@@ -24,7 +26,15 @@ public class ClientSender{
         this.output = output;
     }
    
-    public void send (String str) {
+    public byte getMessage() {
+		return message;
+	}
+
+	public void setMessage(byte message) {
+		this.message = message;
+	}
+
+	public void send (String str) {
     	output.println(str);
     	output.flush();
     }
@@ -33,4 +43,27 @@ public class ClientSender{
     	output.println(b);
     	output.flush();
     }
+
+    public void start(){
+    	Thread t = new Thread (this);
+    	running = true;
+    	t.start();
+    }
+    
+    public void stop(){
+    	running = false;
+    }
+    
+	@Override
+	public void run() {
+		while (running){
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			send(message);
+		}
+	}
  }

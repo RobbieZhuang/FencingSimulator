@@ -32,9 +32,9 @@ public class Client implements Runnable{
     public static PlayerImage[] players = new PlayerImage[2];
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "192.168.1.103";
+    private String IP = "192.168.0.121";
     // Declaring variables
-	private volatile boolean running;
+	private boolean running;
 	private Socket socket;
 	private JFrame frame;
 	private DankTings jpanel;
@@ -44,6 +44,7 @@ public class Client implements Runnable{
 
 		try {
 			socket = new Socket(IP, 6000);
+			socket.setTcpNoDelay(true);
 			PrintWriter write = new PrintWriter(socket.getOutputStream());
 			// Initiate client reader
 			BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -52,7 +53,7 @@ public class Client implements Runnable{
 
 			System.out.println("starting thread");
 			clientReceiver.start();
-
+			clientSender.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

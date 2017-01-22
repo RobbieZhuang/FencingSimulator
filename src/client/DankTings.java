@@ -208,7 +208,7 @@ public class DankTings extends JPanel implements KeyListener {
 			keysPressed = (byte) (keysPressed | (1 << 5));
 		}
 
-		sender.send(keysPressed);
+		sender.setMessage(keysPressed);
 	}
 
 	@Override
@@ -233,7 +233,7 @@ public class DankTings extends JPanel implements KeyListener {
 			keysPressed = (byte) (keysPressed & ~(1 << 5));
 		}
 
-		sender.send(keysPressed);
+		sender.setMessage(keysPressed);
 	}
 
 	@Override

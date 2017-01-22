@@ -58,7 +58,7 @@ public class ClientReceiver implements Runnable {
 //                if (!serverMessage.equals("-1")) {
 //                    runCommands(serverMessage);
 //                }
-//                System.out.println(serverMessage);
+                System.out.println("Server message: " + serverMessage);
             } catch (Exception e) {
                 System.out.println("*** Error receiving message ***");
                 e.printStackTrace();
