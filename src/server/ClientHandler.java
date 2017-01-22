@@ -30,6 +30,7 @@ public class ClientHandler implements Runnable {
     
     //player one or two
 	private int playerID;
+	private int team;
 	
     //Up, Left, Down, Right, Attack, Jump
     private volatile boolean [] keys = new boolean [6];
@@ -57,6 +58,7 @@ public class ClientHandler implements Runnable {
 		}
         running = true;
         this.playerID = playerID;
+        this.team = playerID;
     }
 
     /**
@@ -67,7 +69,7 @@ public class ClientHandler implements Runnable {
     	write(""+playerID);
     	
         System.out.println("Running new ServerReceiver");
-        Server.getGame().addPlayer(playerID);
+        Server.getGame().addPlayer(playerID, team);
         
         String message;
 

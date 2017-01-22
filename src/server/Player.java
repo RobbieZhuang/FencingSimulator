@@ -16,15 +16,18 @@ public class Player {
 	private int jumpCounter = 0;
 	private int attackCounter = 30;
 	private int respawnTimer = 100;
+	private int attackLevel = 0;
 	private int totalNumberOfKills = 0;
 	private int totalNumberOfDeaths = 0;
 	private int team;
+	private boolean onGround;
 
-	public Player(int playerID) {
+	public Player(int playerID, int team) {
 		this.x = 150;
 		this.y = 150;
 		this.ID = playerID;
 		this.status = 0;
+		this.attackLevel = 0;
 		this.hitbox = new Hitbox(x+(int)(DankTings.SPRITE_SIZE*.3), y, (int)(DankTings.SPRITE_SIZE*8/13.0), DankTings.SPRITE_SIZE);
 	}
 
@@ -70,7 +73,7 @@ public class Player {
 		updateHitbox();
 	}
 
-	public void iterateJump() {
+	private void iterateJump() {
 		this.y += -jumpCounter * jumpCounter;
 		if (jumpCounter > 0) {
 			this.jumpCounter--;
@@ -92,7 +95,7 @@ public class Player {
 
 	public void dead() {
 		this.alive = false;
-		int rand = (int) (Math.random() * 3) + 10;
+		int rand = (int) (Math.random() * 3) + 26;
 		status = rand;
 		respawnTimer = 100;
 		totalNumberOfDeaths++;
@@ -112,7 +115,7 @@ public class Player {
 		}
 	}
 
-	public void iterateRespawnTimer() {
+	private void iterateRespawnTimer() {
 		if (respawnTimer > 0) {
 			respawnTimer--;
 		}
@@ -146,7 +149,7 @@ public class Player {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	private void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -154,64 +157,70 @@ public class Player {
 		return ID + " " + x + " " + y + " " + status;
 	}
 
-	public void changeStatus() {
-		if (status >= 7) {
-			status = 0;
-		} else {
-			status++;
-		}
-	}
-
 	public void stand() {
 		if (facingLeft) {
-			this.status = 0;
+			if (attackLevel == 0){
+				setStatus(8);
+			} else if (attackLevel == 1){
+				setStatus(0);
+			} else {
+				setStatus(4);
+			}
 		} else {
-			this.status = 1;
+			if (attackLevel == 0){
+				setStatus(9);
+			} else if (attackLevel == 1){
+				setStatus(1);
+			} else {
+				setStatus(5);
+			}
 		}
 	}
 
 	public void walk() {
 		if (facingLeft) {
-			this.status = 4;
+			setStatus(16);
 		} else {
-			this.status = 6;
+			setStatus(18);
 		}
 	}
 
 	public void jump() {
-		jumpCounter = 4;
-		if (facingLeft) {
-			this.status = 8;
-		} else {
-			this.status = 9;
+		if (onGround){
+			jumpCounter = 6;
+			if (facingLeft) {
+				setStatus(20);
+			} else {
+				setStatus(21);
+			}
 		}
 	}
 
 	public void attack() {
 		if (attackCounter >= 15 && attackCounter <= 30) {
 			if (facingLeft) {
-				moveLeft();
-				moveLeft();
-				moveLeft();
-				moveRight();
-				moveRight();
-				moveRight();
-				this.status = 2;
+				if (attackLevel == 0){
+					setStatus(10);
+				} else if (attackLevel == 1){
+					setStatus(2);
+				} else {
+					setStatus(6);
+				}
 			} else {
-				moveRight();
-				moveRight();
-				moveRight();
-				moveLeft();
-				moveLeft();
-				moveLeft();
-				this.status = 3;
+				if (attackLevel == 0){
+					setStatus(11);
+				} else if (attackLevel == 1){
+					setStatus(3);
+				} else {
+					setStatus(7);
+				}
 			}
 			attackCounter--;
 			attacking = true;
 		}
 	}
 
-	public void iterateAttack() {
+	private void iterateAttack() {
 		if (attacking) {
 			attack();
 		}
@@ -262,5 +271,20 @@ public class Player {
 	 */
 	public void setTotalNumberOfDeaths(int totalNumberOfDeaths) {
 		this.totalNumberOfDeaths = totalNumberOfDeaths;
+	}
+
+	public void setOnGround(boolean onGround) {
+		this.onGround = onGround;
+	}
+	
+	public boolean getOnGround (){
+		return onGround;
+	}
+	
+	public void iterateCounters(){
+		iterateAttack();
+		iterateJump();
+		iterateRespawnTimer();
+		
 	}
 }

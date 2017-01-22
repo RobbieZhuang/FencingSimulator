@@ -12,8 +12,8 @@ public class Game implements Runnable {
 	}
 
 
-	void addPlayer (int playerID){
-		gameState.addPlayer(new Player (playerID));
+	void addPlayer (int playerID, int team){
+		gameState.addPlayer(new Player (playerID, team));
 		gameState.addKeys(new Keys (playerID));
 	}
 
@@ -53,7 +53,7 @@ public class Game implements Runnable {
 					gameState.updateMap(1);
 				}
 			}
-			
+			p.iterateCounters();
 			if (p.isAlive()){
 				if (k.getKey(1) && !p.getAttacking()){
 					// check collision
@@ -86,7 +86,7 @@ public class Game implements Runnable {
 					p.stand();
 				}
 
-				p.iterateAttack();
+				
 
 				if (k.getKey(4)){
 					gameState.getPlayers().get(i).attack();
@@ -136,7 +136,6 @@ public class Game implements Runnable {
 
 				//non keys
 				boolean collides = false;
-				p.iterateJump();
 				for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
 					if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
 						collides = true;
@@ -146,17 +145,23 @@ public class Game implements Runnable {
 						p.moveDown();
 					}
 				}
+				
+				//gravity
 				collides = false;
 				p.moveDown();
 				for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
 					if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
 						collides = true;
 						p.moveUp();
+						p.setOnGround(true);
 						System.out.println("detecing collision43545345235454h4g");
+					}
+					else{
+						p.setOnGround(false);
 					}
 				}
 			}
-			p.iterateRespawnTimer();
+			
 			// THIS IS WHERE I CAN'T RESPAWN THE DUDE
 			if (!p.isAlive()){
 				p.basicRevive();

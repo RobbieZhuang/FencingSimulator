@@ -3,9 +3,6 @@ package server;
 import java.util.ArrayList;
 
 import map.Map;
-import map.Room;
-import map.RoomCastle;
-import map.RoomOutdoors;
 
 public class GameState {
 	
