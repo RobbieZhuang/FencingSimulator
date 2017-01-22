@@ -11,11 +11,11 @@ public class Map {
 	
 	public Map(){
 		rooms = new ArrayList<Room>();
-		rooms.add(new RoomOutdoors());
 		rooms.add(new RoomCastle());
 		rooms.add(new RoomOutdoors());
 		rooms.add(new RoomCastle());
 		rooms.add(new RoomOutdoors());
+		rooms.add(new RoomCastle());
 		currentRoom = rooms.get(2);
 		currentRoomID = 2;
 		size = rooms.size();
@@ -33,6 +33,9 @@ public class Map {
 		}
 		return -1;
 	}
+	public int getNumberOfRooms(){
+		return rooms.size();
+	}
 	public Room getStartingRoom(){
 		return rooms.get(2);
 	}
@@ -44,6 +47,7 @@ public class Map {
 	}
 	public void setCurrentRoom(int i){
 		currentRoom = rooms.get(i);
+		currentRoomID = i;
 	}
 	public Room getCurrentRoom(){
 		return currentRoom;
@@ -52,17 +56,13 @@ public class Map {
 		return currentRoomID;
 	}
 	public void moveToLeftRoom(){
-		int roomPos = getRoom(currentRoom);
-		if (roomPos > 0){
-			this.currentRoom = this.getRooms().get(roomPos-1);
-			currentRoomID = roomPos-1;
+		if (currentRoomID > 0){
+			setCurrentRoom(--currentRoomID);
 		}
 	}
 	public void moveToRightRoom(){
-		int roomPos = getRoom(currentRoom);
-		if (roomPos < this.getMapSize()-1){
-			this.currentRoom = this.getRooms().get(roomPos+1);
-			currentRoomID = roomPos+1;
+		if (currentRoomID < size-1){
+			setCurrentRoom(++currentRoomID);
 		}
 	}
 	public int getRoom(Room r){
@@ -72,5 +72,11 @@ public class Map {
 			}
 		}
 		return -1;
+	}
+	public int getLeftTeamRespawn(){
+		return currentRoom.rightTarget();
+	}
+	public int getRightTeamRespawn(){
+		return currentRoom.leftTarget();
 	}
 }

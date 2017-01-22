@@ -33,4 +33,14 @@ public class RoomOutdoors extends Room {
 		super.getRespawn().add(new Point(1100, 200));
 		super.getRespawn().add(new Point (500, 200));
 	}
+
+	@Override
+	public int leftTarget() {
+		return 50;
+	}
+	
+	@Override
+	public int rightTarget() {
+		return 1950;
+	}
 }

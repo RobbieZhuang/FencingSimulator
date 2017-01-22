@@ -33,6 +33,38 @@ public class GameState {
 	}
 	
 	/**
+	 * updateMap
+	 * This method updates the current room by getting a direction and calling the map update methods
+	 * Players are respawned on either end of the maps
+	 * 
+	 * @param int, the direction 0 for go right, 1 to go left
+	 */
+	public void updateMap(int direction){
+		boolean updatedRoom = false;
+		// Going right (team 0)
+		if (direction == 0 && map.getCurrentRoomID() < map.getNumberOfRooms()-1){
+			map.moveToRightRoom();
+			updatedRoom = true;
+		}
+		// Going left (team 1)
+		else if (direction == 1 && map.getCurrentRoomID() > 0){
+			map.moveToLeftRoom();
+			updatedRoom = true;
+		}
+		if (updatedRoom){
+			for (Player p: players) {
+				if (p.getTeam() == 0){
+					p.setX(map.getRightTeamRespawn());
+					p.setY(100);
+				}
+				else if (p.getTeam() == 1){
+					p.setY(map.getLeftTeamRespawn());
+					p.setY(100);
+				}
+			}
+		}
+	}
+	/**
 	 * Player methods
 	 * @return
 	 */
@@ -46,6 +78,7 @@ public class GameState {
 	
 	public void addPlayer (Player player){
 		players.add(player);
+		player.setTeam(numPlayers%2);
 		numPlayers++;
 	}
 	

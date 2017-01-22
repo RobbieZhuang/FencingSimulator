@@ -26,12 +26,34 @@ public class Game implements Runnable {
 			gameState.getKeys().get(i).setKeys(Server.getInput(gameState.getKeys().get(i).getPlayerID()));
 		}
 	}
-
+	
+	/**
+	 * updateRoom
+	 * Updates the room that the players are in.
+	 * Once on player reaches the other side 
+	 */
+	void updateRoom(){
+		
+	}
 	void updateGameState(){
 		for (int i = 0; i < gameState.getNumPlayers(); i++){
 			Player p = gameState.getPlayers().get(i);
 			Keys k = gameState.getKeys().get(i);
 
+			
+			// Updating which room the players should be in by figuring out if they walked far enough
+			// Zero means team 0 which starts left and goes right
+			// One means team 1 which starts right and goes left
+			if (p.getTeam() == 0){
+				if (p.getX() >= gameState.getMap().getCurrentRoom().rightTarget()){
+					gameState.updateMap(0);
+				}
+			}else if (p.getTeam() == 1){
+				if (p.getX() <= gameState.getMap().getCurrentRoom().leftTarget()){
+					gameState.updateMap(1);
+				}
+			}
+			
 			if (p.isAlive()){
 				if (k.getKey(1) && !p.getAttacking()){
 					// check collision

@@ -9,7 +9,7 @@ public class RoomCastle extends Room {
 	public RoomCastle () {
 		super (2000, 700);
 		LinkedList <Land> terrain = super.getTerrain();
-		terrain.add(new Land (500, 500, 1500, 100, 0));
+		terrain.add(new Land (0, 0, 1500, 100, 0));
 		terrain.add(new Land (800, 450, 400, 50, 0));
         terrain.add(new Land(0, 500, 4000, 100, 0));
         terrain.add(new Land (800, 0, 600, 200, 0));
@@ -35,5 +35,15 @@ public class RoomCastle extends Room {
 		super.getRespawn().add(new Point(100, 500));
 		super.getRespawn().add(new Point(1900, 500));
 		super.getRespawn().add(new Point (1000, 400));
+	}
+
+	@Override
+	public int leftTarget() {
+		return 50;
+	}
+
+	@Override
+	public int rightTarget() {
+		return 1870;
 	}
 }

@@ -18,41 +18,7 @@ public class Player {
 	private int respawnTimer = 100;
 	private int totalNumberOfKills = 0;
 	private int totalNumberOfDeaths = 0;
-
-	/**
-	 * getTotalNumberOfKills
-	 * @return int
-	 */
-	public int getTotalNumberOfKills() {
-		return totalNumberOfKills;
-	}
-	
-	/**
-	 * setTotalNumberOfKills
-	 * @param int 
-	 */
-	public void setTotalNumberOfKills(int totalNumberOfKills) {
-		this.totalNumberOfKills = totalNumberOfKills;
-	}
-	
-	public void increaseTotalNumberOfKills(){
-		this.totalNumberOfKills++;
-	}
-	/**
-	 * getTotalNumberOfDeaths
-	 * @return int
-	 */
-	public int getTotalNumberOfDeaths() {
-		return totalNumberOfDeaths;
-	}
-	
-	/**
-	 * setTotalNumberOfDeaths
-	 * @param int 
-	 */
-	public void setTotalNumberOfDeaths(int totalNumberOfDeaths) {
-		this.totalNumberOfDeaths = totalNumberOfDeaths;
-	}
+	private int team;
 
 	public Player(int playerID) {
 		this.x = 150;
@@ -62,6 +28,12 @@ public class Player {
 		this.hitbox = new Hitbox(x+(int)(DankTings.SPRITE_SIZE*.3), y, (int)(DankTings.SPRITE_SIZE*8/13.0), DankTings.SPRITE_SIZE);
 	}
 
+	public void setTeam(int team){
+		this.team = team;
+	}
+	public int getTeam(){
+		return team;
+	}
 	void faceLeft() {
 		this.facingLeft = true;
 	}
@@ -254,5 +226,41 @@ public class Player {
 
 	public boolean getAttacking() {
 		return attacking;
+	}
+	
+
+	/**
+	 * getTotalNumberOfKills
+	 * @return int
+	 */
+	public int getTotalNumberOfKills() {
+		return totalNumberOfKills;
+	}
+	
+	/**
+	 * setTotalNumberOfKills
+	 * @param int 
+	 */
+	public void setTotalNumberOfKills(int totalNumberOfKills) {
+		this.totalNumberOfKills = totalNumberOfKills;
+	}
+	
+	public void increaseTotalNumberOfKills(){
+		this.totalNumberOfKills++;
+	}
+	/**
+	 * getTotalNumberOfDeaths
+	 * @return int
+	 */
+	public int getTotalNumberOfDeaths() {
+		return totalNumberOfDeaths;
+	}
+	
+	/**
+	 * setTotalNumberOfDeaths
+	 * @param int 
+	 */
+	public void setTotalNumberOfDeaths(int totalNumberOfDeaths) {
+		this.totalNumberOfDeaths = totalNumberOfDeaths;
 	}
 }

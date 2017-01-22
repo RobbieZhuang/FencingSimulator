@@ -46,6 +46,7 @@ public class Screen extends JFrame {
 //        p.setPreferredSize(new Dimension(800,600));
 //        add(p);
 
+        this.setFocusable(false);
         add(menuPanel, BorderLayout.CENTER);
         setVisible(true);
         repaint();

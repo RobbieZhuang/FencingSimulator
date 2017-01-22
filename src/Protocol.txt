@@ -41,3 +41,4 @@ G	(jump)
 #D	(stop right)
 #F	(stop attack)
 #G	(stop jump)
+
