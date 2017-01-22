@@ -1,13 +1,29 @@
 New Protocol
 
-0   standing face left
-1   standing face right
-2   stab left
-3   stab right
-4   walk left
-6   walk right
-8   jump left
-9   jump right
-10  dead 1
-11  dead 2
-12  dead 3
+0   medium face left
+1   medium face right
+2   medium stab left
+3   medium stab right
+4   high left
+5   high right
+6   high stab left
+7   high stab right
+8   low left
+9   low right
+10  low stab left
+11  low stab right
+12  parry left
+13  parry right
+14  kick left
+15  kick right
+16  walk left
+18  walk right
+20  jump left
+21  jump right
+22  stun left
+23  stun right
+24  fall left
+25  fall right
+26  dead 1
+27  dead 2
+28  dead 3

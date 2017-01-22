@@ -3,9 +3,6 @@ package client;
 import graphics.SpriteSheet;
 import graphics.SpriteSheetLoader;
 import map.Map;
-import map.Room;
-import map.RoomCastle;
-import map.RoomOutdoors;
 import specialEffects.Rain;
 
 import javax.swing.JPanel;
@@ -13,17 +10,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 public class DankTings extends JPanel implements KeyListener {
     public static final int WIDTH = Client.WIDTH;
     public static final int HEIGHT = Client.HEIGHT;
     public static final int SPRITE_SIZE = 50;
-	public static final int SPRITE_ROWS = 3;
-	public static final int SPRITE_COLUMNS = 16;
-	public static final int SPRITE_PIXELS = 16;
-	
-	// Sprites
+    public static final int SPRITE_ROWS = 2;
+    public static final int SPRITE_COLUMNS = 32;
+    public static final int SPRITE_PIXELS = 16;
+    public static Map map;
+    // Sprites
 	SpriteSheet spriteSheet = new SpriteSheet("/resources/SpriteSheet.png");
 	long start;
 	long end;
@@ -32,7 +28,6 @@ public class DankTings extends JPanel implements KeyListener {
     long startTime = System.currentTimeMillis();
     long elapsedTime = 0L;
     boolean walkingDouble;
-    public static Map map;
 	private PlayerImage [] players;
 	private ClientSender sender;
 	private byte keysPressed;
@@ -45,8 +40,8 @@ public class DankTings extends JPanel implements KeyListener {
 
 	public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
 		r.go();
-		this.map = new Map();
-		this.myPlayerID = myPlayerID;
+        map = new Map();
+        this.myPlayerID = myPlayerID;
 		this.players = players2;
 		this.sender = sender;
 		this.setLayout(null);
@@ -69,6 +64,7 @@ public class DankTings extends JPanel implements KeyListener {
 				cameraTY = cameraTopY((int)players[b].getpY());
 			}
 		}
+
 		// Making sure that only two players are drawn
 		if (players.length < 3) {
 			for (int a = 0; a < players.length; a++) {
@@ -81,26 +77,26 @@ public class DankTings extends JPanel implements KeyListener {
 				}
 
 				// Walking animation
-				if ((players[a].getStatus() > 3) && (players[a].getStatus() < 8)) {
-					elapsedTime = System.currentTimeMillis() - startTime;
+                if ((players[a].getStatus() > 15) && (players[a].getStatus() < 20)) {
+                    elapsedTime = System.currentTimeMillis() - startTime;
 					System.out.println("Elapsed time: " + elapsedTime);
 					if (elapsedTime >= 100) {
 						System.out.println(players[a].getStatus() + " " + walkingDouble);
 						walkingDouble = !walkingDouble;
 						if (walkingDouble) {
 							// The player switches walking animation
-							if (players[a].getStatus() == 4) {
-								players[a].setStatus(5);
-								walkingDouble = true;
-							} else if (players[a].getStatus() == 5) {
-								players[a].setStatus(4);
-								walkingDouble = false;
-							} else if (players[a].getStatus() == 6) {
-								players[a].setStatus(7);
-								walkingDouble = true;
-							} else if (players[a].getStatus() == 7) {
-								players[a].setStatus(6);
-								walkingDouble = false;
+                            if (players[a].getStatus() == 16) {
+                                players[a].setStatus(17);
+                                walkingDouble = true;
+                            } else if (players[a].getStatus() == 17) {
+                                players[a].setStatus(16);
+                                walkingDouble = false;
+                            } else if (players[a].getStatus() == 18) {
+                                players[a].setStatus(19);
+                                walkingDouble = true;
+                            } else if (players[a].getStatus() == 19) {
+                                players[a].setStatus(18);
+                                walkingDouble = false;
 							}
 						}
 
@@ -109,11 +105,11 @@ public class DankTings extends JPanel implements KeyListener {
 					}
 
 					if (walkingDouble) {
-						if (players[a].getStatus() == 4) {
-							players[a].setStatus(5);
-						} else if (players[a].getStatus() == 6) {
-							players[a].setStatus(7);
-						}
+                        if (players[a].getStatus() == 16) {
+                            players[a].setStatus(17);
+                        } else if (players[a].getStatus() == 18) {
+                            players[a].setStatus(19);
+                        }
 					}
 				}
 				
