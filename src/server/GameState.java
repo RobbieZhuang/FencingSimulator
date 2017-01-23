@@ -14,7 +14,8 @@ public class GameState {
 	private int numPlayers;
 	// Zero for true (wait), One for false
 	private int waitInLobby = 0;
-
+	// -1 for none, 0 for 0, 1 for 1
+	private int winner = 0;
 	public GameState (){
 		players = new ArrayList<Player>();
 		keys = new ArrayList<Keys>();
@@ -41,14 +42,24 @@ public class GameState {
 	public void updateRoom(int direction){
 		boolean updatedRoom = false;
 		// Going right (team 0)
-		if (direction == 0 && map.getCurrentRoomID() < map.getNumberOfRooms()-1){
-			map.moveToRightRoom();
-			updatedRoom = true;
+		if (direction == 0){
+			if (map.getCurrentRoomID() < map.getNumberOfRooms()-1){
+				map.moveToRightRoom();
+				updatedRoom = true;
+			}
+			else{
+				winner = 0;
+			}
 		}
 		// Going left (team 1)
-		else if (direction == 1 && map.getCurrentRoomID() > 0){
-			map.moveToLeftRoom();
-			updatedRoom = true;
+		else if (direction == 1){
+			if (map.getCurrentRoomID() > 0){
+				map.moveToLeftRoom();
+				updatedRoom = true;
+			}
+			else{
+				winner = 1;
+			}
 		}
 		if (updatedRoom){
 			for (Player p: players) {
@@ -146,7 +157,7 @@ public class GameState {
 	 * @return String
 	 */
 	public String getGameString(){
-		String gameString = players.size() + " " + map.getCurrentRoomID() + " " + waitInLobby + " ";
+		String gameString = players.size() + " " + map.getCurrentRoomID() + " " + waitInLobby + " " + winner + " ";
 		for (int i = 0; i < numPlayers; i ++){
 			gameString += players.get(i).getID() + " " + players.get(i).getX() + " " + players.get(i).getY() + " "
 					+ players.get(i).getStatus() + " ";

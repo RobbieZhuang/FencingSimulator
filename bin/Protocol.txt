@@ -1,7 +1,7 @@
 Protocol
 
 Server to Client
-#OfPlayers,map,x,y,status
+#OfPlayers,map,waitInLobby,win,x,y,status
 
 ID List
 0	Player

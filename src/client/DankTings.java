@@ -28,6 +28,8 @@ public class DankTings extends JPanel implements KeyListener {
     private boolean running;
     private int myPlayerID;
     private int currentMap = 1;
+    // -1 if game is still going on, 0 if 0 is winner, 1 if 1 is winner
+    public static int winner = -1;
 
 
     public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {

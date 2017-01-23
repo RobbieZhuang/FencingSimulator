@@ -172,8 +172,16 @@ public class Client implements Runnable {
             if (Integer.parseInt(args[2])%2 == 1){
             	DankTings.waitInLobby = false;
             }
+            
+            // Winning status
+            if (Integer.parseInt(args[3]) == 0){
+            	DankTings.winner = 0;
+            }else if (Integer.parseInt(args[3]) == 1){
+            	DankTings.winner = 1;
+            }
+            
             int c = 0;
-            for (int i = 3; i < args.length; i += 4) {
+            for (int i = 4; i < args.length; i += 4) {
                 players[c].setpX(Double.parseDouble(args[i + 1]));
                 players[c].setpY(Double.parseDouble(args[i + 2]));
                 players[c].setStatus(Integer.parseInt(args[i + 3]));
