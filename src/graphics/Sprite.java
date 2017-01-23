@@ -9,6 +9,8 @@ public class Sprite {
     private SpriteLoader menuBackgound;
     private SpriteLoader winBackground;
     private SpriteLoader loseBackground;
+    private SpriteLoader rules;
+    private SpriteLoader controls;
 
     /**
      * Default constructor
@@ -16,7 +18,9 @@ public class Sprite {
     public Sprite() {
         menuBackgound = new SpriteLoader("/resources/MenuBackground.png");
         winBackground = new SpriteLoader("/resources/WinBackground.png");
-        loseBackground = new SpriteLoader("/resources/loseBackground.png");
+        loseBackground = new SpriteLoader("/resources/LoseBackground.png");
+        rules = new SpriteLoader("/resources/Rules.png");
+        controls = new SpriteLoader("/resources/Controls.png");
     }
 
     /**
@@ -44,5 +48,23 @@ public class Sprite {
      */
     public SpriteLoader getLoseBackground() {
         return loseBackground;
+    }
+
+    /**
+     * getRules
+     *
+     * @return rules the BufferedImage
+     */
+    public SpriteLoader getRules() {
+        return rules;
+    }
+
+    /**
+     * getControles
+     *
+     * @return controls the Bufferedimage
+     */
+    public SpriteLoader getControls() {
+        return controls;
     }
 }
