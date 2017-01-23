@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.LinkedList;
 
+import specialEffects.Rain;
+
 public class RoomGround extends Room {
 	private int RUBBLE_LENGTH = 10;
 	private int RUBBLE_HEIGHT = 5;
@@ -14,8 +16,12 @@ public class RoomGround extends Room {
 	private LinkedList <Point> rubble;
 	private LinkedList <Point> dirt;
 	
+	private Rain r;
+	
 	public RoomGround () {
 		super (3500, 800);
+		r = new Rain(3500, 800, 50, 0);
+		r.go();
 		rubble = new LinkedList<>();
 		dirt = new LinkedList<>();
 		LinkedList <Land> terrain = super.getTerrain();
@@ -50,6 +56,7 @@ public class RoomGround extends Room {
 	@Override
 	public void drawRoom(int lX, int tY, Graphics g) {
 		g.setColor(Color.black);
+		r.drawRain(g, lX, tY);
 		g.fillRect(0, 0, super.getLength(), super.getHeight());
 		g.setColor(Color.gray);
 		for (int a = 0; a < rubble.size(); a++) {
