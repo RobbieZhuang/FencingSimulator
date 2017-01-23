@@ -31,6 +31,9 @@ public class DankTings extends JPanel implements KeyListener {
 
 
     public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
+        // Displaying lobby if needed
+
+        // Setting up the game
         map = new Map();
         this.myPlayerID = myPlayerID;
         this.players = players2;
@@ -46,78 +49,77 @@ public class DankTings extends JPanel implements KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int cameraLX = 0;
-        int cameraTY = 0;
-        for (int b = 0; b < players.length; b++) {
-            if (players[b].getPlayerID() == myPlayerID) {
-                cameraLX = cameraLeftX((int) players[b].getpX());
-                cameraTY = cameraTopY((int) players[b].getpY());
-            }
-        }
 
-        // Drawing the room
-        map.getCurrentRoom().drawRoom(cameraLX, cameraTY, g);
-
-        // Drawing players
-        for (int a = 0; a < players.length; a++) {
-
-            PlayerImage p = players[a];
-            if (p.getStatus() == 0) {
-                g.setColor(p.getPlayerColor());
-            } else {
-                g.setColor(Color.MAGENTA);
+        if (waitInLobby) {
+            // Lobby
+            g.drawImage(Screen.spriteBackground.getLobby().getImage(), 0, 0, Client.WIDTH, Client.HEIGHT, null);
+        } else {
+            // Game
+            int cameraLX = 0;
+            int cameraTY = 0;
+            for (int b = 0; b < players.length; b++) {
+                if (players[b].getPlayerID() == myPlayerID) {
+                    cameraLX = cameraLeftX((int) players[b].getpX());
+                    cameraTY = cameraTopY((int) players[b].getpY());
+                }
             }
 
-            // Walking animation
-            if ((players[a].getStatus() > 15) && (players[a].getStatus() < 20)) {
-                elapsedTime = System.currentTimeMillis() - startTime;
-                System.out.println("Elapsed time: " + elapsedTime);
-                if (elapsedTime >= 100) {
-                    System.out.println(players[a].getStatus() + " " + walkingDouble);
-                    walkingDouble = !walkingDouble;
+            // Drawing the room
+            map.getCurrentRoom().drawRoom(cameraLX, cameraTY, g);
+
+            // Drawing players
+            for (int a = 0; a < players.length; a++) {
+
+                PlayerImage p = players[a];
+                if (p.getStatus() == 0) {
+                    g.setColor(p.getPlayerColor());
+                } else {
+                    g.setColor(Color.MAGENTA);
+                }
+
+                // Walking animation
+                if ((players[a].getStatus() > 15) && (players[a].getStatus() < 20)) {
+                    elapsedTime = System.currentTimeMillis() - startTime;
+                    System.out.println("Elapsed time: " + elapsedTime);
+                    if (elapsedTime >= 100) {
+                        System.out.println(players[a].getStatus() + " " + walkingDouble);
+                        walkingDouble = !walkingDouble;
+                        if (walkingDouble) {
+                            // The player switches walking animation
+                            if (players[a].getStatus() == 16) {
+                                players[a].setStatus(17);
+                                walkingDouble = true;
+                            } else if (players[a].getStatus() == 17) {
+                                players[a].setStatus(16);
+                                walkingDouble = false;
+                            } else if (players[a].getStatus() == 18) {
+                                players[a].setStatus(19);
+                                walkingDouble = true;
+                            } else if (players[a].getStatus() == 19) {
+                                players[a].setStatus(18);
+                                walkingDouble = false;
+                            }
+                        }
+
+                        // Resetting the timer
+                        startTime = System.currentTimeMillis();
+                    }
+
                     if (walkingDouble) {
-                        // The player switches walking animation
                         if (players[a].getStatus() == 16) {
                             players[a].setStatus(17);
-                            walkingDouble = true;
-                        } else if (players[a].getStatus() == 17) {
-                            players[a].setStatus(16);
-                            walkingDouble = false;
                         } else if (players[a].getStatus() == 18) {
                             players[a].setStatus(19);
-                            walkingDouble = true;
-                        } else if (players[a].getStatus() == 19) {
-                            players[a].setStatus(18);
-                            walkingDouble = false;
                         }
                     }
-
-                    // Resetting the timer
-                    startTime = System.currentTimeMillis();
                 }
 
-                if (walkingDouble) {
-                    if (players[a].getStatus() == 16) {
-                        players[a].setStatus(17);
-                    } else if (players[a].getStatus() == 18) {
-                        players[a].setStatus(19);
-                    }
-                }
+
+                // Drawing the player
+                g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX() - cameraLX, (int) p.getpY() - cameraTY, Screen.SPRITE_SIZE, Screen.SPRITE_SIZE, null);
+
             }
-
-
-            // Drawing the player
-            g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX() - cameraLX, (int) p.getpY() - cameraTY, Screen.SPRITE_SIZE, Screen.SPRITE_SIZE, null);
-
         }
-
-        //		LinkedList <Land> terrain = r.getTerrain();
-        //		for (Land l: terrain) {
-        //			g.fillRect(l.getlX(), l.getlY(), l.getLength(), l.getHeight());
-        //		}
-
-        //
-        //		g.drawString(fps + "", 50, 50);
     }
 
     public void setMap(int currentMap) {

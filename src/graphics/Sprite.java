@@ -11,6 +11,7 @@ public class Sprite {
     private SpriteLoader loseBackground;
     private SpriteLoader rules;
     private SpriteLoader controls;
+    private SpriteLoader lobby;
 
     /**
      * Default constructor
@@ -21,6 +22,7 @@ public class Sprite {
         loseBackground = new SpriteLoader("/resources/LoseBackground.png");
         rules = new SpriteLoader("/resources/Rules.png");
         controls = new SpriteLoader("/resources/Controls.png");
+        lobby = new SpriteLoader("/resources/Lobby.png");
     }
 
     /**
@@ -66,5 +68,14 @@ public class Sprite {
      */
     public SpriteLoader getControls() {
         return controls;
+    }
+
+    /**
+     * getLobby
+     *
+     * @return lobby background in BufferedImage
+     */
+    public SpriteLoader getLobby() {
+        return lobby;
     }
 }

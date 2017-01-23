@@ -115,11 +115,7 @@ public class Screen extends JFrame {
             btnPlayOnline.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     System.out.println("Play Online pressed");
-//                    try {
-                        Screen.switchComponent(new DankTings(Client.clientReceiver.getPlayerID(), Client.clientSender, Client.players));
-//                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(null, "Not connected to server", "Connection Error", 0);
-//                    }
+                    Screen.switchComponent(new DankTings(Client.clientReceiver.getPlayerID(), Client.clientSender, Client.players));
                 }
             });
             btnPlayOnline.setBounds(Client.WIDTH / 2 - buttonWidth * 3 / 2 - buttonSpacing, y, buttonWidth, buttonHeight);
