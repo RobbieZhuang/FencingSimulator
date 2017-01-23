@@ -115,6 +115,7 @@ public class Screen extends JFrame {
             btnPlayOnline.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     System.out.println("Play Online pressed");
+                    Client.clientSender.setMessage((byte) (1 << 7));
                     Screen.switchComponent(new DankTings(Client.clientReceiver.getPlayerID(), Client.clientSender, Client.players));
                 }
             });

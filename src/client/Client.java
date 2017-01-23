@@ -29,7 +29,7 @@ public class Client implements Runnable {
     public static PlayerImage[] players = new PlayerImage[2];
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "192.168.1.103";
+    private String IP = "";
     // Declaring variables
     private boolean running;
     private Socket socket;
@@ -61,10 +61,6 @@ public class Client implements Runnable {
 
         players[0] = new PlayerImage(0, 50, 50, 1);
         players[1] = new PlayerImage(1, 0, 0, 0);
-
-        // Initiate client sender
-
-
     }
 
     public static void main(String[] args) throws Exception {
@@ -178,12 +174,12 @@ public class Client implements Runnable {
             }else if (Integer.parseInt(args[3]) == 1){
             	DankTings.winner = 1;
             }
-            
+
             // Can move to next room
-            if (Integer.parseInt(args[4]) == 0){
-            	DankTings.canMoveToNextRoom = 0;
-            }else if (Integer.parseInt(args[4]) == 1){
-            	DankTings.canMoveToNextRoom = 1;
+            if (Integer.parseInt(args[4]) == 0) {
+                DankTings.canMoveToNextRoom = 0;
+            } else if (Integer.parseInt(args[4]) == 1) {
+                DankTings.canMoveToNextRoom = 1;
             }
             
             int c = 0;

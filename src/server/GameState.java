@@ -5,17 +5,16 @@ import map.Map;
 import java.util.ArrayList;
 
 public class GameState {
-	
-	private ArrayList <Player> players;
-	private ArrayList <Keys> keys;
-	
+
+    static ArrayList<Player> players;
+    // -2 for not in game, -1 for in game, 0 for 0, 1 for 1
+    int winner = -1;
+    private ArrayList <Keys> keys;
 	// Declare map variable
 	private Map map;
 	private int numPlayers;
 	// Zero for true (wait), One for false
 	private int waitInLobby = 0;
-	// -1 for none, 0 for 0, 1 for 1
-    private int winner = -1;
     // -1 for none, 0 for 0, 1 for 1
     private int canMoveToNextRoom = -1;
 
@@ -39,14 +38,14 @@ public class GameState {
 	 * updateRoom
 	 * This method updates the current room by getting a direction and calling the map update methods
 	 * Players are spawned on either end of the maps
-	 * 
-	 * @param int, the direction 0 for go right, 1 to go left
-	 */
+	 *
+     * @param direction, the direction 0 for go right, 1 to go left
+     */
 	public void updateRoom(int direction){
 		boolean updatedRoom = false;
 		// Going right (team 0)
-		if (direction == 0 && canMoveToNextRoom == 0){
-			if (map.getCurrentRoomID() < map.getNumberOfRooms()-1){
+        if (direction == 0 && canMoveToNextRoom == 0) {
+            if (map.getCurrentRoomID() < map.getNumberOfRooms()-1){
 				map.moveToRightRoom();
 				updatedRoom = true;
 			}
@@ -55,8 +54,8 @@ public class GameState {
 			}
 		}
 		// Going left (team 1)
-		else if (direction == 1 && canMoveToNextRoom == 1){
-			if (map.getCurrentRoomID() > 0){
+        else if (direction == 1 && canMoveToNextRoom == 1) {
+            if (map.getCurrentRoomID() > 0){
 				map.moveToLeftRoom();
 				updatedRoom = true;
 			}
@@ -86,8 +85,8 @@ public class GameState {
 	}
 
 	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
+        GameState.players = players;
+    }
 	
 	public void addPlayer (Player player){
 		players.add(player);
@@ -160,15 +159,26 @@ public class GameState {
 	 * @return String
 	 */
 	public String getGameString(){
-		String gameString = players.size() + " " + map.getCurrentRoomID() + " " + waitInLobby + " " + winner + " " + canMoveToNextRoom + " ";
-		for (int i = 0; i < numPlayers; i ++){
+        String gameString = players.size() + " " + map.getCurrentRoomID() + " " + waitInLobby + " " + winner + " " + canMoveToNextRoom + " ";
+        for (int i = 0; i < numPlayers; i ++){
 			gameString += players.get(i).getID() + " " + players.get(i).getX() + " " + players.get(i).getY() + " "
 					+ players.get(i).getStatus() + " ";
 		}
+
+        // Remove players after a game
+        if ((winner != -1) && (!players.isEmpty())) {
+            System.out.println("Remove players");
+            winner = -2;
+            removePlayer(0);
+            removePlayer(1);
+            removeKeys(0);
+            removeKeys(1);
+        }
+
 		return gameString;
 	}
-	
-	public void setCanMoveToNextRoom(int i){
-		this.canMoveToNextRoom = i;
-	}
+
+    public void setCanMoveToNextRoom(int i) {
+        this.canMoveToNextRoom = i;
+    }
 }

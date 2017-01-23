@@ -18,7 +18,7 @@ public class DankTings extends JPanel implements KeyListener {
     public static boolean waitInLobby = true;
     // -1 if game is still going on, 0 if 0 is winner, 1 if 1 is winner
     public static int winner = -1;
-	public static int canMoveToNextRoom = -1;
+    public static int canMoveToNextRoom = -1;
     long start;
     long end;
     long counter = 0;
@@ -123,8 +123,12 @@ public class DankTings extends JPanel implements KeyListener {
                 g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX() - cameraLX, (int) p.getpY() - cameraTY, Screen.SPRITE_SIZE, Screen.SPRITE_SIZE, null);
 
             }
-        } else if ((winner == 0) || (winner == 1)) {
-            Screen.switchComponent(new GameOver(myPlayerID, winner));
+        } else {
+            // Game Over
+            if ((winner == 0) || (winner == 1)) {
+                Screen.switchComponent(new GameOver(myPlayerID, winner));
+                winner = -2;
+            }
         }
     }
 

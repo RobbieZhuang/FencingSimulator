@@ -6,6 +6,7 @@
 package client.gui;
 
 import client.Client;
+import client.DankTings;
 import graphics.SpriteSheetLoader;
 
 import javax.swing.JButton;
@@ -120,6 +121,7 @@ public class GameOver extends JPanel {
         btnMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("Menu pressed");
+                DankTings.winner = -1;
                 Screen.PaintPanel paintPanel = new Screen.PaintPanel();
                 Screen.switchComponent(paintPanel);
             }

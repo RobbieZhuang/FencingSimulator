@@ -11,9 +11,9 @@ package server;
 
 
 public class GameOutputManager implements Runnable {
-	GameState gameState;
 	static int counter = 0;
-	long end;
+    GameState gameState;
+    long end;
 	long start;
 	long currentTime;
 	
@@ -38,10 +38,11 @@ public class GameOutputManager implements Runnable {
 //				for (int i = 0; i < gameState.getNumPlayers(); i ++){
 //					Server.sendMessage(gameState.getPlayers().get(i).getPlayerString());
 //				}
-				
-				System.out.println("Message that will be sent: " + gameState.getGameString());
-				Server.sendMessage(gameState.getGameString());
-				try {
+
+            String message = gameState.getGameString();
+            System.out.println("Message that will be sent: " + message);
+            Server.sendMessage(message);
+            try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block

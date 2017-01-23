@@ -10,7 +10,6 @@
 package client;
 
 import java.io.PrintWriter;
-import java.util.Scanner;
 
 public class ClientSender implements Runnable {
     private PrintWriter output;
@@ -64,6 +63,11 @@ public class ClientSender implements Runnable {
 				e.printStackTrace();
 			}
 			send(message);
-		}
+
+            // Making sure that it only makes on player at a time
+            if ((message & (1 << 7)) != 0) {
+                message = 0;
+            }
+        }
 	}
  }
