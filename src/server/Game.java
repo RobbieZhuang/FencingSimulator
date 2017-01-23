@@ -57,11 +57,11 @@ public class Game implements Runnable {
 			p.iterateCounters();
 
 			if (p.isAlive()){
-				if (k.getKey(0) && p.getOnGround() && !p.getParrying() && !p.getStun() && p.canChangeAttackLevel()){
+				if (k.getKey(0) && p.getOnGround() && !p.getAttacking() && !p.getParrying() && !p.getStun() && p.canChangeAttackLevel()){
 					p.moveSwordUp();
 				}
 
-				if (k.getKey(2) && p.getOnGround() && !p.getParrying() && !p.getStun() && p.canChangeAttackLevel()){
+				if (k.getKey(2) && p.getOnGround()&& !p.getAttacking()  && !p.getParrying() && !p.getStun() && p.canChangeAttackLevel()){
 					p.moveSwordDown();
 				}
 
@@ -92,13 +92,16 @@ public class Game implements Runnable {
 					}
 				}
 
-				if (!k.getKey(1) && !k.getKey(3)&& !p.getStun()  && !p.getParrying()){
+				if (!k.getKey(1) && !k.getKey(3) && !p.getAttacking() && !p.getStun()  && !p.getParrying()){
 					p.stand();
 				}
 
-
-
 				if (k.getKey(4)&& !p.getStun() && !p.getAttacking()  && !p.getParrying()){
+					if (p.getOnGround()){
+						p.attack();
+					} else {
+						p.jumpAttack();
+					}
 					if (p.isFacingLeft()){
 						p.moveLeft();
 						p.moveLeft();
@@ -112,10 +115,8 @@ public class Game implements Runnable {
 										} else {
 											if (p.getOnGround()){
 												gameState.getPlayers().get(j).dead();
-												p.attack();
 											} else {
 												gameState.getPlayers().get(j).stun();
-												p.jumpAttack();
 											}
 
 											p.increaseTotalNumberOfKills();
