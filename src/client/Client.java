@@ -1,9 +1,9 @@
 
-/* BRBClient.java
+/* Client.java
  *
  * Version 1.0
- * Bill Li, Robbie Zhuang, Kaitlyn Paglia
- * 12-23-2016
+ * Andi Li, Bill Li, Max Gao, Robbie Zhuang 
+ * 01-23-2017
  *
  * The main class to run the client is located here.
  * This class manages connecting with server as well

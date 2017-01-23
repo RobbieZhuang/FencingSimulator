@@ -1,8 +1,8 @@
 /* ClientSender.java
  *
  * Version 1.0
- * Bill Li, Robbie Zhuang, Kaitlyn Paglia
- * 12-23-2016
+ * Andi Li, Bill Li, Max Gao, Robbie Zhuang 
+ * 01-23-2017
  *
  * This is code for a thread to send messages on the client side
  */

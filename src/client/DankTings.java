@@ -1,3 +1,11 @@
+/* DankTings.java
+ *
+ * Version 1.0
+ * Andi Li, Bill Li, Max Gao, Robbie Zhuang 
+ * 01-23-2017
+ *
+ * This is code for a thread to receive messages on the client side
+ */
 package client;
 
 import client.gui.GameOver;
@@ -33,6 +41,13 @@ public class DankTings extends JPanel implements KeyListener {
     private int myPlayerID;
 
 
+    /**
+     * Constructor
+     * 
+     * @param myPlayerID
+     * @param sender
+     * @param players2
+     */
     public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
         // Displaying lobby if needed
 
@@ -51,7 +66,13 @@ public class DankTings extends JPanel implements KeyListener {
         canMoveToNextRoom = -1;
     }
 
+
     @Override
+    /**
+     * paintComponent
+     * draw things to the screen
+     * @param Graphics
+     */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -182,6 +203,9 @@ public class DankTings extends JPanel implements KeyListener {
     //	}
 
     @Override
+    /**
+     * keyPressed
+     */
     public void keyPressed(KeyEvent e) {
         // WASDFG
         int keyCode = e.getKeyCode();
@@ -212,6 +236,9 @@ public class DankTings extends JPanel implements KeyListener {
     }
 
     @Override
+    /**
+     * keyReleased
+     */
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
@@ -240,6 +267,9 @@ public class DankTings extends JPanel implements KeyListener {
     }
 
     @Override
+    /**
+     * keyTyped
+     */
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
     }
