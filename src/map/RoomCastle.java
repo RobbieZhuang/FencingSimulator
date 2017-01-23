@@ -73,4 +73,16 @@ public class RoomCastle extends Room {
 	public int deathY() {
 		return 500;
 	}
+
+	@Override
+	public Point leftSpawnPoint() {
+		// TODO Auto-generated method stub
+		return new Point(900,50);
+	}
+
+	@Override
+	public Point rightSpawnPoint() {
+		// TODO Auto-generated method stub
+		return new Point(1100,50);
+	}
 }

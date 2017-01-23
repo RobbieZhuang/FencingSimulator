@@ -26,7 +26,7 @@ public class Server {
 	private void initialize(){
 
 		try {
-			socketServer = new ServerSocket (6000);
+			socketServer = new ServerSocket (6001);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

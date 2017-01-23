@@ -1,3 +1,4 @@
+
 package server;
 
 public class Game implements Runnable {
@@ -11,10 +12,16 @@ public class Game implements Runnable {
 		t = new Thread (new GameOutputManager(gameState));
 	}
 
+
 	void addPlayer (int playerID, int team){
-		gameState.addPlayer(new Player (playerID, team));
+		if (team == 0){
+			gameState.addPlayer(new Player (playerID, team, gameState.getMap().getCurrentRoom().leftSpawnPoint()));
+		}else if (team == 1){
+			gameState.addPlayer(new Player (playerID, team,gameState.getMap().getCurrentRoom().rightSpawnPoint()));
+		}
 		gameState.addKeys(new Keys (playerID));
 	}
+
 
 	void removePlayer (int playerID){
 		gameState.removePlayer (playerID);
@@ -54,7 +61,7 @@ public class Game implements Runnable {
 					p.revive(gameState.getMap().getCurrentRoom().rightTarget());
 				}
 			}
-			
+
 			p.iterateCounters();
 
 			if (p.isAlive()){
@@ -252,8 +259,4 @@ public class Game implements Runnable {
 		}
 
 	}
-
-
-
-
 }
