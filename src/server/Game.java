@@ -218,6 +218,12 @@ public class Game implements Runnable {
 			// THIS IS WHERE I CAN'T RESPAWN THE DUDE
 			if (!p.isAlive()){
 				if (p.getTeam() == 0){
+					gameState.setCanMoveToNextRoom(1);
+				}
+				if (p.getTeam() == 1){
+					gameState.setCanMoveToNextRoom(0);
+				}
+				if (p.getTeam() == 0){
 					p.basicRevive(gameState.getMap().getRightTeamRespawn());
 				}
 				else if (p.getTeam() == 1){

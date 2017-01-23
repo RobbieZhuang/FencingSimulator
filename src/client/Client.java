@@ -172,7 +172,6 @@ public class Client implements Runnable {
             if (Integer.parseInt(args[2])%2 == 1){
             	DankTings.waitInLobby = false;
             }
-            
             // Winning status
             if (Integer.parseInt(args[3]) == 0){
             	DankTings.winner = 0;
@@ -180,8 +179,15 @@ public class Client implements Runnable {
             	DankTings.winner = 1;
             }
             
+            // Can move to next room
+            if (Integer.parseInt(args[4]) == 0){
+            	DankTings.canMoveToNextRoom = 0;
+            }else if (Integer.parseInt(args[4]) == 1){
+            	DankTings.canMoveToNextRoom = 1;
+            }
+            
             int c = 0;
-            for (int i = 4; i < args.length; i += 4) {
+            for (int i = 5; i < args.length; i += 4) {
                 players[c].setpX(Double.parseDouble(args[i + 1]));
                 players[c].setpY(Double.parseDouble(args[i + 2]));
                 players[c].setStatus(Integer.parseInt(args[i + 3]));

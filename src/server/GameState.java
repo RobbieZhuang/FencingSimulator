@@ -16,6 +16,8 @@ public class GameState {
 	private int waitInLobby = 0;
 	// -1 for none, 0 for 0, 1 for 1
     private int winner = -1;
+    // -1 for none, 0 for 0, 1 for 1
+    private int canMoveToNextRoom = -1;
 
     public GameState (){
 		players = new ArrayList<Player>();
@@ -43,7 +45,7 @@ public class GameState {
 	public void updateRoom(int direction){
 		boolean updatedRoom = false;
 		// Going right (team 0)
-		if (direction == 0){
+		if (direction == 0 && canMoveToNextRoom == 0){
 			if (map.getCurrentRoomID() < map.getNumberOfRooms()-1){
 				map.moveToRightRoom();
 				updatedRoom = true;
@@ -53,7 +55,7 @@ public class GameState {
 			}
 		}
 		// Going left (team 1)
-		else if (direction == 1){
+		else if (direction == 1 && canMoveToNextRoom == 1){
 			if (map.getCurrentRoomID() > 0){
 				map.moveToLeftRoom();
 				updatedRoom = true;
@@ -158,11 +160,15 @@ public class GameState {
 	 * @return String
 	 */
 	public String getGameString(){
-		String gameString = players.size() + " " + map.getCurrentRoomID() + " " + waitInLobby + " " + winner + " ";
+		String gameString = players.size() + " " + map.getCurrentRoomID() + " " + waitInLobby + " " + winner + " " + canMoveToNextRoom + " ";
 		for (int i = 0; i < numPlayers; i ++){
 			gameString += players.get(i).getID() + " " + players.get(i).getX() + " " + players.get(i).getY() + " "
 					+ players.get(i).getStatus() + " ";
 		}
 		return gameString;
+	}
+	
+	public void setCanMoveToNextRoom(int i){
+		this.canMoveToNextRoom = i;
 	}
 }
