@@ -217,9 +217,14 @@ public class Game implements Runnable {
 
 			// THIS IS WHERE I CAN'T RESPAWN THE DUDE
 			if (!p.isAlive()){
-				p.basicRevive();
-				System.out.println(gameState.getMap().getCurrentRoom().getNearestRespawn((int)p.getX()).x);
-				System.out.println(gameState.getMap().getCurrentRoom().getNearestRespawn((int)p.getX()).y);
+				if (p.getTeam() == 0){
+					p.basicRevive(gameState.getMap().getRightTeamRespawn());
+				}
+				else if (p.getTeam() == 1){
+					p.basicRevive(gameState.getMap().getLeftTeamRespawn());
+				}
+				//System.out.println(gameState.getMap().getCurrentRoom().getNearestRespawn((int)p.getX()).x);
+				//System.out.println(gameState.getMap().getCurrentRoom().getNearestRespawn((int)p.getX()).y);
 				//				p.revive(gameState.getRoom().getNearestRespawn((int)p.getX()).x,gameState.getRoom().getNearestRespawn((int)p.getX()).y);
 			}
 		}

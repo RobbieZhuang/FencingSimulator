@@ -123,10 +123,10 @@ public class Player {
 		this.status = 0;
 	}
 
-	public void basicRevive() {
+	public void basicRevive(Point p) {
 		if (respawnTimer == 0) {
 			this.alive = true;
-			this.status = 0;
+			revive(p);
 		}
 	}
 
