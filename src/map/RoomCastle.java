@@ -1,7 +1,9 @@
 package map;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.LinkedList;
 
@@ -23,10 +25,11 @@ public class RoomCastle extends Room {
 	@Override
 	public void drawRoom(int lX, int tY, Graphics g) {
 		LinkedList <Land> terrain = super.getTerrain();
-		g.setColor(Color.gray);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setPaint(new GradientPaint(0, this.getHeight(), new Color (20,20,20), 0, 0, new Color (160,160,160)));
 		for (int a = 0; a < terrain.size(); a++) {
 			Land l = terrain.get(a);
-			g.fillRect(l.getlX()-lX, l.getlY()-tY, l.getLength(), l.getHeight());
+			g2.fillRect(l.getlX()-lX, l.getlY()-tY, l.getLength(), l.getHeight());
 		}
 	}
 
