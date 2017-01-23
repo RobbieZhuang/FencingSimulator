@@ -148,8 +148,8 @@ public class DankTings extends JPanel implements KeyListener {
         } else if (tY > map.getCurrentRoom().getHeight() - HEIGHT) {
             tY = map.getCurrentRoom().getHeight() - HEIGHT;
         }
-//		return tY;
-        return 0;
+		return tY;
+        //return 0;
     }
 
     //	public synchronized void updatePlayer (String playerInfo) {
