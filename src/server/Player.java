@@ -27,7 +27,7 @@ public class Player {
 	private boolean parrying;
 
 	public static final int ATTACK_DURATION = 25;
-	public static final int ATTACK_COOLDOWN = 30;
+	public static final int ATTACK_COOLDOWN = 100;
 	public static final int RESPAWN_TIME = 100;
 	public static final int ATTACK_LEVEL_CHANGE_DELAY = 10;
 	
@@ -104,7 +104,9 @@ public class Player {
 	}
 
 	public void dead() {
-		this.alive = false;
+		attackCounter = ATTACK_COOLDOWN;
+		attacking = false;
+		alive = false;
 		int rand = (int) (Math.random() * 3) + 26;
 		status = rand;
 		respawnTimer = 100;
@@ -225,7 +227,9 @@ public class Player {
 					setStatus(7);
 				}
 			}
-			attackCounter--;
+			if (attackCounter == ATTACK_COOLDOWN){
+				attackCounter--;
+			}
 			attacking = true;
 		}
 	}
