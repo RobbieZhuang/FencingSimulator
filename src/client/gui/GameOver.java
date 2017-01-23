@@ -8,11 +8,14 @@ package client.gui;
 import client.Client;
 import graphics.SpriteSheetLoader;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 public class GameOver extends JPanel {
@@ -42,6 +45,9 @@ public class GameOver extends JPanel {
         startTime = System.currentTimeMillis();
         this.playerNum = playerNum;
         this.winnerNum = winnerNum;
+
+        // Adding buttons
+        addGameOverButtons();
 
         // Set up which backgrounds to draw
         if (playerNum == winnerNum) {
@@ -95,5 +101,30 @@ public class GameOver extends JPanel {
             // Winner sprite 2
             g.drawImage(winner[1], Client.WIDTH / 2 - SPRITE_WIN_SIZE / 2, Client.HEIGHT / 2, SPRITE_WIN_SIZE, SPRITE_WIN_SIZE, null);
         }
+    }
+
+    /**
+     * addGameOverButtons
+     * <p>
+     * Adds the buttons to GameOver
+     */
+    void addGameOverButtons() {
+        // Adding buttons
+        int buttonWidth = Client.WIDTH / 8;
+        int buttonHeight = Client.HEIGHT / 25;
+        int x = 30;
+        int y = Client.HEIGHT - buttonHeight - (int) (2.5 * x);
+        int buttonSpacing = 5;
+
+        JButton btnMenu = new JButton("Menu");
+        btnMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("Menu pressed");
+                Screen.PaintPanel paintPanel = new Screen.PaintPanel();
+                Screen.switchComponent(paintPanel);
+            }
+        });
+        btnMenu.setBounds(x, y, buttonWidth, buttonHeight);
+        add(btnMenu);
     }
 }

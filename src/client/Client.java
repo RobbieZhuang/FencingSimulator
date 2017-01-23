@@ -13,14 +13,12 @@ package client;
 
 import client.gui.Screen;
 
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-//import physics.Physics;
 
 public class Client implements Runnable {
     public static final String NAME = "Game";
@@ -36,9 +34,7 @@ public class Client implements Runnable {
     // Declaring variables
     private boolean running;
     private Socket socket;
-    private JFrame frame;
-    private DankTings jpanel;
-
+    private boolean offlineReminded = false;
 
     public Client() {
 
@@ -73,11 +69,11 @@ public class Client implements Runnable {
 
     }
 
-	public static void main(String[] args) throws Exception {
-		System.out.println("Attempting connection");
-		Client client = new Client();
-		client.start();
-	}
+    public static void main(String[] args) throws Exception {
+        System.out.println("Attempting connection");
+        Client client = new Client();
+        client.start();
+    }
 
     /**
      * playOnline
@@ -189,6 +185,10 @@ public class Client implements Runnable {
             }
         } catch (Exception e) {
             System.out.println("Something went wrong when trying to receive messages.\nThis is probably because you did not click play yet.");
+            if (!offlineReminded) {
+                JOptionPane.showMessageDialog(null, "Not connected to server", "Connection Error", 0);
+                offlineReminded = true;
+            }
             e.printStackTrace();
         }
     }
