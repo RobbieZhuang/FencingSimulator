@@ -61,12 +61,11 @@ public class RoomCastle extends Room {
 	}
 
 	@Override
-	public int leftTarget() {
-		return 50;
+	public Point leftTarget() {
+		return new Point(50, 50);
 	}
-
 	@Override
-	public int rightTarget() {
-		return 1870;
+	public Point rightTarget() {
+		return new Point(1950, 50);
 	}
 }

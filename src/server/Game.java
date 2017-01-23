@@ -45,11 +45,11 @@ public class Game implements Runnable {
 			// Zero means team 0 which starts left and goes right
 			// One means team 1 which starts right and goes left
 			if (p.getTeam() == 0){
-				if (p.getX() >= gameState.getMap().getCurrentRoom().rightTarget()){
+				if (p.getX() >= gameState.getMap().getCurrentRoom().rightTarget().x){
 					gameState.updateMap(0);
 				}
 			}else if (p.getTeam() == 1){
-				if (p.getX() <= gameState.getMap().getCurrentRoom().leftTarget()){
+				if (p.getX() <= gameState.getMap().getCurrentRoom().leftTarget().x){
 					gameState.updateMap(1);
 				}
 			}

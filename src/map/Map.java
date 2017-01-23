@@ -1,5 +1,6 @@
 package map;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class Map {
@@ -57,12 +58,15 @@ public class Map {
 	}
 	public void moveToLeftRoom(){
 		if (currentRoomID > 0){
-			setCurrentRoom(--currentRoomID);
+			currentRoomID--;
+			System.out.println("------------------------------------------THE CURRENT ROOM ID IS: " + currentRoomID);
+			setCurrentRoom(currentRoomID);
 		}
 	}
 	public void moveToRightRoom(){
 		if (currentRoomID < size-1){
-			setCurrentRoom(++currentRoomID);
+			currentRoomID++;
+			setCurrentRoom(currentRoomID);
 		}
 	}
 	public int getRoom(Room r){
@@ -73,10 +77,10 @@ public class Map {
 		}
 		return -1;
 	}
-	public int getLeftTeamRespawn(){
+	public Point getLeftTeamRespawn(){
 		return currentRoom.rightTarget();
 	}
-	public int getRightTeamRespawn(){
+	public Point getRightTeamRespawn(){
 		return currentRoom.leftTarget();
 	}
 }

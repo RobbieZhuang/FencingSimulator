@@ -51,12 +51,12 @@ public class GameState {
 		if (updatedRoom){
 			for (Player p: players) {
 				if (p.getTeam() == 0){
-					p.setX(map.getRightTeamRespawn());
-					p.setY(100);
+					p.setX(map.getRightTeamRespawn().x);
+					p.setY(map.getRightTeamRespawn().y);
 				}
 				else if (p.getTeam() == 1){
-					p.setY(map.getLeftTeamRespawn());
-					p.setY(100);
+					p.setX(map.getLeftTeamRespawn().x);
+					p.setY(map.getLeftTeamRespawn().y);
 				}
 			}
 		}
