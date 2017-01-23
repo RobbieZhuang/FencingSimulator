@@ -5,7 +5,7 @@ public class Keys {
 	private int playerID;
 	
 	public Keys (int playerID){
-		keys = new boolean [6];
+		keys = new boolean [7];
 		this.playerID = playerID;
 	}
 

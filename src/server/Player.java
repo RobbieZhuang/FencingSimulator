@@ -9,7 +9,7 @@ public class Player {
 	private double y;
 	private int ID;
 	private int status;
-	private Hitbox hitbox;
+	private Hitbox playerHitbox;
 	private boolean facingLeft = true;
 	private boolean attacking = false;
 	private boolean alive = true;
@@ -17,18 +17,28 @@ public class Player {
 	private int attackCounter = 30;
 	private int respawnTimer = 100;
 	private int attackLevel = 0;
+	private int attackLevelCounter = 0;
 	private int totalNumberOfKills = 0;
 	private int totalNumberOfDeaths = 0;
 	private int team;
 	private boolean onGround;
+	private int stunCounter;
+	private boolean stunned;
+	private boolean parrying;
 
+	public static final int ATTACK_DURATION = 25;
+	public static final int ATTACK_COOLDOWN = 30;
+	public static final int RESPAWN_TIME = 100;
+	public static final int ATTACK_LEVEL_CHANGE_DELAY = 10;
+	
+	
 	public Player(int playerID, int team) {
 		this.x = 150;
 		this.y = 150;
 		this.ID = playerID;
 		this.status = 0;
 		this.attackLevel = 0;
-		this.hitbox = new Hitbox(x+(int)(DankTings.SPRITE_SIZE*.3), y, (int)(DankTings.SPRITE_SIZE*8/13.0), DankTings.SPRITE_SIZE);
+		this.playerHitbox = new Hitbox(x+(int)(DankTings.SPRITE_SIZE*.3), y, (int)(DankTings.SPRITE_SIZE*8/13.0), DankTings.SPRITE_SIZE);
 	}
 
 	public void setTeam(int team){
@@ -73,8 +83,8 @@ public class Player {
 		updateHitbox();
 	}
 
-	private void iterateJump() {
-		this.y += -jumpCounter * jumpCounter*0.03125;
+	public void iterateJump() {
+		this.y += -jumpCounter * jumpCounter*0.033;
 		if (jumpCounter > 0) {
 			this.jumpCounter--;
 		}
@@ -82,11 +92,11 @@ public class Player {
 	}
 
 	private void updateHitbox() {
-		this.hitbox.setXY(this.x, this.y);
+		this.playerHitbox.setXY(this.x, this.y);
 	}
 
 	public Hitbox getHitbox() {
-		return hitbox;
+		return playerHitbox;
 	}
 
 	public boolean isAlive() {
@@ -197,7 +207,7 @@ public class Player {
 	}
 
 	public void attack() {
-		if (attackCounter >= 15 && attackCounter <= 30) {
+		if (attackCounter >= ATTACK_COOLDOWN - ATTACK_DURATION && attackCounter <= ATTACK_COOLDOWN) {
 			if (facingLeft) {
 				if (attackLevel == 0){
 					setStatus(10);
@@ -221,22 +231,17 @@ public class Player {
 	}
 
 	private void iterateAttack() {
-		if (attacking) {
+		if (attacking){
 			attack();
 		}
-		if (attackCounter > 0 && attackCounter < 30) {
+		if (attackCounter > 0 && attackCounter < ATTACK_COOLDOWN) {
 			attackCounter--;
 		} else {
-			attackCounter = 30;
+			attackCounter = ATTACK_COOLDOWN;
 			attacking = false;
 		}
 
 	}
-
-	public boolean getAttacking() {
-		return attacking;
-	}
-
 
 	/**
 	 * getTotalNumberOfKills
@@ -283,8 +288,84 @@ public class Player {
 
 	public void iterateCounters(){
 		iterateAttack();
-		iterateJump();
 		iterateRespawnTimer();
+		iterateStun();
+		iterateAttackLevelChange();
+	}
 
+	private void iterateAttackLevelChange() {
+		if (attackLevelCounter > 0){
+			attackLevelCounter --;
+		}else {
+			attackLevelCounter = ATTACK_LEVEL_CHANGE_DELAY;
+		}
+	}
+	
+	public boolean canChangeAttackLevel(){
+		return (attackLevelCounter == 0);
+	}
+
+	private void iterateStun() {
+		if (stunCounter > 0){
+			stunCounter --;
+			stunned = true;
+		} else {
+			stunned = false;
+		}
+		
+	}
+
+	public boolean getAttacking() {
+		return attacking;
+	}
+
+	public void jumpAttack() {
+		jumpCounter = 0;
+		if (facingLeft){
+			setStatus(14);
+		}else {
+			setStatus(15);
+		}
+	}
+
+	public void stun() {
+		stunCounter = 10;
+		if (facingLeft){
+			setStatus(22);
+		}else {
+			setStatus(23);
+		}
+	}
+	
+	public boolean getStun(){
+		return stunned;
+	}
+
+	public void moveSwordUp() {
+		attackLevelCounter = ATTACK_LEVEL_CHANGE_DELAY;
+		if (attackLevel < 2){
+			attackLevel++;
+		}			
+	}
+	public void moveSwordDown() {
+		attackLevelCounter = ATTACK_LEVEL_CHANGE_DELAY;
+		if (attackLevel >0 ){
+			attackLevel--;
+		}			
+	}
+
+	public void parry(boolean parrying) {
+		this.parrying = parrying;
+		if (parrying){
+			if (facingLeft){
+				setStatus(12);
+			}else {
+				setStatus(13);
+			}
+		}
+	}
+	
+	public boolean getParrying(){
+		return this.parrying;
 	}
 }

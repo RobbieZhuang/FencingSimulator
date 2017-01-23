@@ -84,7 +84,7 @@ public class Server {
 
 					clients.add(clientHandler1);
 
-
+					t.start();
 
 					System.out.println("Connection successful");
 
@@ -96,7 +96,7 @@ public class Server {
 
 					clients.add(clientHandler2);
 
-					t.start();
+					
 					
 					System.out.println("Connection successful");
 				} catch (SocketException se) {

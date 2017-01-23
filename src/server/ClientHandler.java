@@ -33,7 +33,7 @@ public class ClientHandler implements Runnable {
 	private int team;
 	
     //Up, Left, Down, Right, Attack, Jump
-    private volatile boolean [] keys = new boolean [6];
+    private volatile boolean [] keys = new boolean [7];
     
     private boolean running;
 
@@ -113,53 +113,11 @@ public class ClientHandler implements Runnable {
                     } else {
                     	keys [5] = false;
                     }
-                    
-//                    if (message != null && message.charAt(0) != '#') { // Make sure its not a login request
-//                    	// W - Up
-//                    	// A - Left
-//                    	// S - Down
-//                    	// D - Right
-//                    	// F - Attack
-//                    	// G - Jump
-//                        if (message.charAt(0) == 'W'){
-//                        	keys [0] = true;
-//                        }
-//                        else if (message.charAt(0) == 'A'){
-//                        	keys [1] = true;
-//                        }
-//                        else if (message.charAt(0) == 'S'){
-//                        	keys [2] = true;
-//                        }
-//                        else if (message.charAt(0) == 'D'){
-//                        	keys [3] = true;
-//                        }
-//                        else if (message.charAt(0) == 'F'){
-//                        	keys [4] = true;
-//                        }
-//                        else if (message.charAt(0) == 'G'){
-//                        	keys [5] = true;
-//                        }
-//                    }
-//                    else if (message.charAt(0) == '#'){
-//                        if (message.charAt(1) == 'W'){
-//                        	keys [0] = false;
-//                        }
-//                        else if (message.charAt(1) == 'A'){
-//                        	keys [1] = false;
-//                        }
-//                        else if (message.charAt(1) == 'S'){
-//                        	keys [2] = false;
-//                        }
-//                        else if (message.charAt(1) == 'D'){
-//                        	keys [3] = false;
-//                        }
-//                        else if (message.charAt(1) == 'F'){
-//                        	keys [4] = false;
-//                        }
-//                        else if (message.charAt(1) == 'G'){
-//                        	keys [5] = false;
-//                        }
-//                    }
+                    if ((received & (1<<6)) != 0){
+                    	keys [6] = true;
+                    } else {
+                    	keys [6] = false;
+                    }
                 }
             } catch (Exception e) {
                 System.out.println("*** Error receiving message ***");
