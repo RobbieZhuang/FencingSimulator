@@ -24,6 +24,7 @@ public class Player {
 	private boolean onGround;
 	private int stunCounter;
 	private boolean stunned;
+	private boolean parrying;
 
 	public static final int ATTACK_DURATION = 25;
 	public static final int ATTACK_COOLDOWN = 30;
@@ -351,5 +352,20 @@ public class Player {
 		if (attackLevel >0 ){
 			attackLevel--;
 		}			
+	}
+
+	public void parry(boolean parrying) {
+		this.parrying = parrying;
+		if (parrying){
+			if (facingLeft){
+				setStatus(12);
+			}else {
+				setStatus(13);
+			}
+		}
+	}
+	
+	public boolean getParrying(){
+		return this.parrying;
 	}
 }

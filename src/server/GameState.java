@@ -10,7 +10,7 @@ public class GameState {
 	private ArrayList <Keys> keys;
 	
 	// Declare map variable
-	private static Map map;
+	private Map map;
 	private int numPlayers;
 
 	public GameState (){

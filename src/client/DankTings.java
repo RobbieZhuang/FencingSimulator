@@ -208,6 +208,9 @@ public class DankTings extends JPanel implements KeyListener {
 		if (keyCode == KeyEvent.VK_G) {
 			keysPressed = (byte) (keysPressed | (1 << 5));
 		}
+		if (keyCode == KeyEvent.VK_SPACE) {
+			keysPressed = (byte) (keysPressed | (1 << 6));
+		}
 
 		sender.setMessage(keysPressed);
 	}
@@ -232,6 +235,9 @@ public class DankTings extends JPanel implements KeyListener {
 		}
 		if (keyCode == KeyEvent.VK_G) {
 			keysPressed = (byte) (keysPressed & ~(1 << 5));
+		}
+		if (keyCode == KeyEvent.VK_SPACE){
+			keysPressed = (byte) (keysPressed & ~(1 << 6));
 		}
 
 		sender.setMessage(keysPressed);

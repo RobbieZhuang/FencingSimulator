@@ -19,7 +19,6 @@ public class ClientReceiver implements Runnable {
     private BufferedReader input;
     private volatile boolean running = true;
     private String serverMessage = "";
-    private DankTings panel;
     private int playerID = -999;
 
     /**

@@ -57,15 +57,15 @@ public class Game implements Runnable {
 			p.iterateCounters();
 
 			if (p.isAlive()){
-				if (k.getKey(0) && p.getOnGround() && !p.getStun() && p.canChangeAttackLevel()){
+				if (k.getKey(0) && p.getOnGround() && !p.getParrying() && !p.getStun() && p.canChangeAttackLevel()){
 					p.moveSwordUp();
 				}
 
-				if (k.getKey(2) && p.getOnGround()&& !p.getStun() && p.canChangeAttackLevel()){
+				if (k.getKey(2) && p.getOnGround() && !p.getParrying() && !p.getStun() && p.canChangeAttackLevel()){
 					p.moveSwordDown();
 				}
 
-				if (k.getKey(1) && !p.getAttacking()&& !p.getStun()){
+				if (k.getKey(1) && !p.getAttacking()&& !p.getStun()  && !p.getParrying()){
 					// check collision
 					boolean collides = false;
 					p.moveLeft();
@@ -79,7 +79,7 @@ public class Game implements Runnable {
 					}
 				}
 
-				if (k.getKey(3) && !p.getAttacking()&& !p.getStun()){
+				if (k.getKey(3) && !p.getAttacking()&& !p.getStun()  && !p.getParrying()){
 					boolean collides = false;
 					p.moveRight();
 					p.faceRight();
@@ -92,20 +92,13 @@ public class Game implements Runnable {
 					}
 				}
 
-				if (!k.getKey(1) && !k.getKey(3)&& !p.getStun()){
+				if (!k.getKey(1) && !k.getKey(3)&& !p.getStun()  && !p.getParrying()){
 					p.stand();
 				}
 
 
 
-				if (k.getKey(4)&& !p.getStun() && !p.getAttacking()){
-					if (!p.getOnGround()){
-						p.jumpAttack();
-					}
-					else {
-						p.attack();
-					}
-
+				if (k.getKey(4)&& !p.getStun() && !p.getAttacking()  && !p.getParrying()){
 					if (p.isFacingLeft()){
 						p.moveLeft();
 						p.moveLeft();
@@ -114,13 +107,19 @@ public class Game implements Runnable {
 							if (i != j){
 								if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
 									if (gameState.getPlayers().get(j).isAlive()) {
-										if (p.getOnGround()){
-											gameState.getPlayers().get(j).dead();
+										if (gameState.getPlayers().get(j).getParrying()){
+											p.dead();
 										} else {
-											gameState.getPlayers().get(j).stun();
-										}
+											if (p.getOnGround()){
+												gameState.getPlayers().get(j).dead();
+												p.attack();
+											} else {
+												gameState.getPlayers().get(j).stun();
+												p.jumpAttack();
+											}
 
-										p.increaseTotalNumberOfKills();
+											p.increaseTotalNumberOfKills();
+										}
 									}
 									System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
 								}
@@ -144,12 +143,18 @@ public class Game implements Runnable {
 							if (i != j){
 								if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
 									if (gameState.getPlayers().get(j).isAlive()) {
-										if (p.getOnGround()){
-											gameState.getPlayers().get(j).dead();
+										if (gameState.getPlayers().get(j).getParrying()){
+											p.dead();
 										} else {
-											gameState.getPlayers().get(j).stun();
+											if (p.getOnGround()){
+												gameState.getPlayers().get(j).dead();
+												p.attack();
+											} else {
+												gameState.getPlayers().get(j).stun();
+												p.jumpAttack();
+											}
+											p.increaseTotalNumberOfKills();
 										}
-										p.increaseTotalNumberOfKills();
 									}
 									System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
 								}
@@ -168,8 +173,14 @@ public class Game implements Runnable {
 
 				}
 
+				if (k.getKey(5) && !p.getStun()){
+					p.parry(true);
+				} else {
+					p.parry(false);
+				}
+
 				//jumping
-				if (k.getKey(5)&& !p.getStun()){
+				if (k.getKey(6)&& !p.getStun()  && !p.getParrying()){
 					gameState.getPlayers().get(i).jump();
 				}
 
