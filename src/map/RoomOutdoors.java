@@ -30,6 +30,8 @@ public class RoomOutdoors extends Room {
 	
 	@Override
 	public void drawRoom(int lX, int tY, Graphics g) {
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, super.getLength(), super.getHeight());
 		r.drawRain(g, lX, tY);
 		LinkedList <Land> terrain = super.getTerrain();
 		Graphics2D g2 = (Graphics2D) g;
