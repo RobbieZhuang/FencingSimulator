@@ -99,7 +99,7 @@ public class Screen extends JFrame {
             addMenuButtons();
 
             // Drawing the background
-            g.drawImage(spriteBackground.getMenuBackgound().getImage(), 0, 0, Client.WIDTH, Client.HEIGHT, null);
+            g.drawImage(spriteBackground.getMenuBackground().getImage(), 0, 0, Client.WIDTH, Client.HEIGHT, null);
         }
 
         void addMenuButtons() {

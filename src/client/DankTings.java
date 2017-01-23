@@ -1,5 +1,6 @@
 package client;
 
+import client.gui.GameOver;
 import client.gui.Screen;
 import graphics.SpriteSheetLoader;
 import map.Map;
@@ -15,6 +16,8 @@ public class DankTings extends JPanel implements KeyListener {
     public static final int HEIGHT = Client.HEIGHT;
     public static Map map;
     public static boolean waitInLobby = true;
+    // -1 if game is still going on, 0 if 0 is winner, 1 if 1 is winner
+    public static int winner = -1;
     long start;
     long end;
     long counter = 0;
@@ -28,8 +31,6 @@ public class DankTings extends JPanel implements KeyListener {
     private boolean running;
     private int myPlayerID;
     private int currentMap = 1;
-    // -1 if game is still going on, 0 if 0 is winner, 1 if 1 is winner
-    public static int winner = -1;
 
 
     public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
@@ -55,7 +56,7 @@ public class DankTings extends JPanel implements KeyListener {
         if (waitInLobby) {
             // Lobby
             g.drawImage(Screen.spriteBackground.getLobby().getImage(), 0, 0, Client.WIDTH, Client.HEIGHT, null);
-        } else {
+        } else if (winner == -1) {
             // Game
             int cameraLX = 0;
             int cameraTY = 0;
@@ -121,6 +122,8 @@ public class DankTings extends JPanel implements KeyListener {
                 g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX() - cameraLX, (int) p.getpY() - cameraTY, Screen.SPRITE_SIZE, Screen.SPRITE_SIZE, null);
 
             }
+        } else if ((winner == 0) || (winner == 1)) {
+            Screen.switchComponent(new GameOver(myPlayerID, winner));
         }
     }
 

@@ -1,8 +1,8 @@
 package server;
 
-import java.util.ArrayList;
-
 import map.Map;
+
+import java.util.ArrayList;
 
 public class GameState {
 	
@@ -15,8 +15,9 @@ public class GameState {
 	// Zero for true (wait), One for false
 	private int waitInLobby = 0;
 	// -1 for none, 0 for 0, 1 for 1
-	private int winner = 0;
-	public GameState (){
+    private int winner = -1;
+
+    public GameState (){
 		players = new ArrayList<Player>();
 		keys = new ArrayList<Keys>();
 		map = new Map();

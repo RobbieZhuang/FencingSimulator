@@ -6,7 +6,7 @@
 package graphics;
 
 public class Sprite {
-    private SpriteLoader menuBackgound;
+    private SpriteLoader menuBackground;
     private SpriteLoader winBackground;
     private SpriteLoader loseBackground;
     private SpriteLoader rules;
@@ -17,7 +17,7 @@ public class Sprite {
      * Default constructor
      */
     public Sprite() {
-        menuBackgound = new SpriteLoader("/resources/MenuBackground.png");
+        menuBackground = new SpriteLoader("/resources/MenuBackground.png");
         winBackground = new SpriteLoader("/resources/WinBackground.png");
         loseBackground = new SpriteLoader("/resources/LoseBackground.png");
         rules = new SpriteLoader("/resources/Rules.png");
@@ -30,8 +30,8 @@ public class Sprite {
      *
      * @return menuBackground
      */
-    public SpriteLoader getMenuBackgound() {
-        return menuBackgound;
+    public SpriteLoader getMenuBackground() {
+        return menuBackground;
     }
 
     /**
