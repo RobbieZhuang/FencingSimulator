@@ -89,9 +89,6 @@ public class Screen extends JFrame {
             setPreferredSize(new Dimension(Client.WIDTH, Client.HEIGHT));
             setLayout(new BorderLayout());
             setBackground(Color.blue);
-
-            // Adding buttons
-            addMenuButtons();
         }
 
         @Override
@@ -99,11 +96,15 @@ public class Screen extends JFrame {
             super.paintComponent(g);
             g.setColor(Color.GRAY);
 
+            addMenuButtons();
+
             // Drawing the background
             g.drawImage(spriteBackground.getMenuBackgound().getImage(), 0, 0, Client.WIDTH, Client.HEIGHT, null);
         }
 
         void addMenuButtons() {
+            System.out.println("Adding menu buttons");
+
             // Adding buttons
             int buttonWidth = Client.WIDTH / 8;
             int buttonHeight = Client.HEIGHT / 25;
@@ -114,7 +115,11 @@ public class Screen extends JFrame {
             btnPlayOnline.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     System.out.println("Play Online pressed");
-                    Screen.switchComponent(new DankTings(Client.clientReceiver.getPlayerID(), Client.clientSender, Client.players));
+//                    try {
+                        Screen.switchComponent(new DankTings(Client.clientReceiver.getPlayerID(), Client.clientSender, Client.players));
+//                    } catch (Exception e) {
+//                        JOptionPane.showMessageDialog(null, "Not connected to server", "Connection Error", 0);
+//                    }
                 }
             });
             btnPlayOnline.setBounds(Client.WIDTH / 2 - buttonWidth * 3 / 2 - buttonSpacing, y, buttonWidth, buttonHeight);
@@ -124,8 +129,7 @@ public class Screen extends JFrame {
             btnNewButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     System.out.println("Rules pressed");
-                    GameOver gameOver = new GameOver(1, 0);
-                    Screen.switchComponent(gameOver);   // TODO: actual rules
+                    Screen.switchComponent(new Rules());
                 }
             });
             btnNewButton.setBounds(Client.WIDTH / 2 - buttonWidth / 2, y, buttonWidth, buttonHeight);
@@ -135,6 +139,7 @@ public class Screen extends JFrame {
             btnControls.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     System.out.println("Controls pressed");
+                    Screen.switchComponent(new Controls());
                 }
             });
             btnControls.setBounds(Client.WIDTH / 2 + buttonWidth / 2 + buttonSpacing, y, buttonWidth, buttonHeight);

@@ -1,6 +1,6 @@
-/* Rules.java
+/* Controls.java
  *
- * This is a panel that displays the rules
+ * This panel has all the controls
  */
 
 package client.gui;
@@ -15,11 +15,11 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Rules extends JPanel {
-    Rules() {
+public class Controls extends JPanel {
+    Controls() {
 
         // Add buttons
-        addRulesButtons();
+        addControlsButtons();
 
         // Set up GUI
         setLayout(null);
@@ -29,11 +29,11 @@ public class Rules extends JPanel {
     }
 
     /**
-     * addRulesButtons
+     * addControlsButtons
      * <p>
      * Adds the buttons to GameOver
      */
-    void addRulesButtons() {
+    void addControlsButtons() {
         // Adding buttons
         int buttonWidth = Client.WIDTH / 6;
         int buttonHeight = Client.HEIGHT / 25;
@@ -41,7 +41,7 @@ public class Rules extends JPanel {
         int y = Client.HEIGHT - buttonHeight - (int) (2.5 * x);
         int buttonSpacing = 5;
 
-        JButton btnMenu = new JButton("I understand");
+        JButton btnMenu = new JButton("Ok, makes sense");
         btnMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("Menu pressed");
