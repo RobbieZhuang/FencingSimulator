@@ -162,9 +162,13 @@ public class Client implements Runnable {
     private void getOutput() {
         try {
             String message = clientReceiver.getServerMessage();
-            System.out.println("Message From Server: " + message);
+//            System.out.println("Message From Server: " + message);
             String[] args = message.trim().split(" ");
+            
+            
             DankTings.map.setCurrentRoom(Integer.parseInt(args[1]));
+            
+
             if (Integer.parseInt(args[2])%2 == 1){
             	DankTings.waitInLobby = false;
             }

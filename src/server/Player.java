@@ -7,7 +7,7 @@ import mechanics.Hitbox;
 
 public class Player {
     public static final int ATTACK_DURATION = 25;
-    public static final int ATTACK_COOLDOWN = 100;
+    public static final int ATTACK_COOLDOWN = 35;
     public static final int RESPAWN_TIME = 30;
     public static final int ATTACK_LEVEL_CHANGE_DELAY = 10;
     private double speed = 5;

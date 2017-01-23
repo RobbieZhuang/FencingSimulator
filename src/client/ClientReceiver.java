@@ -44,7 +44,6 @@ public class ClientReceiver implements Runnable {
                     playerID = Integer.parseInt(message);
                     messageReceived = true;
                 }
-//                System.out.println(serverMessage);
             } catch (Exception e) {
                 System.out.println("*** Error receiving message ***");
                 e.printStackTrace();
@@ -57,7 +56,7 @@ public class ClientReceiver implements Runnable {
 //                if (!serverMessage.equals("-1")) {
 //                    runCommands(serverMessage);
 //                }
-                System.out.println("Server message: " + serverMessage);
+//                System.out.println("Server message: " + serverMessage);
             } catch (Exception e) {
                 System.out.println("*** Error receiving message ***");
                 e.printStackTrace();

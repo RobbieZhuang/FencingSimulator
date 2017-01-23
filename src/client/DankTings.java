@@ -31,7 +31,6 @@ public class DankTings extends JPanel implements KeyListener {
     private byte keysPressed;
     private boolean running;
     private int myPlayerID;
-    private int currentMap = 1;
 
 
     public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
@@ -47,7 +46,6 @@ public class DankTings extends JPanel implements KeyListener {
         addKeyListener(this);
         setFocusable(true);
         setBackground(Color.black);
-        setMap(1);
     }
 
     @Override
@@ -131,11 +129,6 @@ public class DankTings extends JPanel implements KeyListener {
             }
         }
     }
-
-    public void setMap(int currentMap) {
-        this.currentMap = currentMap;
-    }
-
     private int cameraLeftX(int pX) {
         int lX = pX - WIDTH / 2;
         if (lX > map.getCurrentRoom().getLength() - WIDTH) {
@@ -188,7 +181,6 @@ public class DankTings extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         // WASDFG
-
         int keyCode = e.getKeyCode();
 
         if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {

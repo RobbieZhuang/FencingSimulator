@@ -11,7 +11,6 @@ public class Game implements Runnable {
 		t = new Thread (new GameOutputManager(gameState));
 	}
 
-
 	void addPlayer (int playerID, int team){
 		gameState.addPlayer(new Player (playerID, team));
 		gameState.addKeys(new Keys (playerID));

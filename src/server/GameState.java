@@ -8,21 +8,24 @@ public class GameState {
 
     static ArrayList<Player> players;
     // -2 for not in game, -1 for in game, 0 for 0, 1 for 1
-    int winner = -1;
+    int winner;
     private ArrayList <Keys> keys;
 	// Declare map variable
 	private Map map;
 	private int numPlayers;
 	// Zero for true (wait), One for false
-	private int waitInLobby = 0;
+	private int waitInLobby;
     // -1 for none, 0 for 0, 1 for 1
-    private int canMoveToNextRoom = -1;
+    private int canMoveToNextRoom;
 
     public GameState (){
 		players = new ArrayList<Player>();
 		keys = new ArrayList<Keys>();
 		map = new Map();
 		numPlayers = 0;
+		winner = -1;
+		waitInLobby = 0;
+		canMoveToNextRoom = 0;
 	}
 	
 	/**
@@ -168,17 +171,23 @@ public class GameState {
         // Remove players after a game
         if ((winner != -1) && (!players.isEmpty())) {
             System.out.println("Remove players");
-            winner = -2;
-            removePlayer(0);
-            removePlayer(1);
-            removeKeys(0);
-            removeKeys(1);
+            reset();
         }
 
 		return gameString;
 	}
 
-    public void setCanMoveToNextRoom(int i) {
+    private void reset() {
+		players = new ArrayList<Player>();
+		keys = new ArrayList<Keys>();
+		map = new Map();
+		numPlayers = 0;
+		winner = -1;
+		waitInLobby = 0;
+		canMoveToNextRoom = 0;
+	}
+
+	public void setCanMoveToNextRoom(int i) {
         this.canMoveToNextRoom = i;
     }
 }

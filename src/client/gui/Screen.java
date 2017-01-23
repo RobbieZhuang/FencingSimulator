@@ -116,7 +116,9 @@ public class Screen extends JFrame {
                 public void actionPerformed(ActionEvent arg0) {
                     System.out.println("Play Online pressed");
                     Client.clientSender.setMessage((byte) (1 << 7));
-                    Screen.switchComponent(new DankTings(Client.clientReceiver.getPlayerID(), Client.clientSender, Client.players));
+                    DankTings gameScreen = new DankTings(Client.clientReceiver.getPlayerID(), Client.clientSender, Client.players);
+                    Screen.switchComponent(gameScreen);
+                    gameScreen.requestFocus();
                 }
             });
             btnPlayOnline.setBounds(Client.WIDTH / 2 - buttonWidth * 3 / 2 - buttonSpacing, y, buttonWidth, buttonHeight);
