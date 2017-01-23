@@ -13,7 +13,6 @@ package client;
 
 import client.gui.Screen;
 
-import javax.swing.JOptionPane;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,11 +29,10 @@ public class Client implements Runnable {
     public static PlayerImage[] players = new PlayerImage[2];
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "192.168.1.103";
+    private String IP = "";
     // Declaring variables
     private boolean running;
     private Socket socket;
-    private boolean offlineReminded = false;
 
     public Client() {
 
@@ -185,10 +183,6 @@ public class Client implements Runnable {
             }
         } catch (Exception e) {
             System.out.println("Something went wrong when trying to receive messages.\nThis is probably because you did not click play yet.");
-            if (!offlineReminded) {
-                JOptionPane.showMessageDialog(null, "Not connected to server", "Connection Error", 0);
-                offlineReminded = true;
-            }
             e.printStackTrace();
         }
     }

@@ -8,7 +8,6 @@ import graphics.SpriteSheetLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
@@ -116,11 +115,11 @@ public class Screen extends JFrame {
             btnPlayOnline.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     System.out.println("Play Online pressed");
-                    try {
+//                    try {
                         Screen.switchComponent(new DankTings(Client.clientReceiver.getPlayerID(), Client.clientSender, Client.players));
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Not connected to server", "Connection Error", 0);
-                    }
+//                    } catch (Exception e) {
+//                        JOptionPane.showMessageDialog(null, "Not connected to server", "Connection Error", 0);
+//                    }
                 }
             });
             btnPlayOnline.setBounds(Client.WIDTH / 2 - buttonWidth * 3 / 2 - buttonSpacing, y, buttonWidth, buttonHeight);
