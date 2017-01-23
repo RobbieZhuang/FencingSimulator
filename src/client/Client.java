@@ -175,9 +175,11 @@ public class Client implements Runnable {
             System.out.println("Message From Server: " + message);
             String[] args = message.trim().split(" ");
             DankTings.map.setCurrentRoom(Integer.parseInt(args[1]));
-            System.out.println("THE CURRENT ROOM IS: " + args[1]);
+            if (Integer.parseInt(args[2])%2 == 1){
+            	DankTings.waitInLobby = false;
+            }
             int c = 0;
-            for (int i = 2; i < args.length; i += 4) {
+            for (int i = 3; i < args.length; i += 4) {
                 players[c].setpX(Double.parseDouble(args[i + 1]));
                 players[c].setpY(Double.parseDouble(args[i + 2]));
                 players[c].setStatus(Integer.parseInt(args[i + 3]));
