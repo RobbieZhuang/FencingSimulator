@@ -1,8 +1,8 @@
-/* ServerReceiver.java
+/* ClientHandler.java
  *
  * Version 1.0
- * Bill Li, Robbie Zhuang, Kaitlyn Paglia
- * 12-23-2016
+ * Max Gao, Andi Li, Bill Li, Robbie Zhuang
+ * 01-23-17
  *
  * Manages receiving messages from clients.
  */

@@ -1,3 +1,11 @@
+/* Keys.java
+ *
+ * Version 1.0
+ * Max Gao, Andi Li, Bill Li, Robbie Zhuang
+ * 01-23-17
+ *
+ * Keys pressed object
+ */
 package server;
 
 public class Keys {

@@ -1,3 +1,12 @@
+/* GameState.java
+ *
+ * Version 1.0
+ * Max Gao, Andi Li, Bill Li, Robbie Zhuang
+ * 01-23-17
+ *
+ * A class for defining the current gamestate
+ */
+
 package server;
 
 import map.Map;

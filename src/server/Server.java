@@ -1,3 +1,11 @@
+/* Server.java
+ *
+ * Version 1.0
+ * Max Gao, Andi Li, Bill Li, Robbie Zhuang
+ * 01-23-17
+ *
+ * Manages handling and creating new threads for clients
+ */
 package server;
 
 import java.io.IOException;
