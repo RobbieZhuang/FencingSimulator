@@ -29,7 +29,7 @@ public class Client implements Runnable {
     public static PlayerImage[] players = new PlayerImage[2];
     //	private static Physics physics;
     static boolean playOnline;
-    private String IP = "";
+    private String IP = "192.168.1.103";
     // Declaring variables
     private boolean running;
     private Socket socket;
@@ -40,7 +40,7 @@ public class Client implements Runnable {
         Screen screen = new Screen(NAME);
 
         try {
-            socket = new Socket(IP, 6000);
+            socket = new Socket(IP, 6001);
             socket.setTcpNoDelay(true);
             PrintWriter write = new PrintWriter(socket.getOutputStream());
             // Initiate client reader

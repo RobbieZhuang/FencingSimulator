@@ -13,7 +13,11 @@ public class Game implements Runnable {
 
 
 	void addPlayer (int playerID, int team){
-		gameState.addPlayer(new Player (playerID, team));
+		if (team == 0){
+			gameState.addPlayer(new Player (playerID, team, gameState.getMap().getCurrentRoom().leftSpawnPoint()));
+		}else if (team == 1){
+			gameState.addPlayer(new Player (playerID, team,gameState.getMap().getCurrentRoom().rightSpawnPoint()));
+		}
 		gameState.addKeys(new Keys (playerID));
 	}
 

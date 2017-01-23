@@ -63,4 +63,16 @@ public class RoomOutdoors extends Room {
 	public int deathY() {
 		return 500;
 	}
+
+	@Override
+	public Point leftSpawnPoint() {
+		// TODO Auto-generated method stub
+		return new Point(1400,50);
+	}
+
+	@Override
+	public Point rightSpawnPoint() {
+		// TODO Auto-generated method stub
+		return new Point(1600,50);
+	}
 }

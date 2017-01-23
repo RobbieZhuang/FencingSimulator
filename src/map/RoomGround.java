@@ -100,4 +100,16 @@ public class RoomGround extends Room {
 		return 1000;
 	}
 
+	@Override
+	public Point leftSpawnPoint() {
+		// TODO Auto-generated method stub
+		return new Point(3500/2-100,50);
+	}
+
+	@Override
+	public Point rightSpawnPoint() {
+		// TODO Auto-generated method stub
+		return new Point(3500/2+100,50);
+	}
+
 }

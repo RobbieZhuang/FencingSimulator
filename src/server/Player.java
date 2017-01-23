@@ -33,9 +33,9 @@ public class Player {
 	private boolean parrying;
 	
 	
-	public Player(int playerID, int team) {
-		this.x = 150;
-		this.y = 150;
+	public Player(int playerID, int team, Point p) {
+		this.x = p.x;
+		this.y = p.y;
 		this.ID = playerID;
 		this.status = 0;
 		this.attackLevel = 0;
