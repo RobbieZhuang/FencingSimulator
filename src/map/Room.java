@@ -88,7 +88,6 @@ public abstract class Room {
 	public abstract void drawRoom (int lX, int tY, Graphics g);
 	protected abstract void generateRespawnPoints ();
 
-	public abstract int leftTarget();
-	public abstract int rightTarget();
-
+	public abstract Point leftTarget();
+	public abstract Point rightTarget();
 }

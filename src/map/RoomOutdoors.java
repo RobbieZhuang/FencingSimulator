@@ -45,18 +45,17 @@ public class RoomOutdoors extends Room {
 
 	@Override
 	protected void generateRespawnPoints() {
-		super.getRespawn().add(new Point(100, 200));
-		super.getRespawn().add(new Point(1100, 200));
-		super.getRespawn().add(new Point (500, 200));
+		super.getRespawn().add(new Point(100, 50));
+		super.getRespawn().add(new Point(1100, 50));
+		super.getRespawn().add(new Point (500, 50));
 	}
 
 	@Override
-	public int leftTarget() {
-		return 50;
+	public Point leftTarget() {
+		return new Point(50,50);
 	}
-	
 	@Override
-	public int rightTarget() {
-		return 1950;
+	public Point rightTarget() {
+		return new Point(1950,50);
 	}
 }
