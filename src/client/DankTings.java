@@ -33,13 +33,10 @@ public class DankTings extends JPanel implements KeyListener {
 	private byte keysPressed;
 	private boolean running;
 	private int myPlayerID;
-	private int currentMap = 0;
-
-	private Rain r = new Rain(2000, 500);
+	private int currentMap = 1;
 
 
 	public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
-		r.go();
         map = new Map();
         this.myPlayerID = myPlayerID;
 		this.players = players2;
@@ -50,7 +47,7 @@ public class DankTings extends JPanel implements KeyListener {
 		addKeyListener(this);
 		setFocusable(true);
 		setBackground(Color.black);
-        setMap(0);
+        setMap(1);
     }
 
 	@Override
@@ -126,7 +123,6 @@ public class DankTings extends JPanel implements KeyListener {
 
 		//
 		//		g.drawString(fps + "", 50, 50);
-		r.drawRain(g, cameraLX, cameraTY);
 		map.getCurrentRoom().drawRoom(cameraLX, cameraTY, g);
 
 	}
