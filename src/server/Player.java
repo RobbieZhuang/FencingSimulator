@@ -74,7 +74,7 @@ public class Player {
 	}
 
 	private void iterateJump() {
-		this.y += -jumpCounter * jumpCounter;
+		this.y += -jumpCounter * jumpCounter*0.03125;
 		if (jumpCounter > 0) {
 			this.jumpCounter--;
 		}
@@ -187,7 +187,7 @@ public class Player {
 
 	public void jump() {
 		if (onGround){
-			jumpCounter = 6;
+			jumpCounter = 24;
 			if (facingLeft) {
 				setStatus(20);
 			} else {
@@ -236,7 +236,7 @@ public class Player {
 	public boolean getAttacking() {
 		return attacking;
 	}
-	
+
 
 	/**
 	 * getTotalNumberOfKills
@@ -245,7 +245,7 @@ public class Player {
 	public int getTotalNumberOfKills() {
 		return totalNumberOfKills;
 	}
-	
+
 	/**
 	 * setTotalNumberOfKills
 	 * @param int 
@@ -253,7 +253,7 @@ public class Player {
 	public void setTotalNumberOfKills(int totalNumberOfKills) {
 		this.totalNumberOfKills = totalNumberOfKills;
 	}
-	
+
 	public void increaseTotalNumberOfKills(){
 		this.totalNumberOfKills++;
 	}
@@ -264,7 +264,7 @@ public class Player {
 	public int getTotalNumberOfDeaths() {
 		return totalNumberOfDeaths;
 	}
-	
+
 	/**
 	 * setTotalNumberOfDeaths
 	 * @param int 
@@ -276,15 +276,15 @@ public class Player {
 	public void setOnGround(boolean onGround) {
 		this.onGround = onGround;
 	}
-	
+
 	public boolean getOnGround (){
 		return onGround;
 	}
-	
+
 	public void iterateCounters(){
 		iterateAttack();
 		iterateJump();
 		iterateRespawnTimer();
-		
+
 	}
 }

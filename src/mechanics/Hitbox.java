@@ -42,9 +42,6 @@ public class Hitbox {
         // This checks up and down
         return !(sameSign(crossProduct(lX, tY, rX, tY, hLX, hTY), crossProduct(lX, tY, rX, tY, hLX, hBY)) || sameSign(crossProduct(lX, bY, rX, bY, hLX, hTY), crossProduct(lX, bY, rX, bY, hLX, hBY)));
     	*/
-    	System.out.println("Sprite 1: " + r.x + " " + r.y);
-    	System.out.println("Bling bling: " + r.contains(h.getRectangle().x, h.getRectangle().y));
-    	System.out.println("Sprite 2: " + h.getRectangle().x + " " + h.getRectangle().y);
     	return (r.intersects(h.getRectangle()));
     }
 
