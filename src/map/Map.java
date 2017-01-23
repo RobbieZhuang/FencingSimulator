@@ -11,7 +11,6 @@ public class Map {
 	
 	public Map(){
 		rooms = new ArrayList<Room>();
-		rooms.add(new RoomOutdoors());
 		rooms.add(new RoomCastle());
 		rooms.add(new RoomOutdoors());
 		rooms.add(new RoomCastle());

@@ -8,8 +8,13 @@ import java.awt.Point;
 import java.util.LinkedList;
 
 public class RoomCastle extends Room {
+	private int RUBBLE_LENGTH = 15;
+	private int RUBBLE_HEIGHT = 3;
+	
+	private LinkedList <Point> rubble;
 	public RoomCastle () {
 		super (2000, 700);
+		rubble = new LinkedList<>();
 		LinkedList <Land> terrain = super.getTerrain();
 		terrain.add(new Land (0, 0, 1500, 100, 0));
 		terrain.add(new Land (800, 450, 400, 50, 0));
@@ -19,6 +24,16 @@ public class RoomCastle extends Room {
         terrain.add(new Land(-10, 0, 5, 1000, 0));
         terrain.add(new Land(2000, 0, 5, 1000, 0));
 
+        for (int a = 0; a < super.getTerrain().size(); a++) {
+        	Land l = super.getTerrain().get(a);
+        	int nLoops = (int)(Math.random()*l.getLength()/50.0)+1;
+        	for (int b = 0; b < nLoops; b++) {
+        		int x = (int)(Math.random()*l.getLength()) + l.getlX();
+        		int y = l.getlY()-RUBBLE_HEIGHT;
+        		rubble.add(new Point(x, y));
+        	}
+        }
+        
 		generateRespawnPoints();
 	}
 
@@ -30,6 +45,11 @@ public class RoomCastle extends Room {
 		for (int a = 0; a < terrain.size(); a++) {
 			Land l = terrain.get(a);
 			g2.fillRect(l.getlX()-lX, l.getlY()-tY, l.getLength(), l.getHeight());
+		}
+		for (int a = 0; a < rubble.size(); a++) {
+			int x = (int)(rubble.get(a).getX());
+			int y = (int)(rubble.get(a).getY());
+			g2.fillRect(x, y, RUBBLE_LENGTH, RUBBLE_HEIGHT);
 		}
 	}
 
