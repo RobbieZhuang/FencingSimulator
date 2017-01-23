@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
 public class DankTings extends JPanel implements KeyListener {
     public static final int WIDTH = Client.WIDTH;
     public static final int HEIGHT = Client.HEIGHT;
-    public static final int SPRITE_SIZE = 50;
+    public static final int SPRITE_SIZE = 70;
     public static final int SPRITE_ROWS = 2;
     public static final int SPRITE_COLUMNS = 32;
     public static final int SPRITE_PIXELS = 16;

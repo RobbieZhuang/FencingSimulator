@@ -1,8 +1,8 @@
 package server;
 
 public class Game implements Runnable {
-    static boolean running;
-    GameState gameState;
+	static boolean running;
+	GameState gameState;
 	Thread t;
 
 
@@ -26,21 +26,21 @@ public class Game implements Runnable {
 			gameState.getKeys().get(i).setKeys(Server.getInput(gameState.getKeys().get(i).getPlayerID()));
 		}
 	}
-	
+
 	/**
 	 * updateRoom
 	 * Updates the room that the players are in.
 	 * Once on player reaches the other side 
 	 */
 	void updateRoom(){
-		
+
 	}
 	void updateGameState(){
 		for (int i = 0; i < gameState.getNumPlayers(); i++){
 			Player p = gameState.getPlayers().get(i);
 			Keys k = gameState.getKeys().get(i);
 
-			
+
 			// Updating which room the players should be in by figuring out if they walked far enough
 			// Zero means team 0 which starts left and goes right
 			// One means team 1 which starts right and goes left
@@ -53,9 +53,19 @@ public class Game implements Runnable {
 					gameState.updateMap(1);
 				}
 			}
+
 			p.iterateCounters();
+
 			if (p.isAlive()){
-				if (k.getKey(1) && !p.getAttacking()){
+				if (k.getKey(0) && p.getOnGround() && !p.getStun() && p.canChangeAttackLevel()){
+					p.moveSwordUp();
+				}
+
+				if (k.getKey(2) && p.getOnGround()&& !p.getStun() && p.canChangeAttackLevel()){
+					p.moveSwordDown();
+				}
+
+				if (k.getKey(1) && !p.getAttacking()&& !p.getStun()){
 					// check collision
 					boolean collides = false;
 					p.moveLeft();
@@ -69,7 +79,7 @@ public class Game implements Runnable {
 					}
 				}
 
-				if (k.getKey(3) && !p.getAttacking()){
+				if (k.getKey(3) && !p.getAttacking()&& !p.getStun()){
 					boolean collides = false;
 					p.moveRight();
 					p.faceRight();
@@ -82,14 +92,20 @@ public class Game implements Runnable {
 					}
 				}
 
-				if (!k.getKey(1) && !k.getKey(3)){
+				if (!k.getKey(1) && !k.getKey(3)&& !p.getStun()){
 					p.stand();
 				}
 
-				
 
-				if (k.getKey(4)){
-					gameState.getPlayers().get(i).attack();
+
+				if (k.getKey(4)&& !p.getStun() && !p.getAttacking()){
+					if (!p.getOnGround()){
+						p.jumpAttack();
+					}
+					else {
+						p.attack();
+					}
+
 					if (p.isFacingLeft()){
 						p.moveLeft();
 						p.moveLeft();
@@ -97,44 +113,67 @@ public class Game implements Runnable {
 						for (int j = 0; j < gameState.getNumPlayers(); j++) {
 							if (i != j){
 								if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
-                                    if (gameState.getPlayers().get(j).isAlive()) {
-                                        gameState.getPlayers().get(j).dead();
-                                        gameState.getPlayer(i).increaseTotalNumberOfKills();
-                                    }
-                                    System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
+									if (gameState.getPlayers().get(j).isAlive()) {
+										if (p.getOnGround()){
+											gameState.getPlayers().get(j).dead();
+										} else {
+											gameState.getPlayers().get(j).stun();
+										}
+
+										p.increaseTotalNumberOfKills();
+									}
+									System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
 								}
 							}
 						}
-						p.moveRight();
-						p.moveRight();
-						p.moveRight();
+						boolean collides = false;;
+						for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
+							if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
+								collides = true;
+								p.moveRight();
+								p.moveRight();
+								p.moveRight();
+							}
+						}
 					}
 					else{
-						p.moveRight();
+						p.moveRight();			
 						p.moveRight();
 						p.moveRight();
 						for (int j = 0; j < gameState.getNumPlayers(); j++) {
 							if (i != j){
 								if (p.getHitbox().collidesWith(gameState.getPlayers().get(j).getHitbox())){
-                                    if (gameState.getPlayers().get(j).isAlive()) {
-                                        gameState.getPlayers().get(j).dead();
-                                        gameState.getPlayer(i).increaseTotalNumberOfKills();
-                                    }
-                                    System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
+									if (gameState.getPlayers().get(j).isAlive()) {
+										if (p.getOnGround()){
+											gameState.getPlayers().get(j).dead();
+										} else {
+											gameState.getPlayers().get(j).stun();
+										}
+										p.increaseTotalNumberOfKills();
+									}
+									System.out.println(j + " is dead " + gameState.getPlayers().get(j).isAlive());
 								}
 							}
 						}
-						p.moveLeft();
-						p.moveLeft();
-						p.moveLeft();
+						boolean collides = false;
+						for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
+							if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
+								collides = true;
+								p.moveLeft();
+								p.moveLeft();
+								p.moveLeft();
+							}
+						}
 					}
+
 				}
 
-				if (k.getKey(5)){
+				//jumping
+				if (k.getKey(5)&& !p.getStun()){
 					gameState.getPlayers().get(i).jump();
 				}
 
-				//non keys
+				p.iterateJump();
 				boolean collides = false;
 				for (int j = 0;j < gameState.getMap().getCurrentRoom().getTerrain().size() && !collides; j++) {
 					if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
@@ -145,7 +184,7 @@ public class Game implements Runnable {
 						p.moveDown();
 					}
 				}
-				
+
 				//gravity
 				collides = false;
 				p.moveDown();
@@ -161,13 +200,13 @@ public class Game implements Runnable {
 					}
 				}
 			}
-			
+
 			// THIS IS WHERE I CAN'T RESPAWN THE DUDE
 			if (!p.isAlive()){
 				p.basicRevive();
 				System.out.println(gameState.getMap().getCurrentRoom().getNearestRespawn((int)p.getX()).x);
 				System.out.println(gameState.getMap().getCurrentRoom().getNearestRespawn((int)p.getX()).y);
-//				p.revive(gameState.getRoom().getNearestRespawn((int)p.getX()).x,gameState.getRoom().getNearestRespawn((int)p.getX()).y);
+				//				p.revive(gameState.getRoom().getNearestRespawn((int)p.getX()).x,gameState.getRoom().getNearestRespawn((int)p.getX()).y);
 			}
 		}
 	}
