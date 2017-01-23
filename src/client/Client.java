@@ -172,6 +172,8 @@ public class Client implements Runnable {
 
             if (Integer.parseInt(args[2])%2 == 1){
             	DankTings.waitInLobby = false;
+            } else {
+            	DankTings.waitInLobby = true;
             }
             // Winning status
             if (Integer.parseInt(args[3]) == 0){

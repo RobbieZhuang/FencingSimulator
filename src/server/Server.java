@@ -26,7 +26,7 @@ public class Server {
 	private void initialize(){
 
 		try {
-			socketServer = new ServerSocket (6001);
+			socketServer = new ServerSocket (6000);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,5 +123,10 @@ public class Server {
 
 	public static Game getGame() {
 		return game;
+	}
+
+	public static void reset() {
+		game = new Game();
+		
 	}
 }

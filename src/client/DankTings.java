@@ -15,10 +15,10 @@ public class DankTings extends JPanel implements KeyListener {
     public static final int WIDTH = Client.WIDTH;
     public static final int HEIGHT = Client.HEIGHT;
     public static Map map;
-    public static boolean waitInLobby = true;
+    public static boolean waitInLobby;
     // -1 if game is still going on, 0 if 0 is winner, 1 if 1 is winner
-    public static int winner = -1;
-    public static int canMoveToNextRoom = -1;
+    public static int winner;
+    public static int canMoveToNextRoom;
     long start;
     long end;
     long counter = 0;
@@ -46,6 +46,9 @@ public class DankTings extends JPanel implements KeyListener {
         addKeyListener(this);
         setFocusable(true);
         setBackground(Color.black);
+        waitInLobby = true;
+        winner = -1;
+        canMoveToNextRoom = -1;
     }
 
     @Override

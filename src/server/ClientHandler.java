@@ -77,7 +77,7 @@ public class ClientHandler implements Runnable {
             	Thread.sleep(10);
                 if (input.ready()) {
                 	message = input.readLine();
-                    System.out.println("Message received from " + ": " + message);
+//                    System.out.println("Message received from " + ": " + message);
                     
                     byte received = Byte.valueOf(message);
 
@@ -91,6 +91,7 @@ public class ClientHandler implements Runnable {
 
                     // Player is playing
                     if ((received & (1 << 7)) != 0) {
+                   
                         System.out.println("Making a player");
                         Server.getGame().addPlayer(playerID, team);                  ////////// This is where the player is added
                     }

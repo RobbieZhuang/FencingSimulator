@@ -92,10 +92,16 @@ public class GameState {
     }
 	
 	public void addPlayer (Player player){
+		System.out.println("adding player");
 		players.add(player);
 		player.setTeam(numPlayers%2);
 		numPlayers++;
 		if (numPlayers == 2){
+			if (players.get(0).getID() == 1){
+				Player p = players.remove(0);
+				players.add(p);
+				System.out.println("it works");
+			}
 			waitInLobby = 1;
 		}
 	}
@@ -163,7 +169,7 @@ public class GameState {
 	 */
 	public String getGameString(){
         String gameString = players.size() + " " + map.getCurrentRoomID() + " " + waitInLobby + " " + winner + " " + canMoveToNextRoom + " ";
-        for (int i = 0; i < numPlayers; i ++){
+        for (int i = 0; i < players.size(); i ++){
 			gameString += players.get(i).getID() + " " + players.get(i).getX() + " " + players.get(i).getY() + " "
 					+ players.get(i).getStatus() + " ";
 		}
@@ -171,6 +177,7 @@ public class GameState {
         // Remove players after a game
         if ((winner != -1) && (!players.isEmpty())) {
             System.out.println("Remove players");
+            Server.reset();
             reset();
         }
 

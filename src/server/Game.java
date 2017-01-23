@@ -2,7 +2,7 @@
 package server;
 
 public class Game implements Runnable {
-	static boolean running;
+	private boolean running;
 	GameState gameState;
 	Thread t;
 
@@ -23,17 +23,16 @@ public class Game implements Runnable {
 	}
 
 
-	void removePlayer (int playerID){
-		gameState.removePlayer (playerID);
-		gameState.removeKeys(playerID);
-	}
 	void getInput (){
 		for (int i = 0; i < gameState.getNumPlayers(); i ++){
 			gameState.getKeys().get(i).setKeys(Server.getInput(gameState.getKeys().get(i).getPlayerID()));
 		}
 	}
+	
+
 
 	void updateGameState(){
+		System.out.println("updating game state");
 		for (int i = 0; i < gameState.getNumPlayers(); i++){
 			Player p = gameState.getPlayers().get(i);
 			Keys k = gameState.getKeys().get(i);
@@ -212,9 +211,7 @@ public class Game implements Runnable {
 					if (p.getHitbox().collidesWith(gameState.getMap().getCurrentRoom().getTerrain().get(j).getHitbox())){
 						collides = true;
 						p.moveUp();
-						p.setOnGround(true);
-						System.out.println("detecing collision43545345235454h4g");
-					}
+						p.setOnGround(true);					}
 					else{
 						p.setOnGround(false);
 					}
@@ -246,11 +243,10 @@ public class Game implements Runnable {
 		running = true;
 		t.start();
 		while (running){
-
-			getInput();
-			updateGameState();
-
 			try {
+				System.out.println("game loop");
+				getInput();
+				updateGameState();
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
