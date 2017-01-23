@@ -1,11 +1,15 @@
 package server;
 
-import client.DankTings;
+import client.gui.Screen;
 import mechanics.Hitbox;
 
 public class Player {
-	private double speed = 5;
-	private double x;
+    public static final int ATTACK_DURATION = 25;
+    public static final int ATTACK_COOLDOWN = 100;
+    public static final int RESPAWN_TIME = 30;
+    public static final int ATTACK_LEVEL_CHANGE_DELAY = 10;
+    private double speed = 5;
+    private double x;
 	private double y;
 	private int ID;
 	private int status;
@@ -25,11 +29,6 @@ public class Player {
 	private int stunCounter;
 	private boolean stunned;
 	private boolean parrying;
-
-	public static final int ATTACK_DURATION = 25;
-	public static final int ATTACK_COOLDOWN = 100;
-	public static final int RESPAWN_TIME = 30;
-	public static final int ATTACK_LEVEL_CHANGE_DELAY = 10;
 	
 	
 	public Player(int playerID, int team) {
@@ -38,15 +37,17 @@ public class Player {
 		this.ID = playerID;
 		this.status = 0;
 		this.attackLevel = 0;
-		this.playerHitbox = new Hitbox(x+(int)(DankTings.SPRITE_SIZE*.3), y, (int)(DankTings.SPRITE_SIZE*8/13.0), DankTings.SPRITE_SIZE);
-	}
+        this.playerHitbox = new Hitbox(x + (int) (Screen.SPRITE_SIZE * .3), y, (int) (Screen.SPRITE_SIZE * 8 / 13.0), Screen.SPRITE_SIZE);
+    }
 
-	public void setTeam(int team){
-		this.team = team;
-	}
 	public int getTeam(){
 		return team;
 	}
+
+    public void setTeam(int team) {
+        this.team = team;
+    }
+
 	void faceLeft() {
 		this.facingLeft = true;
 	}
@@ -257,8 +258,8 @@ public class Player {
 
 	/**
 	 * setTotalNumberOfKills
-	 * @param int 
-	 */
+     * @param
+     */
 	public void setTotalNumberOfKills(int totalNumberOfKills) {
 		this.totalNumberOfKills = totalNumberOfKills;
 	}
@@ -268,27 +269,27 @@ public class Player {
 	}
 	/**
 	 * getTotalNumberOfDeaths
-	 * @return int
-	 */
+     * @return totalNumberOfDeaths
+     */
 	public int getTotalNumberOfDeaths() {
 		return totalNumberOfDeaths;
 	}
 
 	/**
 	 * setTotalNumberOfDeaths
-	 * @param int 
-	 */
+     * @param totalNumberOfDeaths
+     */
 	public void setTotalNumberOfDeaths(int totalNumberOfDeaths) {
 		this.totalNumberOfDeaths = totalNumberOfDeaths;
-	}
-
-	public void setOnGround(boolean onGround) {
-		this.onGround = onGround;
 	}
 
 	public boolean getOnGround (){
 		return onGround;
 	}
+
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
+    }
 
 	public void iterateCounters(){
 		iterateAttack();

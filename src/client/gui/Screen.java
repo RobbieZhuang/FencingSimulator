@@ -2,7 +2,9 @@ package client.gui;
 
 import client.Client;
 import client.DankTings;
-import graphics.SpriteLoader;
+import graphics.Sprite;
+import graphics.SpriteSheet;
+import graphics.SpriteSheetLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +21,14 @@ import java.awt.event.ActionListener;
 
 public class Screen extends JFrame {
 
+    public static final int SPRITE_SIZE = 70;
+    public static final int SPRITE_ROWS = 2;
+    public static final int SPRITE_COLUMNS = 32;
+    public static final int SPRITE_PIXELS = 16;
     public static JPanel contentPane;
+    public static Sprite spriteBackground = new Sprite();
+    private static SpriteSheet spriteSheet = new SpriteSheet("/resources/SpriteSheet.png");
+    public static SpriteSheetLoader spriteSheetLoader = new SpriteSheetLoader(SPRITE_PIXELS, SPRITE_PIXELS, SPRITE_ROWS, SPRITE_COLUMNS, spriteSheet);
 
     /**
      * Create the frame.
@@ -39,21 +48,10 @@ public class Screen extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
-
-        // Adding the menu panel
-        MenuPanel menuPanel = new MenuPanel();
-//        p = new PaintPanel();
-//        p.setPreferredSize(new Dimension(800,600));
-//        add(p);
-
-        this.setFocusable(false);
-        add(menuPanel, BorderLayout.CENTER);
-        setVisible(true);
-        repaint();
     }
 
     /**
-     * Launch the application.
+     * Debugging by directly starting the screen
      */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -74,6 +72,7 @@ public class Screen extends JFrame {
     }
 
     public static void switchComponent(Component component) {
+        System.out.println("Switching component");
         contentPane.removeAll();
         contentPane.add(component, BorderLayout.CENTER);
         refresh();
@@ -81,31 +80,30 @@ public class Screen extends JFrame {
 
     public static void refresh() {
         contentPane.repaint();
-//	    p.repaint();
     }
 
     // Paints the background
     static class PaintPanel extends JPanel {
+
         PaintPanel() {
             setPreferredSize(new Dimension(Client.WIDTH, Client.HEIGHT));
             setLayout(new BorderLayout());
             setBackground(Color.blue);
 
-            // Adding background picture
-            MenuPanel.menuBackground = new SpriteLoader("/resources/MenuBackground.png");
-
             // Adding buttons
-            addButtons();
+            addMenuButtons();
         }
 
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.GRAY);
-            g.drawImage(MenuPanel.menuBackground.getImage(), 0, 0, Client.WIDTH, Client.HEIGHT, null);
+
+            // Drawing the background
+            g.drawImage(spriteBackground.getMenuBackgound().getImage(), 0, 0, Client.WIDTH, Client.HEIGHT, null);
         }
 
-        void addButtons() {
+        void addMenuButtons() {
             // Adding buttons
             int buttonWidth = Client.WIDTH / 8;
             int buttonHeight = Client.HEIGHT / 25;
@@ -126,6 +124,8 @@ public class Screen extends JFrame {
             btnNewButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     System.out.println("Rules pressed");
+                    GameOver gameOver = new GameOver(1, 0);
+                    Screen.switchComponent(gameOver);   // TODO: actual rules
                 }
             });
             btnNewButton.setBounds(Client.WIDTH / 2 - buttonWidth / 2, y, buttonWidth, buttonHeight);

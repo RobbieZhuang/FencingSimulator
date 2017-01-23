@@ -1,9 +1,8 @@
 package client;
 
-import graphics.SpriteSheet;
+import client.gui.Screen;
 import graphics.SpriteSheetLoader;
 import map.Map;
-import specialEffects.Rain;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -14,16 +13,10 @@ import java.awt.event.KeyListener;
 public class DankTings extends JPanel implements KeyListener {
     public static final int WIDTH = Client.WIDTH;
     public static final int HEIGHT = Client.HEIGHT;
-    public static final int SPRITE_SIZE = 70;
-    public static final int SPRITE_ROWS = 2;
-    public static final int SPRITE_COLUMNS = 32;
-    public static final int SPRITE_PIXELS = 16;
     public static Map map;
-    // Sprites
-	SpriteSheet spriteSheet = new SpriteSheet("/resources/SpriteSheet.png");
-	long start;
-	long end;
-	long counter = 0;
+    long start;
+    long end;
+    long counter = 0;
 	int fps = 0;
     long startTime = System.currentTimeMillis();
     long elapsedTime = 0L;
@@ -43,7 +36,6 @@ public class DankTings extends JPanel implements KeyListener {
 		this.sender = sender;
 		this.setLayout(null);
 		this.setSize(WIDTH, HEIGHT);
-		SpriteSheetLoader spriteSheetLoader = new SpriteSheetLoader(SPRITE_PIXELS, SPRITE_PIXELS, SPRITE_ROWS, SPRITE_COLUMNS, spriteSheet);
 		addKeyListener(this);
 		setFocusable(true);
 		setBackground(Color.black);
@@ -112,7 +104,7 @@ public class DankTings extends JPanel implements KeyListener {
 				
 
 				// Drawing the player
-                g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX() - cameraLX, (int) p.getpY() - cameraTY, SPRITE_SIZE, SPRITE_SIZE, null);
+                g.drawImage(SpriteSheetLoader.sprites[a][players[a].getStatus()], (int) p.getpX() - cameraLX, (int) p.getpY() - cameraTY, Screen.SPRITE_SIZE, Screen.SPRITE_SIZE, null);
                
 			}
 		}
