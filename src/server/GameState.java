@@ -32,13 +32,13 @@ public class GameState {
 	}
 	
 	/**
-	 * updateMap
+	 * updateRoom
 	 * This method updates the current room by getting a direction and calling the map update methods
 	 * Players are spawned on either end of the maps
 	 * 
 	 * @param int, the direction 0 for go right, 1 to go left
 	 */
-	public void updateMap(int direction){
+	public void updateRoom(int direction){
 		boolean updatedRoom = false;
 		// Going right (team 0)
 		if (direction == 0 && map.getCurrentRoomID() < map.getNumberOfRooms()-1){

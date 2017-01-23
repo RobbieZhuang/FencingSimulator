@@ -27,14 +27,6 @@ public class Game implements Runnable {
 		}
 	}
 
-	/**
-	 * updateRoom
-	 * Updates the room that the players are in.
-	 * Once on player reaches the other side 
-	 */
-	void updateRoom(){
-
-	}
 	void updateGameState(){
 		for (int i = 0; i < gameState.getNumPlayers(); i++){
 			Player p = gameState.getPlayers().get(i);
@@ -46,14 +38,24 @@ public class Game implements Runnable {
 			// One means team 1 which starts right and goes left
 			if (p.getTeam() == 0){
 				if (p.getX() >= gameState.getMap().getCurrentRoom().rightTarget().x){
-					gameState.updateMap(0);
+					gameState.updateRoom(0);
 				}
 			}else if (p.getTeam() == 1){
 				if (p.getX() <= gameState.getMap().getCurrentRoom().leftTarget().x){
-					gameState.updateMap(1);
+					gameState.updateRoom(1);
 				}
 			}
 
+			if (p.getTeam() == 0){
+				if (p.getY() > gameState.getMap().getCurrentRoom().deathY()){
+					p.revive(gameState.getMap().getCurrentRoom().leftTarget());
+				}
+			}else if (p.getTeam() == 1){
+				if (p.getY() > gameState.getMap().getCurrentRoom().deathY()){
+					p.revive(gameState.getMap().getCurrentRoom().rightTarget());
+				}
+			}
+			
 			p.iterateCounters();
 
 			if (p.isAlive()){

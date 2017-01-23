@@ -58,4 +58,9 @@ public class RoomOutdoors extends Room {
 	public Point rightTarget() {
 		return new Point(1950,50);
 	}
+
+	@Override
+	public int deathY() {
+		return 500;
+	}
 }

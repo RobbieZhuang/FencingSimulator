@@ -81,7 +81,7 @@ public class RoomGround extends Room {
 
 	@Override
 	protected void generateRespawnPoints() {
-		super.getRespawn().add(new Point(100, 500));
+		super.getRespawn().add(new Point(150, 500));
 		super.getRespawn().add(new Point(3400, 100));
 		super.getRespawn().add(new Point (1500, 400));
 	}
@@ -93,6 +93,11 @@ public class RoomGround extends Room {
 	@Override
 	public Point rightTarget() {
 		return new Point(3450, 50);
+	}
+
+	@Override
+	public int deathY() {
+		return 1000;
 	}
 
 }

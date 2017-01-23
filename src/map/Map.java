@@ -14,7 +14,7 @@ public class Map {
 		rooms = new ArrayList<Room>();
 		rooms.add(new RoomCastle());
 		rooms.add(new RoomOutdoors());
-		rooms.add(new RoomCastle());
+		rooms.add(new RoomGround());
 		rooms.add(new RoomOutdoors());
 		rooms.add(new RoomCastle());
 		currentRoom = rooms.get(2);
