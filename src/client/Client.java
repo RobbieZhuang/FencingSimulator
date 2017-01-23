@@ -64,6 +64,11 @@ public class Client implements Runnable {
         players[1] = new PlayerImage(1, 0, 0, 0);
     }
 
+    /**
+     * main Method
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         System.out.println("Attempting connection");
         Client client = new Client();
@@ -117,15 +122,24 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * start
+     */
     public synchronized void start() {
         running = true;
         new Thread(this).start();
     }
 
+    /**
+     * stop
+     */
     public synchronized void stop() {
         running = false;
     }
 
+    /** 
+     * render
+     */
     void render() {
         Screen.contentPane.repaint();
     }

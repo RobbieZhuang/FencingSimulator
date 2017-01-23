@@ -25,35 +25,55 @@ public class ClientSender implements Runnable {
         this.output = output;
     }
    
+    /**getMessage
     public byte getMessage() {
 		return message;
 	}
 
+   	/**
+   	 * setMessage
+   	 */
 	public void setMessage(byte message) {
 		this.message = message;
 	}
 
+	/*
+	 * send
+	 */
 	public void send (String str) {
     	output.println(str);
     	output.flush();
     }
     
+	/**
+	 * send
+	 * @param b
+	 */
     public void send (long b) {
     	output.println(b);
     	output.flush();
     }
 
+    /**
+     * start
+     */
     public void start(){
     	Thread t = new Thread (this);
     	running = true;
     	t.start();
     }
     
+    /**
+     * stop
+     */
     public void stop(){
     	running = false;
     }
     
 	@Override
+	/**
+	 * run
+	 */
 	public void run() {
 		while (running){
 			try {

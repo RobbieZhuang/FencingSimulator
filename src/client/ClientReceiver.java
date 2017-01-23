@@ -35,6 +35,9 @@ public class ClientReceiver implements Runnable {
      * This is used to run a new thread
      */
     @Override
+    /**
+     * run
+     */
     public void run() {
     	boolean messageReceived = false;
     	while (!messageReceived) {
@@ -81,7 +84,10 @@ public class ClientReceiver implements Runnable {
         running = false;
     }
     
-    
+    /**
+     * getServerMessage
+     * @return string
+     */
     public String getServerMessage() {
 		return serverMessage;
 	}
@@ -96,6 +102,10 @@ public class ClientReceiver implements Runnable {
 //    	}
 //    }
     
+    /**
+     * firstMessage
+     * @return
+     */
     public String firstMessage () {
     	while (true) {
     		 try {
@@ -110,6 +120,10 @@ public class ClientReceiver implements Runnable {
     	}
     }
 
+    /**
+     * getPlayerID
+     * @return int
+     */
     public int getPlayerID () {
     	return playerID;
     }
