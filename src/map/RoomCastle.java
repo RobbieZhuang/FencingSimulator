@@ -49,7 +49,7 @@ public class RoomCastle extends Room {
 		for (int a = 0; a < rubble.size(); a++) {
 			int x = (int)(rubble.get(a).getX());
 			int y = (int)(rubble.get(a).getY());
-			g2.fillRect(x, y, RUBBLE_LENGTH, RUBBLE_HEIGHT);
+			g2.fillRect(x-lX, y-tY, RUBBLE_LENGTH, RUBBLE_HEIGHT);
 		}
 	}
 
