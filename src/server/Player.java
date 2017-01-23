@@ -1,5 +1,7 @@
 package server;
 
+import java.awt.Point;
+
 import client.gui.Screen;
 import mechanics.Hitbox;
 
@@ -114,10 +116,10 @@ public class Player {
 		totalNumberOfDeaths++;
 	}
 
-	public void revive(int x, int y) {
+	public void revive(Point p) {
 		this.alive = true;
-		this.x = x;
-		this.y = y;
+		this.x = p.x;
+		this.y = p.y;
 		this.status = 0;
 	}
 

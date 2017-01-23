@@ -90,4 +90,5 @@ public abstract class Room {
 
 	public abstract Point leftTarget();
 	public abstract Point rightTarget();
+	public abstract int deathY();
 }
