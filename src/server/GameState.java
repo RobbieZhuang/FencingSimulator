@@ -12,6 +12,8 @@ public class GameState {
 	// Declare map variable
 	private Map map;
 	private int numPlayers;
+	// Zero for true (wait), One for false
+	private int waitInLobby = 0;
 
 	public GameState (){
 		players = new ArrayList<Player>();
@@ -32,7 +34,7 @@ public class GameState {
 	/**
 	 * updateMap
 	 * This method updates the current room by getting a direction and calling the map update methods
-	 * Players are respawned on either end of the maps
+	 * Players are spawned on either end of the maps
 	 * 
 	 * @param int, the direction 0 for go right, 1 to go left
 	 */
@@ -77,6 +79,9 @@ public class GameState {
 		players.add(player);
 		player.setTeam(numPlayers%2);
 		numPlayers++;
+		if (numPlayers == 2){
+			waitInLobby = 1;
+		}
 	}
 	
 	public void removePlayer (int playerID){
@@ -141,7 +146,7 @@ public class GameState {
 	 * @return String
 	 */
 	public String getGameString(){
-		String gameString = players.size() + " " + map.getCurrentRoomID() + " ";
+		String gameString = players.size() + " " + map.getCurrentRoomID() + " " + waitInLobby + " ";
 		for (int i = 0; i < numPlayers; i ++){
 			gameString += players.get(i).getID() + " " + players.get(i).getX() + " " + players.get(i).getY() + " "
 					+ players.get(i).getStatus() + " ";

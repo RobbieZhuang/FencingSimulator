@@ -27,6 +27,7 @@ public class DankTings extends JPanel implements KeyListener {
 	private boolean running;
 	private int myPlayerID;
 	private int currentMap = 1;
+	public static boolean waitInLobby = true;
 
 
 	public DankTings(int myPlayerID, ClientSender sender, PlayerImage[] players2) {
