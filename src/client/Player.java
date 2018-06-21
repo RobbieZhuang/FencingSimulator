@@ -1,4 +1,4 @@
-/* PlayerImage.java
+/* Player.java
  *
  * Version 1.0
  * Andi Li, Bill Li, Max Gao, Robbie Zhuang 
@@ -11,7 +11,7 @@ package client;
 
 import java.awt.Color;
 
-public class PlayerImage {
+public class Player {
 	private int playerID;
 	private double pX;
 	private double pY;
@@ -19,7 +19,7 @@ public class PlayerImage {
 	private Color playerColor;
 	
 	/**
-	 * PlayerImage
+	 * Player
 	 * 
 	 * constructor
 	 * 
@@ -28,7 +28,7 @@ public class PlayerImage {
 	 * @param y
 	 * @param status
 	 */
-	public PlayerImage (int playerID, double x, double y, int status) {
+	public Player(int playerID, double x, double y, int status) {
 		this.pX = x;
 		this.pY = y;
 		this.status = status;

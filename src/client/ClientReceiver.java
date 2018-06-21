@@ -54,13 +54,8 @@ public class ClientReceiver implements Runnable {
             }
     	}
         while (running) {
-            // Attempting to receive message
             try {
                 serverMessage = input.readLine();
-//                if (!serverMessage.equals("-1")) {
-//                    runCommands(serverMessage);
-//                }
-//                System.out.println("Server message: " + serverMessage);
             } catch (Exception e) {
                 System.out.println("*** Error receiving message ***");
                 e.printStackTrace();
@@ -92,16 +87,6 @@ public class ClientReceiver implements Runnable {
 		return serverMessage;
 	}
 
-//	public void updatePanel (DankTings panel) {
-//    	this.panel = panel;
-//    }
-    
-//    private void runCommands(String command){
-//    	if (panel != null) {
-//    		panel.updatePlayer(command);
-//    	}
-//    }
-    
     /**
      * firstMessage
      * @return

@@ -27,21 +27,6 @@ public class Hitbox {
     }
     
     public boolean collidesWith(Hitbox h) {
-    	/*
-        double hLX = h.getlX();
-        double hRX = h.getrX();
-        double hTY = h.gettY();
-        double hBY = h.getbY();
-
-        // If two points are on the same side (RETURN FALSE)
-        // This part checks the left and right sides
-        if (sameSign(crossProduct(lX, bY, lX, tY, hLX, hTY), crossProduct(lX, bY, lX, tY, hRX, hTY)) || sameSign(crossProduct(rX, bY, rX, tY, hLX, hTY), crossProduct(rX, bY, rX, tY, hRX, hTY))) {
-            return false;
-        }
-        System.out.println("jsehduijsfhdruisfhdsd");
-        // This checks up and down
-        return !(sameSign(crossProduct(lX, tY, rX, tY, hLX, hTY), crossProduct(lX, tY, rX, tY, hLX, hBY)) || sameSign(crossProduct(lX, bY, rX, bY, hLX, hTY), crossProduct(lX, bY, rX, bY, hLX, hBY)));
-    	*/
     	return (r.intersects(h.getRectangle()));
     }
 

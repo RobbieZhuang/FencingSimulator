@@ -1,4 +1,4 @@
-/* PlayerImage.java
+/* Player.java
  *
  * Version 1.0
  * Andi Li, Bill Li, Max Gao, Robbie Zhuang 
